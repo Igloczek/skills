@@ -1,11 +1,11 @@
 ---
 name: review-ponytail
-description: "Review a change for over-engineering, unnecessary complexity, and avoidable change surface."
+description: "Review a change for over-engineering, unnecessary complexity, and avoidable change surface as one of the three review personas."
 ---
 
-Use as the minimality review lane within `review`. It applies the public
-`ponytail` skill's deletion-first lens and does not replace correctness,
-security, performance, accessibility, product, or domain review.
+Use as one of the three review personas within `review`. Run it for every
+change alongside `standard` and `review-gilfoyle`. It covers over-engineering,
+unnecessary dependencies, speculative flexibility, and avoidable complexity.
 
 Use the same project snapshot, pinned diff, and repository instructions as the
 other review lanes. This skill has a different focus, not a different
@@ -32,7 +32,7 @@ environment or branch.
 ## Output
 
 ```text
-Status: PASS|CHANGES_REQUESTED|BLOCKED|NOT_RUN
+Status: PASS|CHANGES_REQUESTED|BLOCKED
 Scope: base, diff, and paths inspected
 Decision: one-line complexity verdict
 Findings: path:line, tag, cut, replacement, and evidence

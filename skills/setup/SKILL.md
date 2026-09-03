@@ -63,6 +63,9 @@ paths or `none`, and remaining gaps. End with `Status: READY` or
   `billing-specialist` is created inside the consuming project, not here.
 - Missing source paths or a usable target is a visible setup gap, not permission
   to create a weaker substitute.
+- Do not install mutation, complexity, architecture, or other quality tooling
+  by default; record what the project already supports and let later workflows
+  choose checks proportionally.
 - Do not create tracker labels, branches, hooks, or browser processes unless
   the user explicitly enables that action.
 - A setup failure is a clean stop for downstream workflows, not permission to
