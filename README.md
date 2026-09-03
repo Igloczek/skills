@@ -204,8 +204,9 @@ boundary and narrowed before the domain code uses it.
 
 ## Sources
 
-Inspired by and reusing work from:
+The core workflow started with ideas from:
 
+- [Cursor's pstack skills](https://github.com/cursor/plugins/tree/main/pstack)
 - [open-mercato/skills](https://github.com/open-mercato/skills)
 - [mattpocock/skills](https://github.com/mattpocock/skills)
 - [axiomhq/gilfoyle](https://github.com/axiomhq/gilfoyle)
