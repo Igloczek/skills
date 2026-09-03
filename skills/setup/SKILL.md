@@ -8,11 +8,12 @@ project-local domain expert setup changes.
 
 Start by running the bundled [`scripts/init.cjs`](scripts/init.cjs) with the
 project as its working directory. It performs the repeatable bootstrap: checks
-the project root and known signals, creates `.ai` when needed, checks global
+the project root and known signals, creates `.ai` when needed, checks project
 skill directories, and installs missing upstream companions from
 [`references/external-skills.json`](references/external-skills.json). Use
 `--dry-run` to inspect the result without changing anything; pass `--agent` for
-a non-Codex host. Do not recreate these checks manually.
+a narrower target than the default `*` (all supported agents). Do not recreate
+these checks manually.
 
 ## Workflow
 

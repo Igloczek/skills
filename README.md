@@ -2,24 +2,25 @@
 
 Small, intent-based agent workflows for a normal software delivery lifecycle.
 
-## Install once
+## Install in a project
 
-Install the collection into the global skill directory of Codex:
+Install the collection into the current project's skill directories for all
+supported agents:
 
 ```bash
-npx skills add igloczek/skills --skill '*' --global --agent codex --yes
+npx skills add igloczek/skills --skill '*' --agent '*' --yes
 ```
 
 Then invoke `setup` in a project. Its bundled initializer checks the project
 shape, creates `.ai` when needed, and installs the upstream companion skills
-listed below into the same global agent directory. Projects may still use a
+listed below into the project's skill directories. Projects may still use a
 local `.ai/skills.json` for their own commands, tracker, or browser provider.
 
 ## Runtime companions
 
 These are installed dependencies, not just references. The initializer checks
-the global skill directories before installing and keeps the upstream skill
-folders intact, including their supporting files.
+the project's agent skill directories before installing and keeps the upstream
+skill folders intact, including their supporting files.
 
 | Companion | Used by | Source |
 | --- | --- | --- |
@@ -30,7 +31,7 @@ folders intact, including their supporting files.
 
 The manifest is [`skills/setup/references/external-skills.json`](skills/setup/references/external-skills.json),
 and the deterministic initializer is [`skills/setup/scripts/init.cjs`](skills/setup/scripts/init.cjs).
-Update installed companions with `npx skills update --global`.
+Update installed companions with `npx skills update --project --yes`.
 
 ## Shape
 

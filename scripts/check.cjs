@@ -51,7 +51,10 @@ for (const skill of ['review-gilfoyle', 'review-ponytail', 'ui-dev']) {
 }
 const readme = fs.readFileSync(path.join(root, 'README.md'), 'utf8');
 const setupText = fs.readFileSync(path.join(root, 'skills', 'setup', 'SKILL.md'), 'utf8');
+const setupScriptText = fs.readFileSync(setupScript, 'utf8');
 assert(setupText.includes('scripts/init.cjs'), 'setup does not use the initializer');
+assert(setupScriptText.includes("process.env.SKILLS_AGENT || '*'"), 'initializer must default to all agents');
+assert(!setupScriptText.includes('--global'), 'initializer must remain project-scoped');
 for (const skill of expected) {
   assert(readme.includes(`\`${skill}\``), `missing README skill entry: ${skill}`);
 }
@@ -59,5 +62,8 @@ assert(readme.includes('```mermaid'), 'missing README workflow graph');
 assert(readme.includes('## Setup (once per repository)'), 'missing setup graph section');
 assert(readme.includes('domain-expert<br/>project-local only'), 'missing local domain expert branch');
 assert(readme.includes('These are installed dependencies, not just references.'), 'missing installed companion statement');
-execFileSync(process.execPath, [setupScript, '--dry-run', '--project-dir', root, '--agent', 'codex'], { stdio: 'ignore' });
+assert(readme.includes("--agent '*' --yes"), 'README must install for all project agents');
+assert(!readme.includes('--global'), 'README must not install globally');
+assert(!readme.includes('--agent codex'), 'README must not target Codex only');
+execFileSync(process.execPath, [setupScript, '--dry-run', '--project-dir', root, '--agent', '*'], { stdio: 'ignore' });
 console.log(`ok: ${skillFiles.length} public skills`);
