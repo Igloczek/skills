@@ -31,6 +31,7 @@ Risk: LOW|MEDIUM|HIGH
 Scenario: <what was exercised>
 Checks: <commands and observed results>
 Gates: <name=PASS|FAIL|SKIPPED|NOT_CONFIGURED; evidence>
+Quality: <signal=PASS|WARN|BLOCKED|NOT_RUN; evidence>
 Evidence: <artifact paths or none>
 Cleanup: <what was stopped or removed>
 Skipped: <proof deliberately not run and why|none>
@@ -53,5 +54,8 @@ it does not apply or the project does not provide it.
 - Clean up processes and temporary resources even after a failed check.
 - Keep expensive checks proportional to change risk and available feedback;
   never require enterprise tooling for a small project.
+- Report quality warnings separately from functional failures. A warning,
+  unconfigured signal, or legacy violation is not a failure without project
+  policy or high-risk scope.
 - Do not modify source code unless the caller explicitly switches to `build`
   or `fix`.

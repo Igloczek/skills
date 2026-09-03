@@ -1,6 +1,6 @@
 ---
 name: review
-description: "Review a diff against the repository standards and requested behavior, including security, compatibility, tests, and unnecessary complexity."
+description: "Review a diff against repository standards and requested behavior, including security, compatibility, tests, complexity, and proportionate quality signals."
 ---
 
 ## Workflow
@@ -8,7 +8,7 @@ description: "Review a diff against the repository standards and requested behav
 1. Pin the comparison point and confirm the diff is the intended one.
 2. Read the originating issue or spec and the repository's standards.
 3. Review separately for requested behavior, standards/design, security,
-   backward compatibility, and test gaps.
+   backward compatibility, test gaps, and applicable quality signals.
 4. Run the standard lane for every change. Add `review-gilfoyle` when the
    change has meaningful operational, integration, security, or production
    risk, and add `review-ponytail` when scope or complexity makes it useful.
@@ -26,10 +26,13 @@ description: "Review a diff against the repository standards and requested behav
 
 ```text
 Status: APPROVED|CHANGES_REQUESTED|NEEDS_HUMAN
+Quality: <signal=PASS|WARN|BLOCKED|NOT_RUN; evidence>
 ```
 
 The report must contain `blockers`, `majors`, `minors`, `spec_findings`,
-`standards_findings`, `test_gaps`, and `review_lanes`. `review_lanes` must show
+`standards_findings`, `test_gaps`, `quality_signals`, and `review_lanes`.
+`quality_signals` must show the changed-code scope, the configured tool or
+reason, the status, and evidence. `review_lanes` must show
 the status, findings, and selection reason for `standard`, `review-gilfoyle`,
 and `review-ponytail`, plus `domain-expert` when used.
 
@@ -46,4 +49,9 @@ and `review-ponytail`, plus `domain-expert` when used.
   in the composed report.
 - Do not spawn specialist lanes for ceremony; a low-risk change may record them
   as `NOT_RUN` with a concrete reason.
+- Measure the changed surface before considering legacy repository-wide
+  findings. Do not add a metric tool just to satisfy this skill.
+- A quality `WARN` is not a blocker unless project policy or change risk makes
+  it one. In TypeScript, flag new unapproved `any`, but allow `unknown` at a
+  trust boundary when it is narrowed before domain logic.
 - Never request changes merely for personal style preferences.

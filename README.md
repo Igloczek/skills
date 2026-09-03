@@ -2,6 +2,18 @@
 
 Small, intent-based agent workflows for a normal software delivery lifecycle.
 
+## Purpose
+
+This repository builds a small, agent-neutral toolkit for a solo developer who
+wants to ship software with less friction. The skills help turn a request into
+a small slice, implement it, review it proportionally, verify the real
+behavior, and finish safely.
+
+It is not an enterprise software process, compliance framework, test runner, or
+replacement for project-specific tools. The default path is the smallest one
+that gives useful confidence; optional add-ons apply only when uncertainty or
+risk justifies them. Contributor boundaries live in [AGENTS.md](AGENTS.md).
+
 ## Install in a project
 
 Install the collection into the current project's skill directories for all
@@ -185,6 +197,12 @@ Every mutating workflow must:
 
 `finish` never merges unless the user explicitly enables the merge action. UI
 verification is evidence-based and optional for non-UI work.
+
+Quality signals are review aids, not a global cleanup mandate. They apply to
+changed code first, use tools the project already has, and report warnings or
+unavailable checks without turning them into blockers by default. In
+TypeScript, new unapproved `any` is discouraged; `unknown` remains valid at
+trust boundaries when it is narrowed before domain logic.
 
 ## Sources
 

@@ -51,6 +51,30 @@ Owner: `verify`. Combine repo-native tests with proportionate configured quality
 gates and UI/browser evidence when the change is user-facing. Keep credentials
 indirect and clean up test processes.
 
+## quality-signals
+
+Owner: `review` and `verify`. Measure the changed, non-generated code first and
+use project-configured tools only. Treat thresholds as warning triggers, not a
+global cleanup mandate. Report `PASS`, `WARN`, `BLOCKED`, or `NOT_RUN` with the
+tool or reason and its evidence.
+
+- Cyclomatic or cognitive complexity `>=22`: warn and consider a smaller seam.
+- A changed file at `>=500` lines: warn when a clear responsibility boundary
+  exists, not because a number alone demands a split.
+- CRAP `>=25`: use for high-risk changed functions when the project already
+  has the metric.
+- Mutation testing: require zero surviving mutants only for selected critical
+  or bug-fix logic when a configured runner exists.
+- Dead or redundant code: remove only when tool-proven or obvious in the
+  changed area; do not promise global zero.
+- TypeScript: no new unapproved `any` in production code. `unknown` is valid
+  at trust boundaries but must be narrowed before domain logic.
+- Halstead is advisory only when already configured; never install it for this
+  workflow.
+
+A warning is not a blocker unless project policy or change risk makes it one.
+Legacy findings may remain, but new changed-code violations should be explicit.
+
 ## pr-state-dispatcher
 
 Owner: `finish`. Read the current PR state, choose the next allowed gate,

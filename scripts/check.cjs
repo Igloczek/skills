@@ -35,10 +35,12 @@ const domainReference = path.join(root, 'skills', 'setup', 'references', 'domain
 const domainGuide = path.join(root, 'internal', 'DOMAIN-EXPERT.md');
 const setupScript = path.join(root, 'skills', 'setup', 'scripts', 'init.cjs');
 const externalManifest = path.join(root, 'skills', 'setup', 'references', 'external-skills.json');
+const agentsFile = path.join(root, 'AGENTS.md');
 assert(fs.existsSync(domainReference), 'missing domain expert reference');
 assert(fs.existsSync(domainGuide), 'missing domain expert guide');
 assert(fs.existsSync(setupScript), 'missing setup initializer');
 assert(fs.existsSync(externalManifest), 'missing external skill manifest');
+assert(fs.existsSync(agentsFile), 'missing repository AGENTS.md');
 const domainText = fs.readFileSync(domainReference, 'utf8');
 assert(domainText.includes('name: domain-expert-{{DOMAIN_ROLE_SLUG}}'), 'missing domain expert template');
 const externalSkills = JSON.parse(fs.readFileSync(externalManifest, 'utf8'));
@@ -50,6 +52,7 @@ for (const skill of ['review-gilfoyle', 'review-ponytail', 'ui-dev']) {
   assert(names.includes(skill), `missing required skill: ${skill}`);
 }
 const readme = fs.readFileSync(path.join(root, 'README.md'), 'utf8');
+const agentsText = fs.readFileSync(agentsFile, 'utf8');
 const setupText = fs.readFileSync(path.join(root, 'skills', 'setup', 'SKILL.md'), 'utf8');
 const setupScriptText = fs.readFileSync(setupScript, 'utf8');
 assert(setupText.includes('scripts/init.cjs'), 'setup does not use the initializer');
@@ -68,7 +71,7 @@ function checkLocalMarkdownLinks(file) {
   }
 }
 
-for (const file of [...files(path.join(root, 'skills')), ...files(path.join(root, 'internal')), path.join(root, 'README.md')].filter(file => file.endsWith('.md'))) {
+for (const file of [...files(path.join(root, 'skills')), ...files(path.join(root, 'internal')), path.join(root, 'README.md'), agentsFile].filter(file => file.endsWith('.md'))) {
   checkLocalMarkdownLinks(file);
 }
 
@@ -76,6 +79,9 @@ for (const skill of expected) {
   assert(readme.includes(`\`${skill}\``), `missing README skill entry: ${skill}`);
 }
 assert(readme.includes('```mermaid'), 'missing README workflow graph');
+assert(readme.includes('## Purpose'), 'missing README purpose');
+assert(agentsText.includes('## Purpose'), 'missing AGENTS purpose');
+assert(agentsText.includes('solo'), 'AGENTS must describe the solo-developer scope');
 assert(readme.includes('## Setup (once per repository)'), 'missing setup graph section');
 assert(readme.includes('domain-expert<br/>project-local only'), 'missing local domain expert branch');
 assert(readme.includes("--agent '*' --yes"), 'README must install for all project agents');

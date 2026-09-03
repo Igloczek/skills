@@ -33,6 +33,8 @@ PR: #<number> (link: <url>)
 - Do not report readiness for a code change until the selected review lanes
   have returned terminal results. A deliberately omitted specialist lane must
   have a recorded risk-based reason.
+- Do not block on a quality warning, unconfigured signal, or legacy violation
+  unless project policy or high-risk scope explicitly makes it a gate.
 - Never create a duplicate PR.
 - Bound waits and fan-out; stop if a downstream workflow would re-enter this
   one.
