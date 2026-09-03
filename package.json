@@ -1,0 +1,10 @@
+{
+  "name": "igloczek-skills",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A compact, intent-based collection of agent skills for software delivery.",
+  "license": "MIT",
+  "scripts": {
+    "check": "node scripts/check.cjs"
+  }
+}
