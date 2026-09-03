@@ -44,5 +44,6 @@ for (const skill of expected) {
   assert(readme.includes(`\`${skill}\``), `missing README skill entry: ${skill}`);
 }
 assert(readme.includes('```mermaid'), 'missing README workflow graph');
+assert(readme.includes('## Setup (once per repository)'), 'missing setup graph section');
 assert(readme.includes('domain-expert<br/>project-local only'), 'missing local domain expert branch');
 console.log(`ok: ${skillFiles.length} public skills`);

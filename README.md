@@ -51,15 +51,41 @@ parameters of a workflow. They are not separate skills.
 | `review-ponytail` | Core | Review over-engineering, YAGNI, and avoidable change surface. |
 | `ui-dev` | Add-on | Implement interface changes with accessible states and polished interaction. |
 
+## Setup (once per repository)
+
+Run `setup` once for a repository. It discovers the local delivery surface and
+creates one project-local domain expert only when domain-specific behavior needs
+one. Every work item starts at `intake` after this graph reaches `ready`.
+
+```mermaid
+%%{init: {"theme":"base","themeVariables":{"fontFamily":"ui-sans-serif,system-ui,sans-serif","lineColor":"#94a3b8","primaryColor":"#eef2ff","primaryTextColor":"#172033","primaryBorderColor":"#6366f1","secondaryColor":"#ecfdf5","tertiaryColor":"#fff7ed"}}}%%
+flowchart LR
+    setup["setup<br/>once per repository"] --> inspect["inspect<br/>commands + providers"]
+    inspect --> configure["configure<br/>safe defaults"]
+    configure --> domain{"domain-specific?"}
+    domain -->|yes| domain_expert["domain-expert<br/>project-local only"]
+    domain -->|no| ready(["repository ready"])
+    domain_expert --> ready
+
+    classDef core fill:#eef2ff,stroke:#6366f1,color:#1e1b4b,stroke-width:1.5px;
+    classDef decision fill:#fff7ed,stroke:#f59e0b,color:#7c2d12,stroke-width:1.5px;
+    classDef local fill:#fff7ed,stroke:#f59e0b,color:#7c2d12,stroke-width:1.5px,stroke-dasharray:5 5;
+    classDef terminal fill:#f1f5f9,stroke:#475569,color:#0f172a,stroke-width:1.5px;
+    class setup,inspect,configure core;
+    class domain decision;
+    class domain_expert local;
+    class ready terminal;
+```
+
 ## Sample workflow
 
 Solid arrows are the default path. Dashed arrows are optional routing based on
 the work being done.
 
 ```mermaid
+%%{init: {"theme":"base","themeVariables":{"fontFamily":"ui-sans-serif,system-ui,sans-serif","lineColor":"#94a3b8","primaryColor":"#eef2ff","primaryTextColor":"#172033","primaryBorderColor":"#6366f1","secondaryColor":"#ecfdf5","tertiaryColor":"#f8fafc"}}}%%
 flowchart TD
-    setup["setup<br/>repository configuration"] --> intake["intake<br/>normalize work"]
-    intake --> shape["shape<br/>define scope"]
+    intake["intake<br/>normalize work"] --> shape["shape<br/>define scope"]
     shape --> specify["specify<br/>acceptance + plan"]
     specify --> kind{"new work or defect?"}
     kind -->|feature/change| build["build<br/>implement"]
@@ -67,7 +93,8 @@ flowchart TD
     build --> review["review<br/>fan-out gate"]
     fix --> review
 
-    subgraph review_threads [Review threads - run in parallel]
+    subgraph review_threads["Review threads · parallel, separate tasks"]
+        direction LR
         standard_review["standard review<br/>behavior + standards"]
         review_gilfoyle["review-gilfoyle<br/>operations + reliability"]
         review_ponytail["review-ponytail<br/>complexity + minimality"]
@@ -85,7 +112,8 @@ flowchart TD
     verify --> finish["finish<br/>PR gates + merge decision"]
     finish --> retro["retro<br/>capture improvements"]
 
-    subgraph optional [Optional add-ons]
+    subgraph optional["Optional add-ons · use only when needed"]
+        direction LR
         research["research"]
         prototype["prototype"]
         wayfinder["wayfinder"]
@@ -106,17 +134,25 @@ flowchart TD
     verify -. user-facing UI .-> ux_proof
     ux_proof --> finish
 
-    setup -. domain-specific repository .-> domain_expert["domain-expert<br/>project-local only"]
-    domain_expert -. domain semantics .-> shape
-    domain_expert -. domain semantics .-> specify
-    domain_expert -. domain semantics .-> build
-    domain_expert -. domain semantics .-> review
+    classDef core fill:#eef2ff,stroke:#6366f1,color:#1e1b4b,stroke-width:1.5px;
+    classDef review fill:#ecfdf5,stroke:#059669,color:#064e3b,stroke-width:1.5px;
+    classDef optional fill:#f8fafc,stroke:#94a3b8,color:#334155,stroke-width:1px,stroke-dasharray:5 5;
+    classDef decision fill:#fff7ed,stroke:#f59e0b,color:#7c2d12,stroke-width:1.5px;
+    classDef join fill:#e0f2fe,stroke:#0284c7,color:#0c4a6e,stroke-width:1.5px;
+    classDef terminal fill:#f1f5f9,stroke:#475569,color:#0f172a,stroke-width:1.5px;
+    class intake,shape,specify,build,fix,review,verify core;
+    class standard_review,review_gilfoyle,review_ponytail review;
+    class review_join join;
+    class kind decision;
+    class finish,retro terminal;
+    class research,prototype,wayfinder,deep_design,ui_dev,ux_proof optional;
 ```
 
 `review` launches the three review threads in parallel. Each thread is
 read-only and returns its own findings; the join happens before `verify`.
 Changes requested by any lane return to implementation instead of being hidden
-inside one combined review.
+inside one combined review. The local domain expert from the setup graph is
+consulted by `shape`, `specify`, `build`, and `review` when relevant.
 
 ## Project-local domain expert
 
