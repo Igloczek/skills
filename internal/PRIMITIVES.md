@@ -6,7 +6,7 @@ primitive; the primitive must not become another user-facing command.
 ## context-and-safety
 
 Owner: `setup` and every workflow. Load project instructions and local config,
-discover and scope project-local expert profiles, mark untrusted content,
+discover and scope the one project-local domain expert, mark untrusted content,
 redact secrets, and refuse unsafe or ambiguous mutations.
 
 ## decision-gate
@@ -39,9 +39,9 @@ claim locks, labels, idempotent comments, and lock cleanup.
 ## review-engine
 
 Owner: `review` and `finish`. Review standards, requested behavior, security,
-compatibility, tests, and architecture; route independent operational,
-minimality, UI, and domain lenses only when relevant; return a bounded,
-severity-ranked report.
+compatibility, tests, and architecture; route the public operational and
+minimality add-ons and the local domain expert only when relevant; return a
+bounded, severity-ranked report.
 
 ## evidence-engine
 

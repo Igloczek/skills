@@ -17,10 +17,9 @@ runs are modes of this skill, not separate commands.
    progress record.
 5. Commit coherent changes and open or update one reviewable PR.
 
-When `.ai/skills.json` configures local experts, route UI changes through the
-project's `persona-ui-dev` profile and consult its domain expert before changing
-domain-sensitive behavior. These profiles add project context; they do not
-change the public skill roster or override the repository's contracts.
+When a change touches UI, use the public `ui-dev` skill. Consult the project's
+local domain expert before changing domain-sensitive behavior. The domain expert
+adds project context; it does not change public skill contracts.
 
 ## Output
 

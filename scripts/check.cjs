@@ -6,6 +6,7 @@ const root = path.join(__dirname, '..');
 const expected = new Set([
   'setup', 'shape', 'intake', 'specify', 'build', 'fix', 'review', 'verify', 'finish', 'retro',
   'prototype', 'research', 'deep-design', 'ux-proof', 'wayfinder',
+  'review-gilfoyle', 'review-ponytail', 'ui-dev',
 ]);
 
 function files(dir) {
@@ -29,16 +30,17 @@ assert.equal(new Set(names).size, names.length, 'duplicate skill name');
 assert.deepEqual(new Set(names), expected, 'skill roster drift');
 assert.equal(files(path.join(root, 'internal')).filter(file => file.endsWith('SKILL.md')).length, 0, 'internal docs must not be installable skills');
 
-const profileReference = path.join(root, 'skills', 'setup', 'references', 'expert-profiles.md');
-const personaGuide = path.join(root, 'internal', 'PERSONAS.md');
-assert(fs.existsSync(profileReference), 'missing local profile reference');
-assert(fs.existsSync(personaGuide), 'missing local persona guide');
-const profileText = fs.readFileSync(profileReference, 'utf8');
-for (const profile of ['persona-reviewer-gilfoyle', 'persona-reviewer-ponytail', 'persona-ui-dev', 'persona-domain-expert']) {
-  assert(profileText.includes(profile), `missing profile template: ${profile}`);
+const domainReference = path.join(root, 'skills', 'setup', 'references', 'domain-expert.md');
+const domainGuide = path.join(root, 'internal', 'DOMAIN-EXPERT.md');
+assert(fs.existsSync(domainReference), 'missing domain expert reference');
+assert(fs.existsSync(domainGuide), 'missing domain expert guide');
+const domainText = fs.readFileSync(domainReference, 'utf8');
+assert(domainText.includes('name: domain-expert-{{DOMAIN_ROLE_SLUG}}'), 'missing domain expert template');
+for (const skill of ['review-gilfoyle', 'review-ponytail', 'ui-dev']) {
+  assert(names.includes(skill), `missing specialist skill: ${skill}`);
 }
 const readme = fs.readFileSync(path.join(root, 'README.md'), 'utf8');
-for (const companion of ['gilfoyle', 'ponytail', 'design-taste-frontend', 'make-interfaces-feel-better']) {
-  assert(readme.includes(companion), `missing README companion attribution: ${companion}`);
+for (const item of ['review-gilfoyle', 'review-ponytail', 'ui-dev', 'domain expert']) {
+  assert(readme.includes(item), `missing README specialist entry: ${item}`);
 }
 console.log(`ok: ${skillFiles.length} public skills`);
