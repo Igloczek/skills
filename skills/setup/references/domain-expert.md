@@ -1,8 +1,9 @@
 # Domain expert setup
 
-Read this reference only when the repository contains domain-specific behavior.
+Read this reference only when the repository benefits from one or more domain
+experts.
 
-Create exactly one project-local domain expert. Ask the owner for:
+Create zero or more project-local domain experts. Ask the owner for each expert's:
 
 - `{{DOMAIN_ROLE}}` and the lowercase `{{DOMAIN_ROLE_SLUG}}`;
 - authoritative `{{DOMAIN_SOURCES}}`;
@@ -10,24 +11,26 @@ Create exactly one project-local domain expert. Ask the owner for:
 
 Use `.agents/skills/domain-expert-{{DOMAIN_ROLE_SLUG}}/SKILL.md` by default. Do
 not overwrite an existing custom file without approval. Keep source paths and
-the rendered file inside the consuming project; do not add the role to this
+rendered files inside the consuming project; do not add these roles to this
 public repository.
 
 Recommended `.ai/skills.json` entry:
 
 ```json
 {
-  "domain_expert": {
-    "name": "{{DOMAIN_ROLE}}",
-    "slug": "{{DOMAIN_ROLE_SLUG}}",
-    "path": ".agents/skills/domain-expert-{{DOMAIN_ROLE_SLUG}}",
-    "sources": ["{{DOMAIN_SOURCE_PATH}}"]
-  }
+  "domain_experts": [
+    {
+      "name": "{{DOMAIN_ROLE}}",
+      "slug": "{{DOMAIN_ROLE_SLUG}}",
+      "path": ".agents/skills/domain-expert-{{DOMAIN_ROLE_SLUG}}",
+      "sources": ["{{DOMAIN_SOURCE_PATH}}"]
+    }
+  ]
 }
 ```
 
-For a domain-neutral repository, record `domain_expert: null` and create no
-local expert.
+For a project that needs no domain experts, omit `domain_experts` or record an
+empty array and create none.
 
 ## Local skill template
 

@@ -7,6 +7,10 @@ Use as the minimality review lane within `review`. It applies the public
 `ponytail` skill's deletion-first lens and does not replace correctness,
 security, performance, accessibility, product, or domain review.
 
+Use the same project snapshot, pinned diff, and repository instructions as the
+other review lanes. This skill has a different focus, not a different
+environment or branch.
+
 ## Workflow
 
 1. Pin the base revision and read the task/spec, project guardrails, current

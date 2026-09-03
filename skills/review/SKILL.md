@@ -9,12 +9,14 @@ description: "Review a diff against the repository standards and requested behav
 2. Read the originating issue or spec and the repository's standards.
 3. Review separately for requested behavior, standards/design, security,
    backward compatibility, and test gaps.
-4. Fan out three independent, read-only review lanes on separate threads:
-   standard review, `review-gilfoyle`, and `review-ponytail`. Do not collapse
-   them into one pass.
-5. When changed behavior uses domain semantics, run the project's one local
-   domain expert as a fourth lane. A missing source or target is
-   `BLOCKED`/`NOT_RUN`, not approval.
+4. Fan out three independent, read-only review perspectives over the same
+   project checkout, pinned diff, and repository instructions. Use separate
+   threads only for parallel execution: standard review, `review-gilfoyle`,
+   and `review-ponytail`. Do not collapse them into one pass or create
+   lane-specific branches, worktrees, or environments.
+5. When changed behavior uses domain semantics, run each relevant local domain
+   expert as an additional perspective over that same snapshot. A missing
+   source or target is `BLOCKED`/`NOT_RUN`, not approval.
 6. Wait for every selected lane to reach a terminal state, then join the
    findings while preserving the lane that produced each one.
 7. Rank findings by impact, cite the file and reason, return a composed verdict,
@@ -29,7 +31,7 @@ Status: APPROVED|CHANGES_REQUESTED|NEEDS_HUMAN
 The report must contain `blockers`, `majors`, `minors`, `spec_findings`,
 `standards_findings`, `test_gaps`, and `review_lanes`. `review_lanes` must show
 the status and findings for `standard`, `review-gilfoyle`, and
-`review-ponytail`, plus `domain-expert` when used.
+`review-ponytail`, plus relevant local domain experts when used.
 
 ## Rules
 
@@ -38,6 +40,9 @@ the status and findings for `standard`, `review-gilfoyle`, and
 - Keep `review-gilfoyle` findings evidence-based and operational; keep
   `review-ponytail` findings limited to safe complexity reduction. All review
   lanes are read-only.
+- Every selected lane must inspect the same base revision, head revision,
+  project instructions, and relevant evidence. The lanes differ by focus, not
+  by environment or authority.
 - Do not let a Ponytail suggestion remove validation, security, accessibility,
   data-loss protection, or an explicit acceptance criterion.
 - Do not turn a missing or failed lane into approval. Keep disagreements visible

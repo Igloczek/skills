@@ -8,7 +8,7 @@ Install the collection into the current project's skill directories for all
 supported agents:
 
 ```bash
-npx skills add igloczek/skills --skill '*' --agent '*' --yes
+bunx skills add igloczek/skills --skill '*' --agent '*' --yes
 ```
 
 Then invoke `setup` once per project. It prepares the local workflow context;
@@ -20,41 +20,42 @@ The core path takes work from an unclear request to a verified, merge-ready
 change. Add-ons are available when the task needs research, design, UI work, or
 parallel planning.
 
-| Skill | Layer | Purpose |
-| --- | --- | --- |
-| `setup` | Core | Discover repository commands, documents, providers, and safe defaults. |
-| `intake` | Core | Normalize a brief or issue into one actionable work item. |
-| `shape` | Core | Turn a vague request into a small brief with assumptions and non-goals. |
-| `specify` | Core | Produce an implementation-ready specification and dependency-aware plan. |
-| `build` | Core | Implement a brief or specification with feedback and validation. |
-| `fix` | Core | Reproduce, diagnose, and repair a confirmed defect with a regression check. |
-| `review` | Core | Review behavior, standards, security, compatibility, tests, and complexity. |
-| `verify` | Core | Verify changes with repository checks and UI evidence when needed. |
-| `finish` | Core | Drive a PR through review, CI, QA, and merge gates. |
-| `retro` | Core | Capture evidence-backed process improvements after delivery. |
-| `prototype` | Add-on | Answer a concrete design or interaction question with disposable code. |
-| `research` | Add-on | Investigate uncertain questions with cited, high-trust sources. |
-| `deep-design` | Add-on | Examine boundaries, domain language, and architecture under change risk. |
-| `ux-proof` | Add-on | Shape and verify user-facing changes against the local design language. |
-| `wayfinder` | Add-on | Split large work into a decision map with resumable handoffs. |
-| `review-gilfoyle` | Core | Review runtime reliability, observability, security, and operational risk. |
-| `review-ponytail` | Core | Review over-engineering, YAGNI, and avoidable change surface. |
-| `ui-dev` | Add-on | Implement interface changes with accessible states and polished interaction. |
+| Skill             | Layer  | Purpose                                                                      |
+| ----------------- | ------ | ---------------------------------------------------------------------------- |
+| `build`           | Core   | Implement a brief or specification with feedback and validation.             |
+| `deep-design`     | Add-on | Examine boundaries, domain language, and architecture under change risk.     |
+| `finish`          | Core   | Drive a PR through review, CI, QA, and merge gates.                          |
+| `fix`             | Core   | Reproduce, diagnose, and repair a confirmed defect with a regression check.  |
+| `intake`          | Core   | Normalize a brief or issue into one actionable work item.                    |
+| `prototype`       | Add-on | Answer a concrete design or interaction question with disposable code.       |
+| `research`        | Add-on | Investigate uncertain questions with cited, high-trust sources.              |
+| `retro`           | Core   | Capture evidence-backed process improvements after delivery.                 |
+| `review-gilfoyle` | Core   | Review runtime reliability, observability, security, and operational risk.   |
+| `review-ponytail` | Core   | Review over-engineering, YAGNI, and avoidable change surface.                |
+| `review`          | Core   | Review behavior, standards, security, compatibility, tests, and complexity.  |
+| `setup`           | Core   | Discover repository commands, documents, providers, and safe defaults.       |
+| `shape`           | Core   | Turn a vague request into a small brief with assumptions and non-goals.      |
+| `specify`         | Core   | Produce an implementation-ready specification and dependency-aware plan.     |
+| `ui-dev`          | Add-on | Implement interface changes with accessible states and polished interaction. |
+| `ux-proof`        | Add-on | Shape and verify user-facing changes against the local design language.      |
+| `verify`          | Core   | Verify changes with repository checks and UI evidence when needed.           |
+| `wayfinder`       | Add-on | Split large work into a decision map with resumable handoffs.                |
 
 ## Setup (once per repository)
 
-Run `setup` once for a repository. It prepares the local workflow and creates
-one project-local domain expert only when domain-specific behavior needs one.
+Run `setup` once for a repository. It prepares the local workflow and records
+project-local domain experts only when they are useful. A project may use none,
+one, or several experts.
 
 ```mermaid
 %%{init: {"theme":"base","themeVariables":{"fontFamily":"ui-sans-serif,system-ui,sans-serif","lineColor":"#94a3b8","primaryColor":"#eef2ff","primaryTextColor":"#172033","primaryBorderColor":"#6366f1","secondaryColor":"#ecfdf5","tertiaryColor":"#fff7ed"}}}%%
 flowchart LR
     setup["setup<br/>once per repository"] --> inspect["inspect<br/>commands + providers"]
     inspect --> configure["configure<br/>safe defaults"]
-    configure --> domain{"domain-specific?"}
-    domain -->|yes| domain_expert["domain-expert<br/>project-local only"]
+    configure --> domain{"domain expertise useful?"}
+    domain -->|yes| domain_experts["domain experts<br/>project-local only"]
     domain -->|no| ready(["repository ready"])
-    domain_expert --> ready
+    domain_experts --> ready
 
     classDef core fill:#eef2ff,stroke:#6366f1,color:#1e1b4b,stroke-width:1.5px;
     classDef decision fill:#fff7ed,stroke:#f59e0b,color:#7c2d12,stroke-width:1.5px;
@@ -62,7 +63,7 @@ flowchart LR
     classDef terminal fill:#f1f5f9,stroke:#475569,color:#0f172a,stroke-width:1.5px;
     class setup,inspect,configure core;
     class domain decision;
-    class domain_expert local;
+    class domain_experts local;
     class ready terminal;
 ```
 
@@ -82,7 +83,7 @@ flowchart TD
     build --> review["review<br/>fan-out gate"]
     fix --> review
 
-    subgraph review_threads["Review threads · parallel, separate tasks"]
+    subgraph review_threads["Review perspectives · parallel, same snapshot"]
         direction LR
         standard_review["standard review<br/>behavior + standards"]
         review_gilfoyle["review-gilfoyle<br/>operations + reliability"]
@@ -137,16 +138,18 @@ flowchart TD
     class research,prototype,wayfinder,deep_design,ui_dev,ux_proof optional;
 ```
 
-`review` launches three independent, read-only review lenses in parallel:
-behavior and standards, operational risk, and minimality. Findings join before
-`verify`; requested changes return to implementation. The local domain expert
-is consulted by `shape`, `specify`, `build`, and `review` when relevant.
+`review` sends the same pinned diff to three independent, read-only perspectives
+in parallel: behavior and standards, operational risk, and minimality. Separate
+threads provide concurrency only; they do not imply separate environments,
+branches, or copies. Findings join before `verify`; requested changes return to
+implementation. Relevant local domain experts use the same snapshot when needed.
 
-## Project-local domain expert
+## Project-local domain experts
 
-For domain-specific work, `setup` creates exactly one project-local expert from
-confirmed project sources. It gives the workflow a reliable answer about
-domain rules and marks missing evidence instead of guessing.
+`setup` can create zero or more project-local experts from confirmed project
+sources. A generic CRUD app may need none; a science or game project may use
+several focused experts. Each expert gives the workflow a reliable answer about
+its domain rules and marks missing evidence instead of guessing.
 
 Example: in an invoicing application, a local `billing-specialist` can use
 `docs/invoice-rules.md`, `src/domain/invoices/`, and `docs/tax-provider.md` to

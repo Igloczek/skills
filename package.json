@@ -2,9 +2,14 @@
   "name": "igloczek-skills",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
+  "packageManager": "bun@1.4.0",
   "description": "A compact, intent-based collection of agent skills for software delivery.",
   "license": "MIT",
   "scripts": {
-    "check": "node scripts/check.cjs"
+    "check": "bun scripts/repo-check.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^26.4.1"
   }
 }
