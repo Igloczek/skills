@@ -17,8 +17,8 @@ every work item starts at `intake`.
 ## Skills
 
 The core path takes work from an unclear request to a verified, merge-ready
-change. Add-ons are available when the task needs research, design, UI work, or
-parallel planning.
+change. Add-ons are available when the task needs understanding, research,
+design, UI work, or parallel planning.
 
 | Skill | Layer | Purpose |
 | --- | --- | --- |
@@ -32,6 +32,8 @@ parallel planning.
 | `verify` | Core | Verify changes with repository checks and UI evidence when needed. |
 | `finish` | Core | Drive a PR through review, CI, QA, and merge gates. |
 | `retro` | Core | Capture evidence-backed process improvements after delivery. |
+| `how` | Add-on | Explain existing code and data flow before changing it. |
+| `why` | Add-on | Recover likely intent from history and available project evidence. |
 | `prototype` | Add-on | Answer a concrete design or interaction question with disposable code. |
 | `research` | Add-on | Investigate uncertain questions with cited, high-trust sources. |
 | `deep-design` | Add-on | Examine boundaries, domain language, and architecture under change risk. |
@@ -103,6 +105,8 @@ flowchart TD
 
     subgraph optional["Optional add-ons · use only when needed"]
         direction LR
+        how["how"]
+        why["why"]
         research["research"]
         prototype["prototype"]
         wayfinder["wayfinder"]
@@ -110,6 +114,10 @@ flowchart TD
         ui_dev["ui-dev"]
         ux_proof["ux-proof"]
     end
+    intake -. existing behavior unclear .-> how
+    how -. code map .-> shape
+    shape -. intent unclear .-> why
+    why -. historical constraints .-> specify
     intake -. uncertain external facts .-> research
     research -. cited findings .-> shape
     shape -. feasibility question .-> prototype
@@ -134,7 +142,7 @@ flowchart TD
     class review_join join;
     class kind decision;
     class finish,retro terminal;
-    class research,prototype,wayfinder,deep_design,ui_dev,ux_proof optional;
+    class how,why,research,prototype,wayfinder,deep_design,ui_dev,ux_proof optional;
 ```
 
 `review` launches three independent, read-only review lenses in parallel:

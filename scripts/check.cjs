@@ -6,7 +6,7 @@ const path = require('node:path');
 const root = path.join(__dirname, '..');
 const expected = new Set([
   'setup', 'shape', 'intake', 'specify', 'build', 'fix', 'review', 'verify', 'finish', 'retro',
-  'prototype', 'research', 'deep-design', 'ux-proof', 'wayfinder',
+  'how', 'why', 'prototype', 'research', 'deep-design', 'ux-proof', 'wayfinder',
   'review-gilfoyle', 'review-ponytail', 'ui-dev',
 ]);
 
@@ -55,6 +55,23 @@ const setupScriptText = fs.readFileSync(setupScript, 'utf8');
 assert(setupText.includes('scripts/init.cjs'), 'setup does not use the initializer');
 assert(setupScriptText.includes("process.env.SKILLS_AGENT || '*'"), 'initializer must default to all agents');
 assert(!setupScriptText.includes('--global'), 'initializer must remain project-scoped');
+
+function checkLocalMarkdownLinks(file) {
+  const body = fs.readFileSync(file, 'utf8');
+  for (const match of body.matchAll(/\[[^\]]*\]\(([^)]+)\)/g)) {
+    const target = match[1].trim().replace(/^<|>$/g, '');
+    if (!target || target.startsWith('#') || /^[a-z][a-z\d+.-]*:/i.test(target)) continue;
+    const localTarget = target.split('#', 1)[0];
+    const resolved = path.resolve(path.dirname(file), localTarget);
+    assert(resolved === root || resolved.startsWith(`${root}${path.sep}`), `${file}: link escapes repository: ${target}`);
+    assert(fs.existsSync(resolved), `${file}: broken local link: ${target}`);
+  }
+}
+
+for (const file of [...files(path.join(root, 'skills')), ...files(path.join(root, 'internal')), path.join(root, 'README.md')].filter(file => file.endsWith('.md'))) {
+  checkLocalMarkdownLinks(file);
+}
+
 for (const skill of expected) {
   assert(readme.includes(`\`${skill}\``), `missing README skill entry: ${skill}`);
 }
