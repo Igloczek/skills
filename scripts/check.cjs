@@ -28,4 +28,17 @@ assert.equal(skillFiles.length, expected.size, 'unexpected skill count');
 assert.equal(new Set(names).size, names.length, 'duplicate skill name');
 assert.deepEqual(new Set(names), expected, 'skill roster drift');
 assert.equal(files(path.join(root, 'internal')).filter(file => file.endsWith('SKILL.md')).length, 0, 'internal docs must not be installable skills');
+
+const profileReference = path.join(root, 'skills', 'setup', 'references', 'expert-profiles.md');
+const personaGuide = path.join(root, 'internal', 'PERSONAS.md');
+assert(fs.existsSync(profileReference), 'missing local profile reference');
+assert(fs.existsSync(personaGuide), 'missing local persona guide');
+const profileText = fs.readFileSync(profileReference, 'utf8');
+for (const profile of ['persona-reviewer-gilfoyle', 'persona-reviewer-ponytail', 'persona-ui-dev', 'persona-domain-expert']) {
+  assert(profileText.includes(profile), `missing profile template: ${profile}`);
+}
+const readme = fs.readFileSync(path.join(root, 'README.md'), 'utf8');
+for (const companion of ['gilfoyle', 'ponytail', 'design-taste-frontend', 'make-interfaces-feel-better']) {
+  assert(readme.includes(companion), `missing README companion attribution: ${companion}`);
+}
 console.log(`ok: ${skillFiles.length} public skills`);
