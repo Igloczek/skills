@@ -22,7 +22,7 @@ project-local domain expert setup changes.
    keep credentials as environment-variable names or ignored file paths.
 5. Read [domain-expert.md](references/domain-expert.md) when a domain expert is
    needed. Create or update exactly one project-local domain-expert skill. Do
-   not create local copies of public specialist skills.
+   not create local copies of public skills.
 6. Check that every configured command, provider descriptor, source, and
    generated domain expert is usable. Do not invent a command, source, or domain
    rule; report missing configuration instead.

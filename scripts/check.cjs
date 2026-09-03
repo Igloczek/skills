@@ -37,7 +37,7 @@ assert(fs.existsSync(domainGuide), 'missing domain expert guide');
 const domainText = fs.readFileSync(domainReference, 'utf8');
 assert(domainText.includes('name: domain-expert-{{DOMAIN_ROLE_SLUG}}'), 'missing domain expert template');
 for (const skill of ['review-gilfoyle', 'review-ponytail', 'ui-dev']) {
-  assert(names.includes(skill), `missing specialist skill: ${skill}`);
+  assert(names.includes(skill), `missing required skill: ${skill}`);
 }
 const readme = fs.readFileSync(path.join(root, 'README.md'), 'utf8');
 for (const skill of expected) {

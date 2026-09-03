@@ -3,9 +3,9 @@ name: review-ponytail
 description: "Review a change for over-engineering, unnecessary complexity, and avoidable change surface."
 ---
 
-Use as a specialized, read-only minimality lane alongside `review`. It applies
-the public `ponytail` skill's deletion-first lens and does not replace
-correctness, security, performance, accessibility, product, or domain review.
+Use as the minimality review lane within `review`. It applies the public
+`ponytail` skill's deletion-first lens and does not replace correctness,
+security, performance, accessibility, product, or domain review.
 
 ## Workflow
 

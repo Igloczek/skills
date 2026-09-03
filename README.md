@@ -21,8 +21,8 @@ The current collection contains:
 
 | Layer | Entry points | Purpose |
 | --- | ---: | --- |
-| Core | 10 | The default SDLC menu: `setup`, `shape`, `intake`, `specify`, `build`, `fix`, `review`, `verify`, `finish`, `retro`. |
-| Add-ons | 8 | `prototype`, `research`, `deep-design`, `ux-proof`, `wayfinder`, `review-gilfoyle`, `review-ponytail`, `ui-dev`; load only when the task needs them. |
+| Core | 12 | The default SDLC menu: `setup`, `shape`, `intake`, `specify`, `build`, `fix`, `review`, `review-gilfoyle`, `review-ponytail`, `verify`, `finish`, `retro`. |
+| Add-ons | 6 | `prototype`, `research`, `deep-design`, `ux-proof`, `wayfinder`, `ui-dev`; load only when the task needs them. |
 | Internal | 9 | Shared primitives in [`internal/PRIMITIVES.md`](internal/PRIMITIVES.md); the local domain-expert contract in [`internal/DOMAIN-EXPERT.md`](internal/DOMAIN-EXPERT.md), intentionally not an installable skill. |
 
 Modes such as autonomous, loop, resume, batch, dry-run, and tracker-less are
@@ -47,8 +47,8 @@ parameters of a workflow. They are not separate skills.
 | `deep-design` | Add-on | Examine boundaries, domain language, and architecture under change risk. |
 | `ux-proof` | Add-on | Shape and verify user-facing changes against the local design language. |
 | `wayfinder` | Add-on | Split large work into a decision map with resumable handoffs. |
-| `review-gilfoyle` | Add-on | Review runtime reliability, observability, security, and operational risk. |
-| `review-ponytail` | Add-on | Review over-engineering, YAGNI, and avoidable change surface. |
+| `review-gilfoyle` | Core | Review runtime reliability, observability, security, and operational risk. |
+| `review-ponytail` | Core | Review over-engineering, YAGNI, and avoidable change surface. |
 | `ui-dev` | Add-on | Implement interface changes with accessible states and polished interaction. |
 
 ## Sample workflow
@@ -64,31 +64,46 @@ flowchart TD
     specify --> kind{"new work or defect?"}
     kind -->|feature/change| build["build<br/>implement"]
     kind -->|confirmed bug| fix["fix<br/>reproduce + repair"]
-    build --> review["review<br/>standard gate"]
+    build --> review["review<br/>fan-out gate"]
     fix --> review
-    review --> verify["verify<br/>tests + evidence"]
-    review -. changes requested .-> fix
+
+    subgraph review_threads [Review threads - run in parallel]
+        standard_review["standard review<br/>behavior + standards"]
+        review_gilfoyle["review-gilfoyle<br/>operations + reliability"]
+        review_ponytail["review-ponytail<br/>complexity + minimality"]
+        review_join(("join findings"))
+    end
+    review --> standard_review
+    review --> review_gilfoyle
+    review --> review_ponytail
+    standard_review --> review_join
+    review_gilfoyle --> review_join
+    review_ponytail --> review_join
+    review_join --> verify["verify<br/>tests + evidence"]
+    review_join -. changes requested .-> fix
     verify -. failed .-> fix
     verify --> finish["finish<br/>PR gates + merge decision"]
     finish --> retro["retro<br/>capture improvements"]
 
-    intake -. uncertain external facts .-> research["research"]
+    subgraph optional [Optional add-ons]
+        research["research"]
+        prototype["prototype"]
+        wayfinder["wayfinder"]
+        deep_design["deep-design"]
+        ui_dev["ui-dev"]
+        ux_proof["ux-proof"]
+    end
+    intake -. uncertain external facts .-> research
     research -. cited findings .-> shape
-    shape -. feasibility question .-> prototype["prototype"]
+    shape -. feasibility question .-> prototype
     prototype -. decision .-> specify
-    shape -. large or parallel work .-> wayfinder["wayfinder"]
+    shape -. large or parallel work .-> wayfinder
     wayfinder -. decision map .-> specify
-    specify -. architecture risk .-> deep_design["deep-design"]
+    specify -. architecture risk .-> deep_design
     deep_design -. design result .-> specify
-
-    review -. operational risk .-> review_gilfoyle["review-gilfoyle"]
-    review -. complexity risk .-> review_ponytail["review-ponytail"]
-    review_gilfoyle --> verify
-    review_ponytail --> verify
-
-    build -. UI surface .-> ui_dev["ui-dev"]
+    build -. UI surface .-> ui_dev
     ui_dev --> review
-    verify -. user-facing UI .-> ux_proof["ux-proof"]
+    verify -. user-facing UI .-> ux_proof
     ux_proof --> finish
 
     setup -. domain-specific repository .-> domain_expert["domain-expert<br/>project-local only"]
@@ -97,6 +112,13 @@ flowchart TD
     domain_expert -. domain semantics .-> build
     domain_expert -. domain semantics .-> review
 ```
+
+`review` launches the three review threads in parallel. Each thread is
+read-only and returns its own findings; the join happens before `verify`.
+Changes requested by any lane return to implementation instead of being hidden
+inside one combined review.
+
+## Project-local domain expert
 
 `setup` creates exactly one project-local domain expert from confirmed sources
 when domain-specific behavior requires it; for example, a project may create a

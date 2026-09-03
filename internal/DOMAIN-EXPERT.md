@@ -32,6 +32,5 @@ CHANGES: none
 OPEN: missing evidence, owner, and next action
 ```
 
-All other specialist concerns use public skills. Do not create additional local
-role files when `review-gilfoyle`, `review-ponytail`, or `ui-dev` already covers
-the work.
+All other roles use public skills. Do not create additional local role files
+when `review-gilfoyle`, `review-ponytail`, or `ui-dev` already covers the work.

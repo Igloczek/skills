@@ -3,9 +3,9 @@ name: review-gilfoyle
 description: "Review a change for runtime reliability, observability, security, and operational risk with evidence-first SRE discipline."
 ---
 
-Use as a specialized, read-only review lane alongside `review`. It applies the
-operational lens of the public `gilfoyle` skill without replacing the normal
-specification, product, domain, or QA review.
+Use as the operational review lane within `review`. It applies the evidence-first
+discipline of the public `gilfoyle` skill without replacing specification,
+product, domain, or QA review.
 
 ## Workflow
 

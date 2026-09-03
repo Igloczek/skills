@@ -40,8 +40,9 @@ claim locks, labels, idempotent comments, and lock cleanup.
 
 Owner: `review` and `finish`. Review standards, requested behavior, security,
 compatibility, tests, and architecture; route the public operational and
-minimality add-ons and the local domain expert only when relevant; return a
-bounded, severity-ranked report.
+minimality lanes and the local domain expert only when relevant. Run the core
+review lanes on separate threads, join their terminal results, and return a
+bounded, severity-ranked report with lane ownership preserved.
 
 ## evidence-engine
 
