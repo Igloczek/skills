@@ -1,10 +1,18 @@
 ---
 name: setup
-description: "Bootstrap this repository for the shared skills once, recording local commands, documents, providers, and safe defaults without overwriting existing configuration."
+description: "Bootstrap a repository for the shared skills, install missing upstream companions, and record local commands, documents, providers, and safe defaults without overwriting existing configuration."
 ---
 
 Run this once per repository, and again only when its tooling, provider, or
 project-local domain expert setup changes.
+
+Start by running the bundled [`scripts/init.cjs`](scripts/init.cjs) with the
+project as its working directory. It performs the repeatable bootstrap: checks
+the project root and known signals, creates `.ai` when needed, checks global
+skill directories, and installs missing upstream companions from
+[`references/external-skills.json`](references/external-skills.json). Use
+`--dry-run` to inspect the result without changing anything; pass `--agent` for
+a non-Codex host. Do not recreate these checks manually.
 
 ## Workflow
 
@@ -27,11 +35,14 @@ project-local domain expert setup changes.
    generated domain expert is usable. Do not invent a command, source, or domain
    rule; report missing configuration instead.
 
+If the initializer exits non-zero or reports `Status: NEEDS_SETUP`, stop before
+configuring downstream workflows and report its `Open:` items.
+
 ## Output
 
 Report the config path, detected commands, enabled providers, the domain-expert
 path or `none`, and remaining gaps. End with `Status: READY` or
-`Status: NEEDS_SETUP`.
+`Status: NEEDS_SETUP`. The initializer may additionally return `Status: DRY_RUN`.
 
 ## Rules
 

@@ -1,4 +1,5 @@
 const assert = require('node:assert/strict');
+const { execFileSync } = require('node:child_process');
 const fs = require('node:fs');
 const path = require('node:path');
 
@@ -32,18 +33,31 @@ assert.equal(files(path.join(root, 'internal')).filter(file => file.endsWith('SK
 
 const domainReference = path.join(root, 'skills', 'setup', 'references', 'domain-expert.md');
 const domainGuide = path.join(root, 'internal', 'DOMAIN-EXPERT.md');
+const setupScript = path.join(root, 'skills', 'setup', 'scripts', 'init.cjs');
+const externalManifest = path.join(root, 'skills', 'setup', 'references', 'external-skills.json');
 assert(fs.existsSync(domainReference), 'missing domain expert reference');
 assert(fs.existsSync(domainGuide), 'missing domain expert guide');
+assert(fs.existsSync(setupScript), 'missing setup initializer');
+assert(fs.existsSync(externalManifest), 'missing external skill manifest');
 const domainText = fs.readFileSync(domainReference, 'utf8');
 assert(domainText.includes('name: domain-expert-{{DOMAIN_ROLE_SLUG}}'), 'missing domain expert template');
+const externalSkills = JSON.parse(fs.readFileSync(externalManifest, 'utf8'));
+assert.equal(externalSkills.length, 4, 'unexpected external skill count');
+assert.deepEqual(new Set(externalSkills.map(skill => skill.name)), new Set([
+  'gilfoyle', 'ponytail', 'design-taste-frontend', 'make-interfaces-feel-better',
+]));
 for (const skill of ['review-gilfoyle', 'review-ponytail', 'ui-dev']) {
   assert(names.includes(skill), `missing required skill: ${skill}`);
 }
 const readme = fs.readFileSync(path.join(root, 'README.md'), 'utf8');
+const setupText = fs.readFileSync(path.join(root, 'skills', 'setup', 'SKILL.md'), 'utf8');
+assert(setupText.includes('scripts/init.cjs'), 'setup does not use the initializer');
 for (const skill of expected) {
   assert(readme.includes(`\`${skill}\``), `missing README skill entry: ${skill}`);
 }
 assert(readme.includes('```mermaid'), 'missing README workflow graph');
 assert(readme.includes('## Setup (once per repository)'), 'missing setup graph section');
 assert(readme.includes('domain-expert<br/>project-local only'), 'missing local domain expert branch');
+assert(readme.includes('These are installed dependencies, not just references.'), 'missing installed companion statement');
+execFileSync(process.execPath, [setupScript, '--dry-run', '--project-dir', root, '--agent', 'codex'], { stdio: 'ignore' });
 console.log(`ok: ${skillFiles.length} public skills`);

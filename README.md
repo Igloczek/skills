@@ -4,16 +4,33 @@ Small, intent-based agent workflows for a normal software delivery lifecycle.
 
 ## Install once
 
-Install the collection into the global skill directory of your agent (or use
-the installer's global option when it is available):
+Install the collection into the global skill directory of Codex:
 
 ```bash
-npx skills add igloczek/skills --skill '*'
+npx skills add igloczek/skills --skill '*' --global --agent codex --yes
 ```
 
-Projects may still need a small local `.ai/skills.json` for their own commands,
-tracker, or browser provider. That is project configuration, not a second skill
-installation.
+Then invoke `setup` in a project. Its bundled initializer checks the project
+shape, creates `.ai` when needed, and installs the upstream companion skills
+listed below into the same global agent directory. Projects may still use a
+local `.ai/skills.json` for their own commands, tracker, or browser provider.
+
+## Runtime companions
+
+These are installed dependencies, not just references. The initializer checks
+the global skill directories before installing and keeps the upstream skill
+folders intact, including their supporting files.
+
+| Companion | Used by | Source |
+| --- | --- | --- |
+| `gilfoyle` | `review-gilfoyle` | [axiomhq/gilfoyle](https://github.com/axiomhq/gilfoyle) |
+| `ponytail` | `review-ponytail` | [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail) |
+| `design-taste-frontend` | `ui-dev` | [Leonxlnx/taste-skill](https://github.com/Leonxlnx/taste-skill) |
+| `make-interfaces-feel-better` | `ui-dev` | [jakubkrehel/make-interfaces-feel-better](https://github.com/jakubkrehel/make-interfaces-feel-better) |
+
+The manifest is [`skills/setup/references/external-skills.json`](skills/setup/references/external-skills.json),
+and the deterministic initializer is [`skills/setup/scripts/init.cjs`](skills/setup/scripts/init.cjs).
+Update installed companions with `npx skills update --global`.
 
 ## Shape
 
@@ -208,6 +225,3 @@ This collection uses or is inspired by:
 - [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail)
 - [Leonxlnx/taste-skill](https://github.com/Leonxlnx/taste-skill)
 - [jakubkrehel/make-interfaces-feel-better](https://github.com/jakubkrehel/make-interfaces-feel-better)
-
-External skill instructions remain external dependencies; this repository
-references their capabilities without bundling their skill files.

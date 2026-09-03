@@ -1,0 +1,24 @@
+[
+  {
+    "name": "gilfoyle",
+    "source": "axiomhq/gilfoyle/skill",
+    "usedBy": ["review-gilfoyle"]
+  },
+  {
+    "name": "ponytail",
+    "source": "DietrichGebert/ponytail",
+    "skill": "ponytail",
+    "usedBy": ["review-ponytail"]
+  },
+  {
+    "name": "design-taste-frontend",
+    "source": "Leonxlnx/taste-skill",
+    "skill": "design-taste-frontend",
+    "usedBy": ["ui-dev"]
+  },
+  {
+    "name": "make-interfaces-feel-better",
+    "source": "jakubkrehel/make-interfaces-feel-better",
+    "usedBy": ["ui-dev"]
+  }
+]
