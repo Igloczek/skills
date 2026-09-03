@@ -28,12 +28,13 @@ commands and tools the runner should use. New work starts with `intake`.
 With Cezar, these Markdown files become workflow steps. A basic chain is:
 
 ```text
-intake -> shape -> specify -> build -> review -> verify -> finish
+intake -> specify -> build -> review -> verify -> finish
 ```
 
-For a bug, I use `fix` in place of `build`. When a task needs more context or
-another review, I add `how`, `why`, `research`, `review-gilfoyle`, or
-`review-ponytail`.
+When `intake` finds that the outcome or scope needs work, it routes to `shape`
+before `specify` or `build`. For a bug, I use `fix` in place of `build`. When a
+task needs more context or another review, I add `how`, `why`, `research`,
+`review-gilfoyle`, or `review-ponytail`.
 
 ## Skills
 
@@ -43,7 +44,7 @@ context, research, design work, or another review when it needs one.
 | Skill | Layer | Purpose |
 | --- | --- | --- |
 | `setup` | Core | Find the repo commands, docs, tools, and safe defaults. |
-| `intake` | Core | Turn a brief or issue into one piece of work. |
+| `intake` | Core | Classify a brief or issue and choose the next step. |
 | `shape` | Core | Make the scope, assumptions, and non-goals clear. |
 | `specify` | Core | Write the acceptance checks and next small slice. |
 | `build` | Core | Make the change and run feedback checks. |
@@ -97,8 +98,8 @@ steps I add when the task needs them.
 %%{init: {"theme":"base","themeVariables":{"fontFamily":"ui-sans-serif,system-ui,sans-serif","lineColor":"#94a3b8","primaryColor":"#eef2ff","primaryTextColor":"#172033","primaryBorderColor":"#6366f1","secondaryColor":"#ecfdf5","tertiaryColor":"#f8fafc"}}}%%
 flowchart TD
     request["request"] --> intake["intake<br/>classify work"]
-    request -. scope unclear .-> shape["shape<br/>set scope"]
 
+    intake -->|shape| shape["shape<br/>set scope"]
     shape -->|intake| intake
     shape -->|specify| specify["specify<br/>write checks + plan"]
     shape -->|build| build["build<br/>implement"]

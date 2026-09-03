@@ -1,6 +1,6 @@
 ---
 name: intake
-description: "Normalize a brief or issue into one actionable work item, classifying it and removing duplicates without implementing it."
+description: "Turn a brief or issue into one piece of work, classify it, choose the next step, and remove duplicates without implementing it."
 ---
 
 Use for a new request or an existing backlog item.
@@ -12,18 +12,18 @@ Use for a new request or an existing backlog item.
    claims.
 3. Classify the work as `bug`, `feature`, `maintenance`, or `question`.
 4. Extract outcome, acceptance summary, priority, risk, dependencies, and
-   whether a specification is required.
+   whether shaping or a specification is required.
 5. Create or update a tracker item only when the user or configured workflow
    authorizes it.
 
 ## Output
 
-Return the normalized item, duplicate links, and one terminal state:
+Return the classified item, duplicate links, and one terminal state:
 
 ```text
-Status: ACTIONABLE|NEEDS_SPEC|NO_ACTION_NEEDED|NEEDS_HUMAN
+Status: ACTIONABLE|NEEDS_SHAPE|NEEDS_SPEC|NO_ACTION_NEEDED|NEEDS_HUMAN
 Issue: #<number> (link: <url>)|none
-Next: specify|build|fix|none
+Next: shape|specify|build|fix|none
 ```
 
 ## Rules
