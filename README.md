@@ -4,31 +4,41 @@ Skills for taking a code change from request to working code.
 
 ## Purpose
 
-This repo contains skills for a solo developer using an AI coding agent. They
-cover the basic work: understand the request, keep the change small, write the
-code, review it, run the right checks, and finish the PR.
+I use this repo as a shared baseline workflow for a solo developer using AI
+coding agents. Tools such as [Cezar](https://github.com/open-mercato/cezar) can
+load these skills, put them into a predefined workflow, and run each step with
+an agent.
 
-This is not a company process, compliance tool, test runner, or replacement for
-the tools already in a project. Do not use every skill on every task. Use the
-shortest path that is safe for the change. Add more checks when the change is
-risky or unclear. See [AGENTS.md](AGENTS.md) when changing this repo.
+The skills cover one code change from request to PR: understand the request,
+set the scope, write a plan, change the code, review it, run checks, and finish
+the PR. The runner handles execution; this repo holds the instructions for the
+steps.
 
 ## Install in a project
 
-Install the skills in the current project:
+Make the skills available to the agent runner in the project:
 
 ```bash
 npx skills add igloczek/skills --skill '*' --agent '*' --yes
 ```
 
 Then run `setup` once in the project. It looks at the repo and records the
-commands and tools the agent should use. New work starts with `intake`.
+commands and tools the runner should use. New work starts with `intake`.
+
+With Cezar, these Markdown files become workflow steps. A basic chain is:
+
+```text
+intake -> shape -> specify -> build -> review -> verify -> finish
+```
+
+For a bug, I use `fix` in place of `build`. When a task needs more context or
+another review, I add `how`, `why`, `research`, `review-gilfoyle`, or
+`review-ponytail`.
 
 ## Skills
 
-The core path turns a request into a small change, makes it, checks it, and
-finishes it. Use the add-ons when the code, intent, UI, or task is harder to
-understand.
+The Core skills are the path I use for most changes. Add-ons give a task more
+context, research, design work, or another review when it needs one.
 
 | Skill | Layer | Purpose |
 | --- | --- | --- |
@@ -38,7 +48,7 @@ understand.
 | `specify` | Core | Write the acceptance checks and next small slice. |
 | `build` | Core | Make the change and run feedback checks. |
 | `fix` | Core | Reproduce a bug, fix it, and add a regression check. |
-| `review` | Core | Look for broken behavior, security problems, compatibility issues, missing tests, and needless complexity. |
+| `review` | Core | Look for broken behavior, security problems, compatibility issues, tests to add, and needless complexity. |
 | `verify` | Core | Run the checks that matter and show what passed. |
 | `finish` | Core | Handle the PR, checks, QA, and merge decision. |
 | `retro` | Core | Record what should change next time. |
@@ -50,14 +60,13 @@ understand.
 | `ux-proof` | Add-on | Check a user-facing change against the existing UI. |
 | `wayfinder` | Add-on | Break big work into smaller pieces that can be resumed. |
 | `review-gilfoyle` | Core | Look for problems in running code, logs, and security. |
-| `review-ponytail` | Core | Look for code and dependencies we do not need. |
+| `review-ponytail` | Core | Find code and dependencies to remove. |
 | `ui-dev` | Add-on | Build UI changes with basic accessibility and good interaction. |
 
 ## Setup (once per repository)
 
 Run `setup` once in a repository. It finds the commands and tools already
-there. It creates one local expert only when the work needs project-specific
-rules.
+there. It creates one local expert when the work needs project-specific rules.
 
 ```mermaid
 %%{init: {"theme":"base","themeVariables":{"fontFamily":"ui-sans-serif,system-ui,sans-serif","lineColor":"#94a3b8","primaryColor":"#eef2ff","primaryTextColor":"#172033","primaryBorderColor":"#6366f1","secondaryColor":"#ecfdf5","tertiaryColor":"#fff7ed"}}}%%
@@ -99,7 +108,7 @@ flowchart TD
         direction LR
         standard_review["standard review<br/>behavior + rules"]
         review_gilfoyle["review-gilfoyle<br/>when runtime risk applies"]
-    review_ponytail["review-ponytail<br/>when code is too big"]
+        review_ponytail["review-ponytail<br/>when code is too big"]
         review_join(("join findings"))
     end
     review --> standard_review
@@ -156,51 +165,49 @@ flowchart TD
     class how,why,research,prototype,wayfinder,deep_design,ui_dev,ux_proof optional;
 ```
 
-`review` always runs the standard review. It adds the runtime and simplicity
-reviews only when they can find something useful. The findings are combined
-before `verify`. If review finds a problem, go back to `build` or `fix`. The
-project expert is used by `shape`, `specify`, `build`, and `review` when its
-rules matter.
+The runner sends each box to an agent and passes the result to the next box.
+`review-gilfoyle` and `review-ponytail` are extra review steps I add when a task
+needs them. The project expert gives `shape`, `specify`, `build`, and `review`
+the project rules they need.
 
-## Default rules
+## What I check
 
-Keep the default path small:
+For each change, I do this:
 
-- Check the behavior that changed.
-- For a UI or system change, check the UI or system too.
-- Add extra tests or analysis when the repo already has the tool or the change
+- check the behavior that changed;
+- for a UI or system change, check the UI or system too;
+- add extra tests or analysis when the repo already has the tool or the change
   is risky.
-- Say when a check was skipped or could not run. Do not add a large process just
-  to tick a box.
+- record the checks that ran and any checks left for later.
 
 ## Project-specific rules
 
 For work with project-specific rules, `setup` can create one local expert from
 the project docs and code. It tells the other skills what those rules are and
-says when the evidence is missing. It does not write code or review general
-code quality.
+says when the evidence is missing. Code changes stay in `build` and `fix`, and
+general code review stays in `review`.
 
 Example: an invoicing project might use `docs/invoice-rules.md`,
 `src/domain/invoices/`, and `docs/tax-provider.md` to answer whether a paid
 invoice can be voided, needs a credit note, or needs specific fields.
 
-## Contracts
+## What each step records
 
-Every skill that changes files must:
+Each skill that changes files records:
 
-- say what it reads and writes, what it can change, and how it ends;
-- not erase or overwrite work without asking;
-- keep secrets out of prompts, files, comments, and reports;
-- use `Status:`, `Next:`, `Spec:`, `Issue:`, and `PR:` when another skill needs the result;
-- stop if a required tool, command, or file is missing.
+- what it reads and writes, what it can change, and how it ends;
+- a request for confirmation before destructive or irreversible actions;
+- prompts, files, comments, and reports stay free of secrets;
+- `Status:`, `Next:`, `Spec:`, `Issue:`, and `PR:` when another skill needs the result;
+- a clear stop when a required tool, command, or file is missing.
 
-`finish` never merges unless the user explicitly allows it. UI checks are
-optional for non-UI work.
+Merging stays under the user's control. UI work gets UI checks; other changes
+use the checks for their code and systems.
 
-Quality numbers are hints for changed code, not a cleanup project. Use tools
-already in the repo. Report a warning or a missing check instead of making it a
-failure by default. In TypeScript, do not add new `any` without a reason.
-`unknown` is fine at an input boundary if the code checks it before using it.
+Quality numbers are signals for changed code. The existing repo tools provide
+them, and review reports a warning or a missing check separately from a failed
+check. In TypeScript, new `any` needs a reason. `unknown` is used at an input
+boundary and narrowed before the domain code uses it.
 
 ## Sources
 
