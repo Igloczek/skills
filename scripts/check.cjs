@@ -40,7 +40,9 @@ for (const skill of ['review-gilfoyle', 'review-ponytail', 'ui-dev']) {
   assert(names.includes(skill), `missing specialist skill: ${skill}`);
 }
 const readme = fs.readFileSync(path.join(root, 'README.md'), 'utf8');
-for (const item of ['review-gilfoyle', 'review-ponytail', 'ui-dev', 'domain expert']) {
-  assert(readme.includes(item), `missing README specialist entry: ${item}`);
+for (const skill of expected) {
+  assert(readme.includes(`\`${skill}\``), `missing README skill entry: ${skill}`);
 }
+assert(readme.includes('```mermaid'), 'missing README workflow graph');
+assert(readme.includes('domain-expert<br/>project-local only'), 'missing local domain expert branch');
 console.log(`ok: ${skillFiles.length} public skills`);

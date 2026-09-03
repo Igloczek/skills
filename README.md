@@ -28,27 +28,82 @@ The current collection contains:
 Modes such as autonomous, loop, resume, batch, dry-run, and tracker-less are
 parameters of a workflow. They are not separate skills.
 
-## Specialist skills
+## Skill catalog
 
-These are normal installable add-on skills:
+| Skill | Layer | Purpose |
+| --- | --- | --- |
+| `setup` | Core | Discover repository commands, documents, providers, and safe defaults. |
+| `intake` | Core | Normalize a brief or issue into one actionable work item. |
+| `shape` | Core | Turn a vague request into a small brief with assumptions and non-goals. |
+| `specify` | Core | Produce an implementation-ready specification and dependency-aware plan. |
+| `build` | Core | Implement a brief or specification with feedback and validation. |
+| `fix` | Core | Reproduce, diagnose, and repair a confirmed defect with a regression check. |
+| `review` | Core | Review behavior, standards, security, compatibility, tests, and complexity. |
+| `verify` | Core | Verify changes with repository checks and UI evidence when needed. |
+| `finish` | Core | Drive a PR through review, CI, QA, and merge gates. |
+| `retro` | Core | Capture evidence-backed process improvements after delivery. |
+| `prototype` | Add-on | Answer a concrete design or interaction question with disposable code. |
+| `research` | Add-on | Investigate uncertain questions with cited, high-trust sources. |
+| `deep-design` | Add-on | Examine boundaries, domain language, and architecture under change risk. |
+| `ux-proof` | Add-on | Shape and verify user-facing changes against the local design language. |
+| `wayfinder` | Add-on | Split large work into a decision map with resumable handoffs. |
+| `review-gilfoyle` | Add-on | Review runtime reliability, observability, security, and operational risk. |
+| `review-ponytail` | Add-on | Review over-engineering, YAGNI, and avoidable change surface. |
+| `ui-dev` | Add-on | Implement interface changes with accessible states and polished interaction. |
 
-- `review-gilfoyle` is a dedicated, read-only operational review lane
-  based on the public `gilfoyle` skill: runtime, reliability, security,
-  observability, and incident evidence.
-- `review-ponytail` is a dedicated, read-only minimality lane based on
-  the public `ponytail` skill: deletion, YAGNI, stdlib/native alternatives, and
-  avoidable complexity. It does not review correctness or apply fixes.
-- `ui-dev` is the UI implementation skill. It references
-  `design-taste-frontend` and `make-interfaces-feel-better` when installed, and
-  keeps framework, accessibility, interaction, and performance decisions in one
-  place.
+## Sample workflow
 
-`review` can run both review add-ons independently. `setup` creates exactly one
-project-local domain expert from confirmed sources when domain-specific behavior
-requires it; for example, a project may create a local `nutritionist`. That
-expert is not shipped or installable from this repository. Its contract is in
-[`internal/DOMAIN-EXPERT.md`](internal/DOMAIN-EXPERT.md), with the setup template
-in [`skills/setup/references/domain-expert.md`](skills/setup/references/domain-expert.md).
+Solid arrows are the default path. Dashed arrows are optional routing based on
+the work being done.
+
+```mermaid
+flowchart TD
+    setup["setup<br/>repository configuration"] --> intake["intake<br/>normalize work"]
+    intake --> shape["shape<br/>define scope"]
+    shape --> specify["specify<br/>acceptance + plan"]
+    specify --> kind{"new work or defect?"}
+    kind -->|feature/change| build["build<br/>implement"]
+    kind -->|confirmed bug| fix["fix<br/>reproduce + repair"]
+    build --> review["review<br/>standard gate"]
+    fix --> review
+    review --> verify["verify<br/>tests + evidence"]
+    review -. changes requested .-> fix
+    verify -. failed .-> fix
+    verify --> finish["finish<br/>PR gates + merge decision"]
+    finish --> retro["retro<br/>capture improvements"]
+
+    intake -. uncertain external facts .-> research["research"]
+    research -. cited findings .-> shape
+    shape -. feasibility question .-> prototype["prototype"]
+    prototype -. decision .-> specify
+    shape -. large or parallel work .-> wayfinder["wayfinder"]
+    wayfinder -. decision map .-> specify
+    specify -. architecture risk .-> deep_design["deep-design"]
+    deep_design -. design result .-> specify
+
+    review -. operational risk .-> review_gilfoyle["review-gilfoyle"]
+    review -. complexity risk .-> review_ponytail["review-ponytail"]
+    review_gilfoyle --> verify
+    review_ponytail --> verify
+
+    build -. UI surface .-> ui_dev["ui-dev"]
+    ui_dev --> review
+    verify -. user-facing UI .-> ux_proof["ux-proof"]
+    ux_proof --> finish
+
+    setup -. domain-specific repository .-> domain_expert["domain-expert<br/>project-local only"]
+    domain_expert -. domain semantics .-> shape
+    domain_expert -. domain semantics .-> specify
+    domain_expert -. domain semantics .-> build
+    domain_expert -. domain semantics .-> review
+```
+
+`setup` creates exactly one project-local domain expert from confirmed sources
+when domain-specific behavior requires it; for example, a project may create a
+local `nutritionist`. That expert is not shipped or installable from this
+repository. Its contract is in [`internal/DOMAIN-EXPERT.md`](internal/DOMAIN-EXPERT.md),
+with the setup template in
+[`skills/setup/references/domain-expert.md`](skills/setup/references/domain-expert.md).
 
 ## Contracts
 
