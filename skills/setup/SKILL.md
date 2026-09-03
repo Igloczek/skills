@@ -40,7 +40,7 @@ path or `none`, and remaining gaps. End with `Status: READY` or
 - Never publish the project-local domain expert or copy public-skill text into
   this collection.
 - A domain expert must be grounded in project sources. A role such as
-  `nutritionist` is created inside the consuming project, not here.
+  `billing-specialist` is created inside the consuming project, not here.
 - Missing source paths or a usable target is a visible setup gap, not permission
   to create a weaker substitute.
 - Do not create tracker labels, branches, hooks, or browser processes unless

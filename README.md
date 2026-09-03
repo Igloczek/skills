@@ -157,10 +157,19 @@ consulted by `shape`, `specify`, `build`, and `review` when relevant.
 ## Project-local domain expert
 
 `setup` creates exactly one project-local domain expert from confirmed sources
-when domain-specific behavior requires it; for example, a project may create a
-local `nutritionist`. That expert is not shipped or installable from this
-repository. Its contract is in [`internal/DOMAIN-EXPERT.md`](internal/DOMAIN-EXPERT.md),
-with the setup template in
+when domain-specific behavior cannot be safely inferred from general
+engineering knowledge. It is not shipped or installable from this repository.
+
+For example, in an invoicing application, `setup` might create a local
+`domain-expert-billing-specialist` grounded in `docs/invoice-rules.md`,
+`src/domain/invoices/`, and `docs/tax-provider.md`. If a change adds a “void
+invoice” action, the expert checks which invoice states allow it, whether a paid
+invoice needs a credit note instead, and which audit fields are mandatory. It
+returns a sourced domain verdict; it does not write code, choose the component
+structure, or review general code complexity.
+
+Its contract is in [`internal/DOMAIN-EXPERT.md`](internal/DOMAIN-EXPERT.md), with
+the setup template in
 [`skills/setup/references/domain-expert.md`](skills/setup/references/domain-expert.md).
 
 ## Contracts

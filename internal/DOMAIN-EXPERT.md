@@ -1,8 +1,8 @@
 # Project-local domain expert
 
 `setup` creates exactly one domain expert inside a domain-specific project. The
-role is selected by the project owner (`nutritionist`, `tax-specialist`, or
-another domain role), and the expert is grounded in confirmed local source
+role is selected by the project owner (`billing-specialist`, `tax-specialist`,
+or another domain role), and the expert is grounded in confirmed local source
 paths. It is not part of this public skill collection.
 
 ## Lifecycle
