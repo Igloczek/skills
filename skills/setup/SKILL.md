@@ -18,8 +18,8 @@ these checks manually.
 ## Workflow
 
 1. Read the repository's instructions and inspect its package manager, source
-   layout, documentation paths, test/lint/build commands, tracker, and browser
-   setup if present.
+   layout, documentation paths, test/lint/build commands, available quality or
+   architecture checks, tracker, and browser setup if present.
 2. Detect whether the repository has domain-specific behavior or a UI. For a
    domain-specific repository, ask for exactly one domain expert's role,
    authoritative source paths, boundary, and local destination. Offer `none`
@@ -41,9 +41,10 @@ configuring downstream workflows and report its `Open:` items.
 
 ## Output
 
-Report the config path, detected commands, enabled providers, the domain-expert
-path or `none`, and remaining gaps. End with `Status: READY` or
-`Status: NEEDS_SETUP`. The initializer may additionally return `Status: DRY_RUN`.
+Report the config path, detected commands and available quality gates, enabled
+providers, the domain-expert path or `none`, and remaining gaps. End with
+`Status: READY` or `Status: NEEDS_SETUP`. The initializer may additionally
+return `Status: DRY_RUN`.
 
 ## Rules
 
@@ -55,6 +56,9 @@ path or `none`, and remaining gaps. End with `Status: READY` or
   `billing-specialist` is created inside the consuming project, not here.
 - Missing source paths or a usable target is a visible setup gap, not permission
   to create a weaker substitute.
+- Do not install mutation, complexity, architecture, or other quality tooling
+  by default; record what the project already supports and let later workflows
+  choose checks proportionally.
 - Do not create tracker labels, branches, hooks, or browser processes unless
   the user explicitly enables that action.
 - A setup failure is a clean stop for downstream workflows, not permission to

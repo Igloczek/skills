@@ -5,7 +5,8 @@ description: "Review a completed delivery run and produce a short, evidence-back
 
 ## Workflow
 
-1. Collect the run, PR, CI, review, QA, and rework evidence available locally.
+1. Collect the run, PR, CI, review, QA, and rework evidence available locally,
+   including check duration, repeated failures, and context resets when known.
 2. Separate observations from causes and rank causes by impact or elapsed
    cost.
 3. Choose one or two changes that would prevent the largest repeat cost.
@@ -25,4 +26,5 @@ Next: <one actionable improvement|none>
 
 - Do not use hindsight to blame an individual.
 - Do not scan or rewrite the whole codebase unless the user asks for it.
+- Prefer one measured improvement over adding another mandatory process.
 - Do not create a ticket by default.

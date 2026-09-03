@@ -11,11 +11,16 @@ runs are modes of this skill, not separate commands.
 1. Confirm the input and locate its acceptance criteria.
 2. Read project instructions, select the smallest safe change surface, and
    create or reuse an isolated branch/worktree.
-3. Work in vertical slices. Add a failing test or other concrete feedback
-   before changing behavior when practical.
-4. Run configured validation after each meaningful slice and keep a concise
-   progress record.
-5. Commit coherent changes and open or update one reviewable PR.
+3. Work in the current vertical slice. Preserve behavioral coverage, but let
+   the agent write tests before, alongside, or after implementation when that
+   is the clearest route to a verified result.
+4. Run the cheapest configured feedback after each meaningful slice and keep a
+   concise progress record. Leave cleanup, hardening, and system proof to the
+   appropriate review or verification step.
+5. If the same check fails repeatedly without new evidence, stop that
+   trajectory, summarize the failure, and resume from a fresh focused context
+   instead of growing the instruction prompt.
+6. Commit coherent changes and open or update one reviewable PR.
 
 When a change touches UI, use the public `ui-dev` skill. Consult the project's
 local domain expert before changing domain-sensitive behavior. The domain expert
@@ -36,3 +41,4 @@ Status: READY_FOR_REVIEW|BLOCKED|NEEDS_HUMAN
 - Do not edit a spec PR with implementation code.
 - Keep the work resumable and release claims/temporary processes on exit.
 - Stop when a required command, provider, or acceptance criterion is missing.
+- Prefer repository checks and compact handoffs over long process instructions.
