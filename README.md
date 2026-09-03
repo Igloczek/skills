@@ -90,85 +90,80 @@ flowchart LR
 
 ## Sample workflow
 
-Use the solid arrows by default. Use dashed arrows only when the task needs
-them.
+The solid path is the path I use for every code change. Dashed arrows are extra
+steps I add when the task needs them.
 
 ```mermaid
 %%{init: {"theme":"base","themeVariables":{"fontFamily":"ui-sans-serif,system-ui,sans-serif","lineColor":"#94a3b8","primaryColor":"#eef2ff","primaryTextColor":"#172033","primaryBorderColor":"#6366f1","secondaryColor":"#ecfdf5","tertiaryColor":"#f8fafc"}}}%%
 flowchart TD
-    intake["intake<br/>start here"] --> shape["shape<br/>set scope"]
-    shape --> specify["specify<br/>write checks + plan"]
-    specify --> kind{"new work or defect?"}
-    kind -->|feature/change| build["build<br/>implement"]
-    kind -->|confirmed bug| fix["fix<br/>reproduce + repair"]
-    build --> review["review<br/>check the diff"]
+    request["request"] --> intake["intake<br/>classify work"]
+    request -. scope unclear .-> shape["shape<br/>set scope"]
+
+    shape -->|intake| intake
+    shape -->|specify| specify["specify<br/>write checks + plan"]
+    shape -->|build| build["build<br/>implement"]
+    shape -->|none| done(["no code change"])
+
+    intake -->|specify| specify
+    intake -->|build| build
+    intake -->|fix| fix["fix<br/>reproduce + repair"]
+    intake -->|none| done
+
+    specify -->|shape| shape
+    specify -->|build| build
+    specify -->|none| done
+
+    build --> review["review<br/>required"]
     fix --> review
 
-    subgraph review_threads["Review tasks"]
+    subgraph review_stage["Review stage · required"]
         direction LR
-        standard_review["standard review<br/>behavior + rules"]
-        review_gilfoyle["review-gilfoyle<br/>when runtime risk applies"]
-        review_ponytail["review-ponytail<br/>when code is too big"]
-        review_join(("join findings"))
+        standard_review["standard review<br/>every change"]
+        review_result{"review result"}
     end
-    review --> standard_review
-    review -. if needed .-> review_gilfoyle
-    review -. if needed .-> review_ponytail
-    standard_review --> review_join
-    review_gilfoyle --> review_join
-    review_ponytail --> review_join
-    review_join --> verify["verify<br/>tests + proof"]
-    review_join -. changes requested .-> fix
-    verify -. failed .-> fix
-    verify --> finish["finish<br/>PR + merge choice"]
-    finish --> retro["retro<br/>note what to change"]
 
-    subgraph optional["Extra skills · only if needed"]
+    subgraph specialist_stage["Specialist reviews · selected by risk"]
         direction LR
-        how["how"]
-        why["why"]
-        research["research"]
-        prototype["prototype"]
-        wayfinder["wayfinder"]
-        deep_design["deep-design"]
-        ui_dev["ui-dev"]
-        ux_proof["ux-proof"]
+        review_gilfoyle["review-gilfoyle<br/>runtime risk"]
+        review_ponytail["review-ponytail<br/>simplicity risk"]
     end
-    intake -. existing behavior unclear .-> how
-    how -. code map .-> shape
-    shape -. intent unclear .-> why
-    why -. historical constraints .-> specify
-    intake -. uncertain external facts .-> research
-    research -. cited findings .-> shape
-    shape -. feasibility question .-> prototype
-    prototype -. decision .-> specify
-    shape -. large or parallel work .-> wayfinder
-    wayfinder -. decision map .-> specify
-    specify -. architecture risk .-> deep_design
-    deep_design -. design result .-> specify
-    build -. UI surface .-> ui_dev
-    ui_dev --> review
-    verify -. user-facing UI .-> ux_proof
-    ux_proof --> finish
+
+    review --> standard_review
+    review -. add for runtime risk .-> review_gilfoyle
+    review -. add for simpler code check .-> review_ponytail
+    standard_review --> review_result
+    review_gilfoyle --> review_result
+    review_ponytail --> review_result
+
+    review_result -->|approved| verify["verify<br/>required"]
+    review_result -->|changes needed| rework["build / fix<br/>address findings"]
+    rework --> review
+
+    verify -. check failed .-> rework
+    verify --> finish["finish<br/>PR + merge choice"]
+    finish -. after delivery .-> retro["retro<br/>record what changed"]
 
     classDef core fill:#eef2ff,stroke:#6366f1,color:#1e1b4b,stroke-width:1.5px;
     classDef review fill:#ecfdf5,stroke:#059669,color:#064e3b,stroke-width:1.5px;
-    classDef optional fill:#f8fafc,stroke:#94a3b8,color:#334155,stroke-width:1px,stroke-dasharray:5 5;
     classDef decision fill:#fff7ed,stroke:#f59e0b,color:#7c2d12,stroke-width:1.5px;
-    classDef join fill:#e0f2fe,stroke:#0284c7,color:#0c4a6e,stroke-width:1.5px;
     classDef terminal fill:#f1f5f9,stroke:#475569,color:#0f172a,stroke-width:1.5px;
-    class intake,shape,specify,build,fix,review,verify core;
+    class request,intake,shape,specify,build,fix,review,rework,verify core;
     class standard_review,review_gilfoyle,review_ponytail review;
-    class review_join join;
-    class kind decision;
+    class review_result decision;
     class finish,retro terminal;
-    class how,why,research,prototype,wayfinder,deep_design,ui_dev,ux_proof optional;
 ```
 
 The runner sends each box to an agent and passes the result to the next box.
-`review-gilfoyle` and `review-ponytail` are extra review steps I add when a task
-needs them. The project expert gives `shape`, `specify`, `build`, and `review`
-the project rules they need.
+`review` is required after `build` or `fix`, and the standard review runs every
+time. `review-gilfoyle` and `review-ponytail` answer narrower questions about
+runtime risk and unnecessary complexity; I add them inside the same review
+stage when those questions apply. The project expert gives `shape`, `specify`,
+`build`, and `review` the project rules they need.
+
+The other add-ons fit around the core path: `how` and `why` help before shaping,
+`research` checks outside facts, `prototype` tries an idea, `wayfinder` splits
+large work, `deep-design` checks how parts fit, `ui-dev` handles UI changes,
+and `ux-proof` checks the user flow.
 
 ## What I check
 
