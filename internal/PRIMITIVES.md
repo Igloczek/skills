@@ -22,14 +22,15 @@ classified, agent-ready work item without rewriting the original request.
 
 ## artifact-contract
 
-Owner: `shape`, `specify`, and `build`. Keep briefs, specs, plans, terminal
-states, and handoff markers stable enough for the next workflow to consume.
+Owner: `shape`, `specify`, and `build`. Keep briefs, specs, short-horizon
+plans, terminal states, and compact handoff markers stable enough for the next
+workflow to consume.
 
 ## change-executor
 
 Owner: `build` and `fix`. Work in an isolated branch/worktree, take small
-feedback-driven steps, run the configured validation, and leave a reviewable
-branch or PR.
+feedback-driven steps, reset an unproductive context trajectory with a compact
+handoff, run the configured validation, and leave a reviewable branch or PR.
 
 ## tracker-lifecycle
 
@@ -40,14 +41,15 @@ claim locks, labels, idempotent comments, and lock cleanup.
 
 Owner: `review` and `finish`. Review standards, requested behavior, security,
 compatibility, tests, and architecture; route the public operational and
-minimality lanes and the local domain expert only when relevant. Run the core
+minimality lanes and the local domain expert only when relevant. Run selected
 review lanes on separate threads, join their terminal results, and return a
 bounded, severity-ranked report with lane ownership preserved.
 
 ## evidence-engine
 
-Owner: `verify`. Combine repo-native tests with UI/browser evidence when the
-change is user-facing. Keep credentials indirect and clean up test processes.
+Owner: `verify`. Combine repo-native tests with proportionate configured quality
+gates and UI/browser evidence when the change is user-facing. Keep credentials
+indirect and clean up test processes.
 
 ## pr-state-dispatcher
 

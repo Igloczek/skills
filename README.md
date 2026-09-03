@@ -25,11 +25,11 @@ design, UI work, or parallel planning.
 | `setup` | Core | Discover repository commands, documents, providers, and safe defaults. |
 | `intake` | Core | Normalize a brief or issue into one actionable work item. |
 | `shape` | Core | Turn a vague request into a small brief with assumptions and non-goals. |
-| `specify` | Core | Produce an implementation-ready specification and dependency-aware plan. |
+| `specify` | Core | Produce a stable contract and the next small, dependency-aware slice. |
 | `build` | Core | Implement a brief or specification with feedback and validation. |
 | `fix` | Core | Reproduce, diagnose, and repair a confirmed defect with a regression check. |
-| `review` | Core | Review behavior, standards, security, compatibility, tests, and complexity. |
-| `verify` | Core | Verify changes with repository checks and UI evidence when needed. |
+| `review` | Core | Review behavior, standards, security, compatibility, tests, and complexity proportionally. |
+| `verify` | Core | Verify changes with proportionate repository checks and UI evidence when needed. |
 | `finish` | Core | Drive a PR through review, CI, QA, and merge gates. |
 | `retro` | Core | Capture evidence-backed process improvements after delivery. |
 | `how` | Add-on | Explain existing code and data flow before changing it. |
@@ -84,16 +84,16 @@ flowchart TD
     build --> review["review<br/>fan-out gate"]
     fix --> review
 
-    subgraph review_threads["Review threads · parallel, separate tasks"]
+    subgraph review_threads["Review threads · selected lanes, separate tasks"]
         direction LR
         standard_review["standard review<br/>behavior + standards"]
-        review_gilfoyle["review-gilfoyle<br/>operations + reliability"]
-        review_ponytail["review-ponytail<br/>complexity + minimality"]
+        review_gilfoyle["review-gilfoyle<br/>when operational risk applies"]
+        review_ponytail["review-ponytail<br/>when complexity risk applies"]
         review_join(("join findings"))
     end
     review --> standard_review
-    review --> review_gilfoyle
-    review --> review_ponytail
+    review -. if needed .-> review_gilfoyle
+    review -. if needed .-> review_ponytail
     standard_review --> review_join
     review_gilfoyle --> review_join
     review_ponytail --> review_join
@@ -145,10 +145,22 @@ flowchart TD
     class how,why,research,prototype,wayfinder,deep_design,ui_dev,ux_proof optional;
 ```
 
-`review` launches three independent, read-only review lenses in parallel:
-behavior and standards, operational risk, and minimality. Findings join before
-`verify`; requested changes return to implementation. The local domain expert
-is consulted by `shape`, `specify`, `build`, and `review` when relevant.
+`review` always runs the standard lens and adds independent, read-only
+operational and minimality lenses when the changed surface makes them useful.
+Findings join before `verify`; requested changes return to implementation. The
+local domain expert is consulted by `shape`, `specify`, `build`, and `review`
+when relevant.
+
+## Proportionate defaults
+
+The default path is deliberately lightweight for a small product:
+
+- Always record the smallest relevant proof of the requested behavior.
+- Run UI or system evidence when the change is user-facing.
+- Add coverage, complexity, mutation, architecture, or operational checks only
+  when the project already has them or the change risk justifies the cost.
+- Record skipped or unavailable gates; do not install an enterprise process to
+  satisfy a checklist.
 
 ## Project-local domain expert
 

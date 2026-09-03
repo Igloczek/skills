@@ -9,9 +9,11 @@ description: "Review a diff against the repository standards and requested behav
 2. Read the originating issue or spec and the repository's standards.
 3. Review separately for requested behavior, standards/design, security,
    backward compatibility, and test gaps.
-4. Fan out three independent, read-only review lanes on separate threads:
-   standard review, `review-gilfoyle`, and `review-ponytail`. Do not collapse
-   them into one pass.
+4. Run the standard lane for every change. Add `review-gilfoyle` when the
+   change has meaningful operational, integration, security, or production
+   risk, and add `review-ponytail` when scope or complexity makes it useful.
+   Keep selected lanes independent and read-only; record omitted lanes as
+   `NOT_RUN` with a reason.
 5. When changed behavior uses domain semantics, run the project's one local
    domain expert as a fourth lane. A missing source or target is
    `BLOCKED`/`NOT_RUN`, not approval.
@@ -28,8 +30,8 @@ Status: APPROVED|CHANGES_REQUESTED|NEEDS_HUMAN
 
 The report must contain `blockers`, `majors`, `minors`, `spec_findings`,
 `standards_findings`, `test_gaps`, and `review_lanes`. `review_lanes` must show
-the status and findings for `standard`, `review-gilfoyle`, and
-`review-ponytail`, plus `domain-expert` when used.
+the status, findings, and selection reason for `standard`, `review-gilfoyle`,
+and `review-ponytail`, plus `domain-expert` when used.
 
 ## Rules
 
@@ -42,4 +44,6 @@ the status and findings for `standard`, `review-gilfoyle`, and
   data-loss protection, or an explicit acceptance criterion.
 - Do not turn a missing or failed lane into approval. Keep disagreements visible
   in the composed report.
+- Do not spawn specialist lanes for ceremony; a low-risk change may record them
+  as `NOT_RUN` with a concrete reason.
 - Never request changes merely for personal style preferences.
