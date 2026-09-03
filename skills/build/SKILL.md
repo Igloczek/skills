@@ -24,8 +24,8 @@ runs are modes of this skill, not separate commands.
 6. Commit coherent changes and open or update one reviewable PR.
 
 When a change touches UI, use the public `ui-dev` skill. Consult the project's
-local domain expert before changing domain-sensitive behavior. The domain expert
-adds project context; it does not change public skill contracts.
+relevant local domain experts before changing domain-sensitive behavior. Domain
+experts add project context; they do not change public skill contracts.
 
 ## Output
 

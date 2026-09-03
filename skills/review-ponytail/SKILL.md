@@ -7,6 +7,10 @@ Use as one of the three review personas within `review`. Run it for every
 change alongside `standard` and `review-gilfoyle`. It covers over-engineering,
 unnecessary dependencies, speculative flexibility, and avoidable complexity.
 
+Use the same project snapshot, pinned diff, and repository instructions as the
+other review lanes. This skill has a different focus, not a different
+environment or branch.
+
 ## Workflow
 
 1. Pin the base revision and read the task/spec, project guardrails, current

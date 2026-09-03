@@ -8,6 +8,10 @@ change alongside `standard` and `review-ponytail`. It covers runtime behavior,
 integration, observability, and security with evidence from the changed code
 and controlled runtime targets.
 
+Use the same project snapshot, pinned diff, and repository instructions as the
+other review lanes. This skill has a different focus, not a different
+environment or branch.
+
 ## Workflow
 
 1. Pin the base revision, read the task/spec, repository instructions, handoff,

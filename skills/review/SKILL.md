@@ -9,13 +9,15 @@ description: "Review a diff against repository standards and requested behavior,
 2. Read the originating issue or spec and the repository's standards.
 3. Review separately for requested behavior, standards/design, security,
    backward compatibility, test gaps, and applicable quality signals.
-4. Run all three review personas for every change: `standard`,
-   `review-gilfoyle`, and `review-ponytail`. Keep them independent and
-   read-only, and preserve the findings from each persona.
-5. When changed behavior uses domain semantics, add the project's one local
-   domain expert for project-specific context. A missing source or target is
-   `BLOCKED`/`NOT_RUN`, not approval.
-6. Wait for all three personas, and the domain expert when used, to reach a
+4. Fan out three independent, read-only review personas over the same project
+   checkout, pinned diff, and repository instructions: `standard`,
+   `review-gilfoyle`, and `review-ponytail`. Run all three for every change.
+   Use separate threads only for parallel execution; do not create
+   persona-specific branches, worktrees, or environments.
+5. When changed behavior uses domain semantics, run each relevant local domain
+   expert as additional context over the same snapshot. A missing source or
+   target is `BLOCKED`/`NOT_RUN`, not approval.
+6. Wait for all three personas, and each domain expert when used, to reach a
    terminal state. Join the findings while preserving the reviewer that
    produced each one.
 7. Rank findings by impact, cite the file and reason, return a composed verdict,
@@ -32,15 +34,16 @@ The report must contain `blockers`, `majors`, `minors`, `spec_findings`,
 `standards_findings`, `test_gaps`, `quality_signals`, and `reviewers`.
 `quality_signals` must show the changed-code scope, the configured tool or
 reason, the status, and evidence. `reviewers` must show the status, findings,
-and focus for `standard`, `review-gilfoyle`, and `review-ponytail`, plus
-`domain-expert` when used.
+and focus for `standard`, `review-gilfoyle`, and `review-ponytail`, plus each
+local domain expert when used.
 
 ## Rules
 
 - Do not invent requirements absent from the spec or repository standards.
 - Treat security and data-loss risks as blockers when evidenced.
 - Keep each reviewer focused on its stated perspective. All reviewers are
-  read-only.
+  read-only and inspect the same base revision, head revision, project
+  instructions, and relevant evidence.
 - Do not let a Ponytail suggestion remove validation, security, accessibility,
   data-loss protection, or an explicit acceptance criterion.
 - Do not turn a missing or failed lane into approval. Keep disagreements visible

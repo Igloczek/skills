@@ -28,8 +28,8 @@ the project's framework or explicit requirements.
 ## Boundaries
 
 Do not invent API fields, calculate domain values, change persistence, or decide
-product/domain semantics. Consult the project's local domain expert when the UI
-renders domain-sensitive content. Keep data ownership in the existing API and
+product/domain semantics. Consult the project's relevant local domain experts
+when the UI renders domain-sensitive content. Keep data ownership in the existing API and
 shared contracts.
 
 ## Output

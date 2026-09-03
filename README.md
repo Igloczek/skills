@@ -19,7 +19,7 @@ steps.
 Make the skills available to the agent runner in the project:
 
 ```bash
-npx skills add igloczek/skills --skill '*' --agent '*' --yes
+bunx skills add igloczek/skills --skill '*' --agent '*' --yes
 ```
 
 Then run `setup` once in the project. It looks at the repo and records the
@@ -66,17 +66,18 @@ context or design work when it needs them.
 ## Setup (once per repository)
 
 Run `setup` once in a repository. It finds the commands and tools already
-there. It creates one local expert when the work needs project-specific rules.
+there. It can create zero, one, or several local experts when the work needs
+project-specific rules.
 
 ```mermaid
 %%{init: {"theme":"base","themeVariables":{"fontFamily":"ui-sans-serif,system-ui,sans-serif","lineColor":"#94a3b8","primaryColor":"#eef2ff","primaryTextColor":"#172033","primaryBorderColor":"#6366f1","secondaryColor":"#ecfdf5","tertiaryColor":"#fff7ed"}}}%%
 flowchart LR
     setup["setup<br/>once per repository"] --> inspect["inspect<br/>commands + docs"]
     inspect --> configure["configure<br/>useful defaults"]
-    configure --> domain{"domain-specific?"}
-    domain -->|yes| domain_expert["project expert<br/>local only"]
+    configure --> domain{"project rules useful?"}
+    domain -->|yes| domain_experts["project experts<br/>local only"]
     domain -->|no| ready(["repository ready"])
-    domain_expert --> ready
+    domain_experts --> ready
 
     classDef core fill:#eef2ff,stroke:#6366f1,color:#1e1b4b,stroke-width:1.5px;
     classDef decision fill:#fff7ed,stroke:#f59e0b,color:#7c2d12,stroke-width:1.5px;
@@ -84,7 +85,7 @@ flowchart LR
     classDef terminal fill:#f1f5f9,stroke:#475569,color:#0f172a,stroke-width:1.5px;
     class setup,inspect,configure core;
     class domain decision;
-    class domain_expert local;
+    class domain_experts local;
     class ready terminal;
 ```
 
@@ -116,7 +117,7 @@ flowchart TD
     build --> review["review<br/>required"]
     fix --> review
 
-    subgraph review_stage["Three reviewers · every change"]
+    subgraph review_stage["Three reviewers · every change · same snapshot"]
         direction LR
         standard_review["standard<br/>behavior + rules"]
         review_gilfoyle["review-gilfoyle<br/>runtime + security"]
@@ -153,8 +154,9 @@ The runner sends each box to an agent and passes the result to the next box.
 `review` runs three separate, read-only reviewers after every `build` or `fix`:
 `standard` checks behavior and project rules, `review-gilfoyle` checks runtime
 and security, and `review-ponytail` checks simplicity and scope. All three
-finish before the result goes to `verify`. The project expert gives `shape`,
-`specify`, `build`, and `review` the project rules they need.
+use the same pinned diff, project checkout, and instructions. They can run in
+parallel and all three finish before the result goes to `verify`. Project
+experts give `shape`, `specify`, `build`, and `review` the rules they need.
 
 The other add-ons fit around the core path: `how` and `why` help before shaping,
 `research` checks outside facts, `prototype` tries an idea, `wayfinder` splits
@@ -173,10 +175,10 @@ For each change, I do this:
 
 ## Project-specific rules
 
-For work with project-specific rules, `setup` can create one local expert from
-the project docs and code. It tells the other skills what those rules are and
-says when the evidence is missing. Code changes stay in `build` and `fix`, and
-general code review stays in `review`.
+For work with project-specific rules, `setup` can create one or more local
+experts from the project docs and code. Each expert tells the other skills what
+those rules are and says when the evidence is missing. Code changes stay in
+`build` and `fix`, and general code review stays in `review`.
 
 Example: an invoicing project might use `docs/invoice-rules.md`,
 `src/domain/invoices/`, and `docs/tax-provider.md` to answer whether a paid

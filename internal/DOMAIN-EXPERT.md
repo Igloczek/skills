@@ -1,19 +1,20 @@
-# Project-local domain expert
+# Project-local domain experts
 
-`setup` creates exactly one domain expert inside a domain-specific project. The
-role is selected by the project owner (`billing-specialist`, `tax-specialist`,
-or another domain role), and the expert is grounded in confirmed local source
-paths. It is not part of this public skill collection.
+`setup` may create zero or more domain experts inside a project. Each role is
+selected by the project owner (`billing-specialist`, `tax-specialist`, or
+another domain role), and each expert is grounded in confirmed local source
+paths. They are not part of this public skill collection.
 
 ## Lifecycle
 
-1. Detect domain-specific behavior and ask for the role, slug, authoritative
-   sources, boundary, and local destination.
-2. Render the local skill from `skills/setup/references/domain-expert.md`.
-3. Record the local path and sources in `.ai/skills.json`; preserve an existing
-   custom expert unless the owner explicitly approves an update.
-4. Require a named expert and readable sources before `setup` returns `READY`.
-   A domain-neutral project records `domain_expert: null`.
+1. Detect whether any domain-specific behavior needs expert context. Ask for a
+   role, slug, authoritative sources, boundary, and local destination for each
+   requested expert.
+2. Render each local skill from `skills/setup/references/domain-expert.md`.
+3. Record the local paths and sources in `.ai/skills.json`; preserve existing
+   custom experts unless the owner explicitly approves an update.
+4. A project may have no domain experts. For each configured expert, require a
+   named role and readable sources before `setup` returns `READY`.
 
 ## Contract
 
@@ -32,5 +33,6 @@ CHANGES: none
 OPEN: missing evidence, owner, and next action
 ```
 
-All other roles use public skills. Do not create additional local role files
-when `review-gilfoyle`, `review-ponytail`, or `ui-dev` already covers the work.
+All other roles use public skills. Do not create a local domain expert when a
+public skill already covers the work. Multiple local experts are valid when a
+project needs distinct authorities.
