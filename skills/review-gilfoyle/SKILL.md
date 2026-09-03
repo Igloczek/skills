@@ -1,11 +1,12 @@
 ---
 name: review-gilfoyle
-description: "Review a change for runtime reliability, observability, security, and operational risk with evidence-first SRE discipline."
+description: "Review a change for runtime behavior, integration, observability, and security as one of the three review personas."
 ---
 
-Use as the operational review lane within `review`. It applies the evidence-first
-discipline of the public `gilfoyle` skill without replacing specification,
-product, domain, or QA review.
+Use as one of the three review personas within `review`. Run it for every
+change alongside `standard` and `review-ponytail`. It covers runtime behavior,
+integration, observability, and security with evidence from the changed code
+and controlled runtime targets.
 
 ## Workflow
 
@@ -14,7 +15,9 @@ product, domain, or QA review.
 2. Trace changed paths through callers, configuration, failure handling,
    integrations, deployment, and observability.
 3. If telemetry is available, discover the configured tool, dataset, schema, or
-   application before querying it. If no usable target exists, report `NOT_RUN`.
+   application before querying it. If no usable target exists, record the
+   runtime-evidence check as `NOT_RUN` and continue reviewing code, configuration,
+   failure handling, and integrations.
 4. Try to disprove operational hypotheses. Every finding needs an exact
    `path:line`, consequence, and reproducible evidence.
 5. Refresh the diff and line references before the verdict.
@@ -30,10 +33,10 @@ product, domain, or QA review.
 ## Output
 
 ```text
-Status: PASS|CHANGES_REQUESTED|BLOCKED|NOT_RUN
+Status: PASS|CHANGES_REQUESTED|BLOCKED
 Scope: base, diff, paths, tools, and tests actually inspected
 Decision: one concise operational verdict
 Findings: path:line, severity, consequence, evidence, and confidence
 Changes: none; reviewer is read-only
-Open: unverified gates, owner, and next action
+Open: unverified gates, `NOT_RUN` evidence checks, owner, and next action
 ```

@@ -32,14 +32,13 @@ intake -> specify -> build -> review -> verify -> finish
 ```
 
 When `intake` finds that the outcome or scope needs work, it routes to `shape`
-before `specify` or `build`. For a bug, I use `fix` in place of `build`. When a
-task needs more context or another review, I add `how`, `why`, `research`,
-`review-gilfoyle`, or `review-ponytail`.
+before `specify` or `build`. For a bug, I use `fix` in place of `build`. I add
+`how`, `why`, or `research` when a task needs more context.
 
 ## Skills
 
 The Core skills are the path I use for most changes. Add-ons give a task more
-context, research, design work, or another review when it needs one.
+context or design work when it needs them.
 
 | Skill | Layer | Purpose |
 | --- | --- | --- |
@@ -117,21 +116,17 @@ flowchart TD
     build --> review["review<br/>required"]
     fix --> review
 
-    subgraph review_stage["Review stage · required"]
+    subgraph review_stage["Three reviewers · every change"]
         direction LR
-        standard_review["standard review<br/>every change"]
+        standard_review["standard<br/>behavior + rules"]
+        review_gilfoyle["review-gilfoyle<br/>runtime + security"]
+        review_ponytail["review-ponytail<br/>simplicity + scope"]
         review_result{"review result"}
     end
 
-    subgraph specialist_stage["Specialist reviews · selected by risk"]
-        direction LR
-        review_gilfoyle["review-gilfoyle<br/>runtime risk"]
-        review_ponytail["review-ponytail<br/>simplicity risk"]
-    end
-
     review --> standard_review
-    review -. add for runtime risk .-> review_gilfoyle
-    review -. add for simpler code check .-> review_ponytail
+    review --> review_gilfoyle
+    review --> review_ponytail
     standard_review --> review_result
     review_gilfoyle --> review_result
     review_ponytail --> review_result
@@ -155,11 +150,11 @@ flowchart TD
 ```
 
 The runner sends each box to an agent and passes the result to the next box.
-`review` is required after `build` or `fix`, and the standard review runs every
-time. `review-gilfoyle` and `review-ponytail` answer narrower questions about
-runtime risk and unnecessary complexity; I add them inside the same review
-stage when those questions apply. The project expert gives `shape`, `specify`,
-`build`, and `review` the project rules they need.
+`review` runs three separate, read-only reviewers after every `build` or `fix`:
+`standard` checks behavior and project rules, `review-gilfoyle` checks runtime
+and security, and `review-ponytail` checks simplicity and scope. All three
+finish before the result goes to `verify`. The project expert gives `shape`,
+`specify`, `build`, and `review` the project rules they need.
 
 The other add-ons fit around the core path: `how` and `why` help before shaping,
 `research` checks outside facts, `prototype` tries an idea, `wayfinder` splits
