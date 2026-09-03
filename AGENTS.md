@@ -2,14 +2,13 @@
 
 ## Purpose
 
-This repository builds small, agent-neutral workflow skills for a solo
-developer who wants to ship software with less friction. The skills help an
-agent clarify a request, choose a small slice, implement it, review it,
-verify the real behavior, and finish safely.
+This repo contains skills for a solo developer using an AI coding agent. They
+cover the basic work: understand the request, keep the change small, write the
+code, review it, run the right checks, and finish the PR.
 
-This is not an enterprise software process, compliance framework, test runner,
-or project template. Prefer the smallest useful workflow. Make extra process
-conditional on real uncertainty or risk.
+This is not a company process, compliance tool, test runner, or project
+template. Do not use every skill on every task. Use the shortest path that is
+safe for the change. Add more checks when the change is risky or unclear.
 
 ## Change guidelines
 

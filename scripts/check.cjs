@@ -83,7 +83,7 @@ assert(readme.includes('## Purpose'), 'missing README purpose');
 assert(agentsText.includes('## Purpose'), 'missing AGENTS purpose');
 assert(agentsText.includes('solo'), 'AGENTS must describe the solo-developer scope');
 assert(readme.includes('## Setup (once per repository)'), 'missing setup graph section');
-assert(readme.includes('domain-expert<br/>project-local only'), 'missing local domain expert branch');
+assert(readme.includes('project expert<br/>local only'), 'missing local project expert branch');
 assert(readme.includes("--agent '*' --yes"), 'README must install for all project agents');
 assert(!readme.includes('--global'), 'README must not install globally');
 assert(!readme.includes('--agent codex'), 'README must not target Codex only');
