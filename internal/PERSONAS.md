@@ -50,14 +50,12 @@ Profiles are read-only reviewers unless their contract explicitly says they are
 an implementation role. No profile merges, edits another profile, or silently
 turns missing evidence into approval.
 
-## Deliberate consolidation
+## Public workflow boundary
 
-The workflow in [Paszomistrz PR #100](https://github.com/Igloczek/paszomistrz/pull/100)
-uses several repo-local personas. This collection keeps only the roles that
-need project-local context. General architect, developer, QA, product, and UX
-work stays in the public `shape`, `specify`, `build`, `verify`, and add-on
-workflows. A project can still add a local specialist when its own sources or
-decision boundary justify one.
+General architecture, implementation, QA, product, and UX work stays in the
+public `shape`, `specify`, `build`, `verify`, and add-on workflows. A project
+gets a local specialist only when its own sources or decision boundary justify
+one.
 
 ## Local handoff
 

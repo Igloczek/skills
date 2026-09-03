@@ -2,12 +2,6 @@
 
 Small, intent-based agent workflows for a normal software delivery lifecycle.
 
-This repository is an independent synthesis. It keeps the operational spine of
-Open Mercato's skills and the engineering practices emphasized by Matt Pocock,
-then rewrites them into a smaller collection with one public entry point per
-intent. It is not affiliated with either project and does not copy their files
-or wording.
-
 ## Install once
 
 Install the collection into the global skill directory of your agent (or use
@@ -23,7 +17,7 @@ installation.
 
 ## Shape
 
-The public surface is deliberately small:
+The current collection contains:
 
 | Layer | Entry points | Purpose |
 | --- | ---: | --- |
@@ -36,8 +30,9 @@ parameters of a workflow. They are not separate skills.
 
 ## Project-local expert pods
 
-The public roster stays small. `setup` can create contextual profiles inside a
-consuming project (default: `.agents/skills`) without publishing them here.
+`setup` can create contextual profiles inside a consuming project (default:
+`.agents/skills`). These profiles are project-local and are not part of this
+repository's installable skill roster.
 
 - `persona-reviewer-gilfoyle` is a dedicated, read-only operational review lane
   based on the public `gilfoyle` skill: runtime, reliability, security,
@@ -74,21 +69,6 @@ Every mutating workflow must:
 `finish` never merges unless the user explicitly enables the merge action. UI
 verification is evidence-based and optional for non-UI work.
 
-## Inspiration and attribution
-
-The design was informed by:
-
-- [open-mercato/skills](https://github.com/open-mercato/skills), maintained by Open Mercato — especially its pipeline contracts, PR state handling, QA gates, and provider descriptors.
-- [mattpocock/skills](https://github.com/mattpocock/skills), maintained by Matt Pocock — especially its grilling, TDD, debugging, domain modeling, and deep-module practices.
-- [axiomhq/gilfoyle](https://github.com/axiomhq/gilfoyle) and [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail) — used as companion lenses for operational evidence and complexity reduction.
-- [Leonxlnx/taste-skill](https://github.com/Leonxlnx/taste-skill) and [jakubkrehel/make-interfaces-feel-better](https://github.com/jakubkrehel/make-interfaces-feel-better) — used as optional companion guidance for the local UI developer profile.
-- [Paszomistrz PR #100](https://github.com/Igloczek/paszomistrz/pull/100), used only as inspiration for repo-local specialist profiles and review routing. Its project-specific personas were not copied; the model was rewritten in English and generalized.
-
-Both upstream repositories have their own licenses and authorship. This repo
-is a new, separately authored set of instructions. It makes no claim of
-endorsement or affiliation. If future contributions copy material from an
-upstream project, they must preserve that project's license and attribution.
-
 ## Contributing
 
 Before adding a skill, prove that an existing entry point or add-on cannot own
@@ -101,3 +81,17 @@ Run:
 ```bash
 npm run check
 ```
+
+## Sources
+
+This collection uses or is inspired by:
+
+- [open-mercato/skills](https://github.com/open-mercato/skills)
+- [mattpocock/skills](https://github.com/mattpocock/skills)
+- [axiomhq/gilfoyle](https://github.com/axiomhq/gilfoyle)
+- [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail)
+- [Leonxlnx/taste-skill](https://github.com/Leonxlnx/taste-skill)
+- [jakubkrehel/make-interfaces-feel-better](https://github.com/jakubkrehel/make-interfaces-feel-better)
+
+External skill instructions remain external dependencies; this repository
+references their capabilities without bundling their skill files.
