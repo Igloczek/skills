@@ -41,10 +41,10 @@ claim locks, labels, idempotent comments, and lock cleanup.
 
 Owner: `review` and `finish`. Review standards, requested behavior, security,
 compatibility, tests, and architecture through `review-standard`; route the
-operational and minimality lanes and local domain experts only when relevant. Run the three
-core review personas on separate threads for every change, join their terminal
-results, and return a bounded, severity-ranked report with reviewer ownership
-preserved.
+operational and minimality lanes and local domain experts only when relevant.
+Run the mandatory and selected lanes independently over the same snapshot,
+record unselected specialists as `NOT_RUN`, join terminal results, and return a
+bounded, severity-ranked report with reviewer ownership preserved.
 
 ## evidence-engine
 

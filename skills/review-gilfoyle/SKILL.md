@@ -3,10 +3,10 @@ name: review-gilfoyle
 description: "Review a change for runtime behavior, integration, observability, and security as one of the three review personas."
 ---
 
-Use as one of the three review personas within `review`. Run it for every
-change alongside `review-standard` and `review-ponytail`. It covers runtime behavior,
-integration, observability, and security with evidence from the changed code
-and controlled runtime targets.
+Use as the runtime specialist within `review` when a change affects runtime
+behavior, integrations, access/security boundaries, deployment/configuration,
+reliability, observability, or incident evidence. It covers those concerns with
+evidence from the changed code and controlled runtime targets.
 
 Use the same project snapshot, pinned diff, and repository instructions as the
 other review lanes. This skill has a different focus, not a different

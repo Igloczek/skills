@@ -119,7 +119,7 @@ flowchart TD
     build --> review["review<br/>required"]
     fix --> review
 
-    subgraph review_stage["Three reviewers · every change · same snapshot"]
+    subgraph review_stage["Proportional reviewers · same snapshot"]
         direction LR
         standard_review["review-standard<br/>behavior + rules"]
         review_gilfoyle["review-gilfoyle<br/>runtime + security"]
@@ -128,8 +128,8 @@ flowchart TD
     end
 
     review --> standard_review
-    review --> review_gilfoyle
-    review --> review_ponytail
+    review -. runtime / security .-> review_gilfoyle
+    review -. code / complexity .-> review_ponytail
     standard_review --> review_result
     review_gilfoyle --> review_result
     review_ponytail --> review_result
@@ -153,12 +153,14 @@ flowchart TD
 ```
 
 The runner sends each box to an agent and passes the result to the next box.
-`review` runs three separate, read-only reviewers after every `build` or `fix`:
-`review-standard` checks behavior and project rules, `review-gilfoyle` checks
-runtime and security, and `review-ponytail` checks simplicity and scope. All three
-use the same pinned diff, project checkout, and instructions. They can run in
-parallel and all three finish before the result goes to `verify`. Project
-experts give `shape`, `specify`, `build`, and `review` the rules they need.
+`review` always runs the read-only `review-standard` lane after `build` or
+`fix`. It adds `review-gilfoyle` for runtime, integration, security, deployment,
+or operational risk, and `review-ponytail` for code, dependency, API,
+architecture, or abstraction changes. Unselected specialist lanes are recorded
+as `NOT_RUN` with a reason. Selected lanes use the same pinned diff, project
+checkout, and instructions, and finish before the result goes to `verify`.
+Project experts give `shape`, `specify`, `build`, and `review` the rules they
+need.
 
 The other add-ons fit around the core path: `how` and `why` help before shaping,
 `research` checks outside facts, `prototype` tries an idea, `wayfinder` splits

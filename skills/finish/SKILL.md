@@ -8,7 +8,7 @@ mutation; recovery, batch, and dry-run are modes of this workflow.
 
 ## Workflow
 
-1. Read the PR, linked issue/spec, all three review-persona results, checks,
+1. Read the PR, linked issue/spec, review-persona selection and results, checks,
    labels, conflicts, and QA evidence.
 2. Select the next missing gate: continuation, review, CI repair, QA, or
    readiness report. Do not run a step that is already satisfied.
@@ -30,9 +30,10 @@ PR: #<number> (link: <url>)
 ## Rules
 
 - Never force or administratively merge around a required gate.
-- Do not report readiness for a code change until `review-standard`,
-  `review-gilfoyle`, and `review-ponytail` have returned terminal results. A
-  domain-expert result is included when domain rules were involved.
+- Do not report readiness until `review-standard` and every selected specialist
+  lane have terminal results. Require an explicit `NOT_RUN` reason for each
+  unselected specialist and include domain-expert results when domain rules were
+  involved.
 - Do not block on a quality warning, unconfigured signal, or legacy violation
   unless project policy or high-risk scope explicitly makes it a gate.
 - Never create a duplicate PR.
