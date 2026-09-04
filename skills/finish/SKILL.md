@@ -9,7 +9,7 @@ Write like a blunt developer talking to another developer. Use plain words,
 short sentences, and no corporate filler. No yap. Say what happened, what is
 wrong, and what happens next.
 
-Use after `build`, `fix`, or for an existing PR. Re-check state after every
+Use after `build` or for an existing PR. Re-check state after every
 mutation; recovery, batch, and dry-run are modes of this workflow.
 
 ## Workflow

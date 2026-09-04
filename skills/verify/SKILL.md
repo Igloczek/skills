@@ -9,7 +9,7 @@ Write like a blunt developer talking to another developer. Use plain words,
 short sentences, and no corporate filler. No yap. Say what happened, what is
 wrong, and what happens next.
 
-This is the first gate after `build` or `fix`. Check the product before code
+This is the first gate after `build`. Check the product before code
 review. For user-facing work, check that it works, looks, and behaves as the
 request expects.
 
@@ -32,7 +32,7 @@ request expects.
    as coverage, complexity, mutation, or dependency checks. Do not add a tool
    just to satisfy this skill.
 6. Capture the smallest reproducible artifact for the exercised surface. If
-   the product is wrong, route back to `build` or `fix` before code review.
+   the product is wrong, route back to `build` before code review.
 7. Diagnose failures from their evidence. Do not turn an infrastructure
    failure into a pass.
 8. Write a report and return the correct gate state.
@@ -70,5 +70,4 @@ it does not apply or the project does not provide it.
 - Report quality warnings separately from functional failures. A warning,
   unconfigured signal, or legacy violation is not a failure without project
   policy or high-risk scope.
-- Do not modify source code unless the caller explicitly switches to `build`
-  or `fix`.
+- Do not modify source code unless the caller explicitly switches to `build`.

@@ -68,7 +68,7 @@ Include every invoked reviewer in `reviewers`, including all three baseline
 reviewers and any external or project-local reviewer. Include a concrete
 `NOT_RUN` reason only when a promised reviewer cannot be invoked, and surface
 that gap in `Open`/`NEEDS_HUMAN` rather than hiding it. Never edit code from
-this skill; route fixes to `build` or `fix`.
+this skill; route fixes to `build`.
 
 ## Rules
 
@@ -78,8 +78,7 @@ this skill; route fixes to `build` or `fix`.
 - Reviewers are read-only. Do not constrain an external reviewer's scope beyond
   the supplied target and the user's request.
 - Review does not redefine product intent. If a review finding changes behavior,
-  route the code through `build` or `fix`, then run `verify` again before
-  finish.
+  route the code through `build`, then run `verify` again before finish.
 - Do not let a simplicity suggestion remove validation, security,
   accessibility, data-loss protection, or an explicit acceptance criterion.
 - A quality `WARN` is not a blocker unless project policy or change risk makes it

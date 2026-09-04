@@ -16,10 +16,10 @@ it.
 
 This is a lightweight SDLC for a solo developer. Skills are connected steps,
 not unrelated tasks. Start at `intake`, use the smallest path that fits, and
-pass useful output to the next step. After `build` or `fix`, `verify` checks
-that the product works, looks, and behaves as intended. Only then does `review`
-check the code. The endpoint is a working, checked, reviewable PR. The
-`review` step always runs every available reviewer as set out below.
+pass useful output to the next step. After `build`, `verify` checks that the
+product works, looks, and behaves as intended. Only then does `review` check
+the code. The endpoint is a working, checked, reviewable PR. The `review` step
+always runs every available reviewer as set out below.
 
 ## Voice
 
@@ -59,11 +59,12 @@ Never use em dashes, semicolons, and other "complex" sentence constructions.
   verification skill.
 - Use the upstream `npx skills` CLI for external skills. Do not reimplement its
   install, update, or version lifecycle here.
-- `fix` uses the normal `build` path. Add a reproduction and regression check;
-  do not invent a bug-only process.
-- Run `verify` immediately after code is written and before code review. For
-  user-facing work, prove the real flow, including product behavior and visual
-  fit when the project supports it.
+- `build` handles features, fixes, maintenance, refactors, and other code
+  changes. For a reported bug, reproduce it first, fix the root cause, and
+  leave a regression check. Do not create a bug-only process.
+- Run `verify` immediately after `build` and before code review. For user-facing
+  work, prove the real flow, including product behavior and visual fit when the
+  project supports it.
 - Run every available review skill on every change. Always run
   `review-standard`, `review-gilfoyle`, and `review-ponytail`. Run other local
   or external reviewers too. Give them the same request and diff. Do not pick

@@ -34,8 +34,8 @@ intake -> specify -> build -> verify -> review -> finish
 The agent can take a request through the path and leave a working, checked,
 reviewable change. `verify` comes right after code. It checks that the product
 works, looks, and behaves as intended. `review` comes after that and checks the
-implementation. A code review can send changed code back through `build` or
-`fix`, but the changed behavior must pass `verify` again.
+implementation. A code review can send changed code back through `build`, but
+the changed behavior must pass `verify` again.
 
 ### External skills stay upstream
 
@@ -57,10 +57,12 @@ is enough. Review is a code-quality pass after product verification. It can
 find real implementation defects, but it does not decide what the product
 should do.
 
-### Bugs use the normal path
+### One code path
 
-`fix` is `build` with a reproduction and a regression check. There is no special
-bug-only loop, branch, review, or verification system.
+`build` handles features, fixes, maintenance, refactors, and other code
+changes. For a reported bug, it reproduces the current behavior, fixes the root
+cause, and adds a regression check. Then it follows the same verify, review, and
+finish path. There is no separate fix skill or bug-only process.
 
 ### Setup repairs itself
 
@@ -126,12 +128,11 @@ flowchart TD
     intake -->|shape| shape["shape<br/>set scope"]
     shape -->|intake| intake
     shape -->|specify| specify["specify<br/>write checks + plan"]
-    shape -->|build| build["build<br/>implement"]
+    shape -->|build| build["build<br/>implement or repair"]
     shape -->|none| done(["no code change"])
 
     intake -->|specify| specify
     intake -->|build| build
-    intake -->|fix| fix["fix<br/>reproduce + repair"]
     intake -->|none| done
 
     specify -->|shape| shape
@@ -139,10 +140,8 @@ flowchart TD
     specify -->|none| done
 
     build --> verify["verify<br/>product + checks"]
-    fix --> verify
-
     verify --> verify_result{"product result"}
-    verify_result -->|wrong or broken| product_rework["build / fix<br/>correct behavior"]
+    verify_result -->|wrong or broken| product_rework["build<br/>correct behavior"]
     product_rework --> verify
     verify_result -->|works| review["review<br/>required"]
 
@@ -162,7 +161,7 @@ flowchart TD
     review_ponytail --> review_result
 
     review_result -->|approved| finish["finish<br/>PR + merge choice"]
-    review_result -->|changes needed| code_rework["build / fix<br/>address code findings"]
+    review_result -->|changes needed| code_rework["build<br/>address code findings"]
     code_rework --> verify
 
     finish -. after delivery .-> retro["retro<br/>record what changed"]
@@ -171,7 +170,7 @@ flowchart TD
     classDef review fill:#ecfdf5,stroke:#059669,color:#064e3b,stroke-width:1.5px;
     classDef decision fill:#fff7ed,stroke:#f59e0b,color:#7c2d12,stroke-width:1.5px;
     classDef terminal fill:#f1f5f9,stroke:#475569,color:#0f172a,stroke-width:1.5px;
-    class request,intake,shape,specify,build,fix,review,product_rework,code_rework,verify core;
+    class request,intake,shape,specify,build,review,product_rework,code_rework,verify core;
     class standard_review,review_gilfoyle,review_ponytail review;
     class review_result decision;
     class finish,retro terminal;
@@ -210,9 +209,8 @@ experts from that project's own docs.
 
 | Skill             | Does                                                 |
 | ----------------- | ---------------------------------------------------- |
-| `build`           | Implement the change and run checks.                 |
+| `build`           | Implement or repair code and run checks.             |
 | `finish`          | Take the PR to the requested end state.              |
-| `fix`             | Reproduce and repair a bug on the normal build path. |
 | `intake`          | Classify the request and choose the next step.       |
 | `retro`           | Record useful lessons after delivery.                |
 | `review-gilfoyle` | Check runtime, operations, and security.             |

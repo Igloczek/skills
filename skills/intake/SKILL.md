@@ -29,12 +29,12 @@ Return the classified item, duplicate links, and one terminal state:
 ```text
 Status: ACTIONABLE|NEEDS_SHAPE|NEEDS_SPEC|NO_ACTION_NEEDED|NEEDS_HUMAN
 Issue: #<number> (link: <url>)|none
-Next: shape|specify|build|fix|none
+Next: shape|specify|build|none
 ```
 
 ## Rules
 
 - Intake does not implement code; route it to `shape`, `specify`, `build`, or
-  `fix`.
+  `none`. Bugs and features both go to `build`.
 - An active claim is context, not a reason to stop the requested work.
 - Keep the original wording available for audit.

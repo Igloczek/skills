@@ -16,7 +16,7 @@ external `gilfoyle` skill is available, invoke it directly and preserve its
 findings; only normalize its output into the contract below.
 In the normal workflow, run after `verify` has checked the product. Review the
 implementation against that intent. If a finding changes behavior, send it
-back through `build` or `fix`, then verify again.
+back through `build`, then verify again.
 
 ## Workflow
 

@@ -20,8 +20,8 @@ contract or the next action is destructive; otherwise keep moving.
 
 ## work-item-normalizer
 
-Owner: `intake` and `fix`. Turn a brief or issue into a deduplicated,
-classified, agent-ready work item without rewriting the original request.
+Owner: `intake`. Turn a brief or issue into a deduplicated, classified,
+agent-ready work item without rewriting the original request.
 
 ## artifact-contract
 
@@ -31,10 +31,11 @@ workflow to consume.
 
 ## change-executor
 
-Owner: `build` and `fix`. Work in an isolated branch/worktree, take small
+Owner: `build`. Work in an isolated branch/worktree, take small
 feedback-driven steps, run the configured validation, and leave a reviewable
-branch or PR. `fix` uses the same executor and adds a reproduction and
-regression check; it has no separate failure ceremony.
+branch or PR. Use the same executor for features, fixes, maintenance, and
+refactors. For a reported bug, reproduce it, fix the root cause, and add a
+regression check. There is no separate bug workflow.
 
 ## tracker-lifecycle
 
@@ -55,7 +56,7 @@ If review causes code changes, run `evidence-engine` again before delivery.
 
 ## evidence-engine
 
-Owner: `verify`. Run immediately after `build` or `fix`. Prove the changed
+Owner: `verify`. Run immediately after `build`. Prove the changed
 product works, looks, and behaves as intended, then run repo-native tests and
 proportionate configured checks. Use UI/browser evidence when the change is
 user-facing. Keep credentials out of reports and clean up test processes.
