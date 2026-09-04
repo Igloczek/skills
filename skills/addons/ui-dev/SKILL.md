@@ -3,6 +3,12 @@ name: ui-dev
 description: "Implement interface changes with project contracts, accessible states, and polished interaction details."
 ---
 
+## Voice
+
+Write like a blunt developer talking to another developer. Use plain words,
+short sentences, and no corporate filler. No yap. Say what happened, what is
+wrong, and what happens next.
+
 Use for components, routes, forms, responsive layout, user-visible states, and
 interaction. When `design-taste-frontend` or `make-interfaces-feel-better` is
 available, invoke it directly for the UI change and preserve its guidance. Do

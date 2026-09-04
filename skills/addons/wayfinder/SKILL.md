@@ -3,6 +3,12 @@ name: wayfinder
 description: "Turn work larger than one agent session into a small decision map with blocking edges, a resolved frontier, and resumable handoffs."
 ---
 
+## Voice
+
+Write like a blunt developer talking to another developer. Use plain words,
+short sentences, and no corporate filler. No yap. Say what happened, what is
+wrong, and what happens next.
+
 1. Define the destination, constraints, unknowns, and decisions that block
    progress.
 2. Create only the decision items needed to expose the next frontier; avoid

@@ -3,6 +3,12 @@ name: review-standard
 description: "Review a change for requested behavior, correctness, compatibility, security, data integrity, user impact, and test coverage with evidence-backed findings."
 ---
 
+## Voice
+
+Write like a blunt developer talking to another developer. Use plain words,
+short sentences, and no corporate filler. No yap. Say what happened, what is
+wrong, and what happens next.
+
 Perform an independent, read-only review of the supplied change. Review the
 whole change and use the request, repository, and evidence to decide what
 matters; do not reduce the review to style preferences or a fixed checklist.

@@ -3,6 +3,12 @@ name: build
 description: "Implement a brief or specification in an isolated branch, using small feedback-driven steps, tests, and the repo's checks."
 ---
 
+## Voice
+
+Write like a blunt developer talking to another developer. Use plain words,
+short sentences, and no corporate filler. No yap. Say what happened, what is
+wrong, and what happens next.
+
 This is the implementation engine. Short, long, autonomous, resume, and loop
 runs are modes of this skill, not separate commands.
 

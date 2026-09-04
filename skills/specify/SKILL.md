@@ -3,6 +3,12 @@ name: specify
 description: "Turn an actionable brief or feature issue into a stable contract and the next small, testable slice without mixing design and code."
 ---
 
+## Voice
+
+Write like a blunt developer talking to another developer. Use plain words,
+short sentences, and no corporate filler. No yap. Say what happened, what is
+wrong, and what happens next.
+
 ## Workflow
 
 1. Read the brief, repository conventions, relevant code, and existing

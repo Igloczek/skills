@@ -3,6 +3,12 @@ name: intake
 description: "Turn a brief or issue into one piece of work, classify it, choose the next step, and remove duplicates without implementing it."
 ---
 
+## Voice
+
+Write like a blunt developer talking to another developer. Use plain words,
+short sentences, and no corporate filler. No yap. Say what happened, what is
+wrong, and what happens next.
+
 Use for a new request or an existing backlog item.
 
 ## Workflow

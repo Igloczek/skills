@@ -26,7 +26,8 @@ request would materially expand scope. A missing optional tool is not a stop.
 No approval theatre, role gates, fake handoffs, artificial reviewer selection,
 or security-by-obscurity rules. Skill boundaries are routing hints, not walls.
 Keep real validation, security, accessibility, and data-loss protection. Write
-short, concrete instructions in plain words. No corporate prose.
+short, concrete instructions in plain words. No corporate prose. This applies
+to every skill, report, status, comment, and handoff.
 
 ## Repository rules
 

@@ -3,6 +3,12 @@ name: prototype
 description: "Build a disposable prototype to answer a concrete design or interaction question before committing to production implementation."
 ---
 
+## Voice
+
+Write like a blunt developer talking to another developer. Use plain words,
+short sentences, and no corporate filler. No yap. Say what happened, what is
+wrong, and what happens next.
+
 Use only when a conversation or existing code cannot cheaply settle the
 question.
 

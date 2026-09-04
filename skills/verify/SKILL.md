@@ -3,6 +3,12 @@ name: verify
 description: "Verify a change with repository tests and, when it is user-facing, concrete browser or UI evidence from a controlled test environment."
 ---
 
+## Voice
+
+Write like a blunt developer talking to another developer. Use plain words,
+short sentences, and no corporate filler. No yap. Say what happened, what is
+wrong, and what happens next.
+
 ## Workflow
 
 1. Read the diff, acceptance criteria, and QA procedure; derive the smallest

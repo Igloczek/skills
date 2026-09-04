@@ -5,6 +5,9 @@ selected by the project owner (`billing-specialist`, `tax-specialist`, or
 another domain role), and each expert is grounded in confirmed local source
 paths. They are not part of this public skill collection.
 
+Use blunt developer language in the expert too: plain words, short sentences,
+no corporate filler, no yap.
+
 ## Lifecycle
 
 1. Detect whether any domain-specific behavior needs expert context. If the

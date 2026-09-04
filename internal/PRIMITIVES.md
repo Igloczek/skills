@@ -3,6 +3,9 @@
 These are shared contracts, not installable skills. A public workflow owns the
 primitive; the primitive must not become another user-facing command.
 
+All agent-facing text uses blunt developer language: plain words, short
+sentences, no corporate filler, and no yap.
+
 ## context
 
 Owner: `setup` and every workflow. Load project instructions and local config,

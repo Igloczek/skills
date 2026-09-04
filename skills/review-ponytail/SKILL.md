@@ -3,6 +3,12 @@ name: review-ponytail
 description: "Review a change for correctness and avoidable complexity, including unnecessary dependencies, speculative flexibility, and excess change surface."
 ---
 
+## Voice
+
+Write like a blunt developer talking to another developer. Use plain words,
+short sentences, and no corporate filler. No yap. Say what happened, what is
+wrong, and what happens next.
+
 Run an independent, read-only review of the whole change. Pay particular
 attention to deletion, standard-library and native alternatives, unnecessary
 dependencies, speculative flexibility, and avoidable complexity, but report any

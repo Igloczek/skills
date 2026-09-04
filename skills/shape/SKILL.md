@@ -3,6 +3,12 @@ name: shape
 description: "Turn an idea or vague request into a small, explicit brief by resolving assumptions, alternatives, non-goals, and the next useful action."
 ---
 
+## Voice
+
+Write like a blunt developer talking to another developer. Use plain words,
+short sentences, and no corporate filler. No yap. Say what happened, what is
+wrong, and what happens next.
+
 Use before creating an issue, specification, or code when the desired outcome
 is not yet crisp.
 

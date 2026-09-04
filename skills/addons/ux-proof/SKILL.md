@@ -3,6 +3,12 @@ name: ux-proof
 description: "Shape and verify a user-facing change against the local design language using ranked findings and concrete visual evidence."
 ---
 
+## Voice
+
+Write like a blunt developer talking to another developer. Use plain words,
+short sentences, and no corporate filler. No yap. Say what happened, what is
+wrong, and what happens next.
+
 ## Workflow
 
 1. Identify the user task, affected states, and existing design patterns.

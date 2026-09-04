@@ -1,22 +1,11 @@
 # Skills
 
-Skills for taking a code change from request to working code.
-
-## Purpose
-
-I use this repo as a shared baseline workflow for a solo developer using AI
-coding agents. Tools such as [Cezar](https://github.com/open-mercato/cezar) can
-load these skills, put them into a predefined workflow, and run each step with
-an agent.
-
-The skills cover one code change from request to PR: understand the request,
-set the scope, write a plan, change the code, review it, run checks, and finish
-the PR. The runner handles execution; this repo holds the instructions for the
-steps.
+Small skills for one developer and an AI agent. They turn a request into code,
+checks, review, and a PR.
 
 ## Working style
 
-This is for one person. No committee, no approval theatre.
+One owner. No committee.
 
 The agent should finish the job. Normal work needs no permission: read, edit,
 run commands, install what is needed, create branches, commit, push, and open
@@ -24,218 +13,110 @@ or update PRs when the task calls for it.
 
 Make a reasonable assumption and keep moving. Ask only for a missing credential
 or decision, a destructive or irreversible action, or a real scope change. A
-missing optional tool is not a blocker. Do not invent role gates, handoffs,
-review limits, or security-by-obscurity rules. Keep real validation, security,
-accessibility, and data-loss protection. Use plain words and concrete commands;
-skip corporate prose.
+missing optional tool is not a blocker.
 
-## Install in a project
+No approval theatre, fake handoffs, role gates, review limits, or security by
+obscurity. Keep real validation, security, accessibility, and data-loss
+protection. Use plain words, short sentences, and concrete commands. No yap.
+This voice applies to every skill, report, status, comment, and handoff.
 
-Make the skills available to the agent runner in the project:
+## Install
 
 ```bash
 npx skills add igloczek/skills --skill '*' --agent '*' --yes
 ```
 
-Then run `setup` once in the project. It looks at the repo and records the
-commands and tools the runner should use. New work starts with `intake`.
+Run `setup` once in the project. It finds the repo commands and writes or
+repairs `.ai/skills.json`.
 
-External skills are discovered, installed, updated, or used with the upstream
-`npx skills` CLI. This repository does not maintain a second registry, lockfile,
-version policy, or lifecycle around them.
+Use the upstream CLI for external skills:
 
-With Cezar, these Markdown files become workflow steps. A basic chain is:
+```bash
+npx skills find <query>
+npx skills add <source> --skill <name> --agent <agent> --yes
+npx skills use <source> --skill <name>
+```
+
+This repo does not keep another registry, lockfile, version pin, installer, or
+updater for external skills.
+
+## Flow
 
 ```text
 intake -> specify -> build -> review -> verify -> finish
 ```
 
-When `intake` finds that the outcome or scope needs work, it routes to `shape`
-before `specify` or `build`. For a bug, I use `fix` in place of `build`. I add
-`how`, `why`, or `research` when a task needs more context.
+- Use `shape` before `specify` or `build` when the request is fuzzy.
+- Use `fix` for a bug. It follows the `build` path and adds reproduction plus a
+  regression check. It is not a second delivery system.
+- Use add-ons only when they help: `how`, `why`, `research`, `prototype`,
+  `deep-design`, `ux-proof`, `wayfinder`, or `ui-dev`.
+- `setup` repairs its own config. There is no setup-verification skill.
+- Merge only when the task calls for it.
 
 ## Skills
 
-The Core skills are the path I use for most changes. Add-ons give a task more
-context or design work when it needs them.
-
-| Skill | Layer | Purpose |
+| Skill | Type | Does |
 | --- | --- | --- |
-| `setup` | Core | Find the repo commands, docs, tools, and safe defaults. |
-| `intake` | Core | Classify a brief or issue and choose the next step. |
-| `shape` | Core | Make the scope, assumptions, and non-goals clear. |
-| `specify` | Core | Write the acceptance checks and next small slice. |
-| `build` | Core | Make the change and run feedback checks. |
-| `fix` | Core | Reproduce a bug, fix it, and add a regression check. |
-| `review` | Core | Look for broken behavior, security problems, compatibility issues, tests to add, and needless complexity. |
-| `review-standard` | Core | Review requested behavior, repository rules, compatibility, and tests. |
-| `verify` | Core | Run the checks that matter and show what passed. |
-| `finish` | Core | Handle the PR, checks, QA, and merge decision. |
-| `retro` | Core | Record what should change next time. |
-| `how` | Add-on | Map existing code and data flow before changing it. |
-| `why` | Add-on | Use the docs, code, and history to find the likely intent. |
-| `prototype` | Add-on | Answer one design or interaction question with throwaway code. |
-| `research` | Add-on | Research an uncertain question and cite the sources. |
-| `deep-design` | Add-on | Check how the parts fit before a risky change. |
-| `ux-proof` | Add-on | Check a user-facing change against the existing UI. |
-| `wayfinder` | Add-on | Break big work into smaller pieces that can be resumed. |
-| `review-gilfoyle` | Core | Look for problems in running code, logs, and security. |
-| `review-ponytail` | Core | Find code and dependencies to remove. |
-| `ui-dev` | Add-on | Build UI changes with basic accessibility and good interaction. |
+| `setup` | Core | Find repo commands and repair project config. |
+| `intake` | Core | Classify the request and choose the next step. |
+| `shape` | Core | Make fuzzy work clear. |
+| `specify` | Core | Write the contract and next small slice. |
+| `build` | Core | Implement the change and run checks. |
+| `fix` | Core | Reproduce and repair a bug on the normal build path. |
+| `review` | Core | Run every reviewer and join the results. |
+| `review-standard` | Core | Check behavior, compatibility, security, and tests. |
+| `verify` | Core | Run the checks that matter and show evidence. |
+| `finish` | Core | Take the PR to the requested end state. |
+| `retro` | Core | Record useful lessons after delivery. |
+| `review-gilfoyle` | Core | Check runtime, operations, and security. |
+| `review-ponytail` | Core | Find code and dependencies to cut. |
+| `how` | Add-on | Trace existing code and data flow. |
+| `why` | Add-on | Recover intent from code, docs, and history. |
+| `prototype` | Add-on | Answer one design question with throwaway code. |
+| `research` | Add-on | Check outside facts with sources. |
+| `deep-design` | Add-on | Check module boundaries before a risky change. |
+| `ux-proof` | Add-on | Check a user flow in the real UI. |
+| `wayfinder` | Add-on | Split genuinely multi-session work. |
+| `ui-dev` | Add-on | Build UI changes with basic accessibility. |
 
-## Setup (once per repository)
+## Review
 
-Run `setup` once in a repository. It finds the commands and tools already
-there. It can create zero, one, or several local experts when the work needs
-project-specific rules.
+Every change gets every available review skill. Always run:
 
-```mermaid
-%%{init: {"theme":"base","themeVariables":{"fontFamily":"ui-sans-serif,system-ui,sans-serif","lineColor":"#94a3b8","primaryColor":"#eef2ff","primaryTextColor":"#172033","primaryBorderColor":"#6366f1","secondaryColor":"#ecfdf5","tertiaryColor":"#fff7ed"}}}%%
-flowchart LR
-    setup["setup<br/>once per repository"] --> inspect["inspect<br/>commands + docs"]
-    inspect --> configure["configure<br/>useful defaults"]
-    configure --> domain{"project rules useful?"}
-    domain -->|yes| domain_experts["project experts<br/>local only"]
-    domain -->|no| ready(["repository ready"])
-    domain_experts --> ready
+- `review-standard`
+- `review-gilfoyle`
+- `review-ponytail`
 
-    classDef core fill:#eef2ff,stroke:#6366f1,color:#1e1b4b,stroke-width:1.5px;
-    classDef decision fill:#fff7ed,stroke:#f59e0b,color:#7c2d12,stroke-width:1.5px;
-    classDef local fill:#fff7ed,stroke:#f59e0b,color:#7c2d12,stroke-width:1.5px,stroke-dasharray:5 5;
-    classDef terminal fill:#f1f5f9,stroke:#475569,color:#0f172a,stroke-width:1.5px;
-    class setup,inspect,configure core;
-    class domain decision;
-    class domain_experts local;
-    class ready terminal;
+Run project-local and external reviewers too. Give them the same request,
+checkout, and diff. Do not choose lanes by risk, file type, or diff size. Do not
+tell an external reviewer how to do its job. Normalize only the returned output
+shape.
+
+## Setup and project rules
+
+Project-specific rules stay in the consuming project. `setup` can create local
+domain experts from local docs. They are context for the work, not a reason to
+stop unrelated work. Do not copy them into this repo.
+
+## Checks
+
+Before delivery:
+
+```bash
+git diff --check
+bun run check
 ```
 
-## Sample workflow
+Use project-configured checks when they exist. Warnings are warnings. Missing
+optional tooling is a note, not a fake blocker.
 
-The solid path is the path I use for every code change. Dashed arrows are extra
-steps I add when the task needs them.
-
-```mermaid
-%%{init: {"theme":"base","themeVariables":{"fontFamily":"ui-sans-serif,system-ui,sans-serif","lineColor":"#94a3b8","primaryColor":"#eef2ff","primaryTextColor":"#172033","primaryBorderColor":"#6366f1","secondaryColor":"#ecfdf5","tertiaryColor":"#f8fafc"}}}%%
-flowchart TD
-    request["request"] --> intake["intake<br/>classify work"]
-
-    intake -->|shape| shape["shape<br/>set scope"]
-    shape -->|intake| intake
-    shape -->|specify| specify["specify<br/>write checks + plan"]
-    shape -->|build| build["build<br/>implement"]
-    shape -->|none| done(["no code change"])
-
-    intake -->|specify| specify
-    intake -->|build| build
-    intake -->|fix| fix["fix<br/>reproduce + repair"]
-    intake -->|none| done
-
-    specify -->|shape| shape
-    specify -->|build| build
-    specify -->|none| done
-
-    build --> review["review<br/>required"]
-    fix --> review
-
-    subgraph review_stage["All reviewers · every change · same snapshot"]
-        direction LR
-        standard_review["review-standard<br/>behavior + rules"]
-        review_gilfoyle["review-gilfoyle<br/>runtime + security"]
-        review_ponytail["review-ponytail<br/>simplicity + scope"]
-        review_result{"review result"}
-    end
-
-    review --> standard_review
-    review --> review_gilfoyle
-    review --> review_ponytail
-    standard_review --> review_result
-    review_gilfoyle --> review_result
-    review_ponytail --> review_result
-
-    review_result -->|approved| verify["verify<br/>required"]
-    review_result -->|changes needed| rework["build / fix<br/>address findings"]
-    rework --> review
-
-    verify -. check failed .-> rework
-    verify --> finish["finish<br/>PR + merge choice"]
-    finish -. after delivery .-> retro["retro<br/>record what changed"]
-
-    classDef core fill:#eef2ff,stroke:#6366f1,color:#1e1b4b,stroke-width:1.5px;
-    classDef review fill:#ecfdf5,stroke:#059669,color:#064e3b,stroke-width:1.5px;
-    classDef decision fill:#fff7ed,stroke:#f59e0b,color:#7c2d12,stroke-width:1.5px;
-    classDef terminal fill:#f1f5f9,stroke:#475569,color:#0f172a,stroke-width:1.5px;
-    class request,intake,shape,specify,build,fix,review,rework,verify core;
-    class standard_review,review_gilfoyle,review_ponytail review;
-    class review_result decision;
-    class finish,retro terminal;
-```
-
-The runner sends each box to an agent and passes the result to the next box.
-`review` invokes every available review skill after every `build` or `fix`, with
-`review-standard`, `review-gilfoyle`, and `review-ponytail` as the baseline.
-Reviewers receive the same pinned diff, project checkout, and original request;
-the review skill does not narrow their scope or prescribe an external reviewer's
-method. External skills are invoked through the normal runner or `npx skills`,
-and only their returned shape is normalized before the findings are joined.
-All reviewers finish before the result goes to `verify`. Project experts give
-`shape`, `specify`, `build`, and `review` the rules they need.
-
-`fix` uses the same delivery path as `build`; it only adds a reproduction and a
-regression check for the confirmed defect. `setup` repairs its own project
-configuration by rerunning its read-only check after each fixable gap. It does
-not create a separate setup-verification skill.
-
-The other add-ons fit around the core path: `how` and `why` help before shaping,
-`research` checks outside facts, `prototype` tries an idea, `wayfinder` splits
-large work, `deep-design` checks how parts fit, `ui-dev` handles UI changes,
-and `ux-proof` checks the user flow.
-
-## What I check
-
-For each change, I do this:
-
-- check the behavior that changed;
-- for a UI or system change, check the UI or system too;
-- add extra tests or analysis when the repo already has the tool or the change
-  is risky.
-- record the checks that ran and any checks left for later.
-
-## Project-specific rules
-
-For work with project-specific rules, `setup` can create one or more local
-experts from the project docs and code. Each expert tells the other skills what
-those rules are and says when the evidence is missing. Code changes stay in
-`build` and `fix`, and general code review stays in `review`.
-
-Example: an invoicing project might use `docs/invoice-rules.md`,
-`src/domain/invoices/`, and `docs/tax-provider.md` to answer whether a paid
-invoice can be voided, needs a credit note, or needs specific fields.
-
-## What each step records
-
-Each step records only what the next step needs:
-
-- input, files changed, commands run, result, and next action;
-- real unknowns and decisions, without a process diary;
-- no secrets in prompts, files, comments, or reports;
-- `Status:`, `Next:`, `Spec:`, `Issue:`, and `PR:` when another step needs the
-  result.
-
-Stop only for a real missing credential or decision, a destructive action, or a
-scope change. Use a fallback and report it when an optional tool or artifact is
-missing.
-
-Merge when the task calls for it. UI work gets UI checks; other changes use the
-checks for their code and systems.
-
-Quality numbers are signals for changed code. The existing repo tools provide
-them, and review reports a warning or a missing check separately from a failed
-check. In TypeScript, new `any` needs a reason. `unknown` is used at an input
-boundary and narrowed before the domain code uses it.
+Steps leave only what the next step needs: changed files, commands, result,
+status, and next action. No process diary.
 
 ## Sources
 
-The core workflow started with ideas from:
+Ideas and useful patterns came from:
 
 - [vercel-labs/skills](https://github.com/vercel-labs/skills)
 - [Cursor's pstack skills](https://github.com/cursor/plugins/tree/main/pstack)

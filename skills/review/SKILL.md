@@ -3,6 +3,12 @@ name: review
 description: "Join independent review skills into one evidence-backed report for a change, while preserving every reviewer's findings and status."
 ---
 
+## Voice
+
+Write like a blunt developer talking to another developer. Use plain words,
+short sentences, and no corporate filler. No yap. Say what happened, what is
+wrong, and what happens next.
+
 ## Workflow
 
 1. Pin the comparison point and confirm that the diff is the intended one.
@@ -29,6 +35,9 @@ description: "Join independent review skills into one evidence-backed report for
 7. Deduplicate only identical findings, rank the rest by impact, cite the file
    and reason, and return the composed verdict. Perform tracker mutations when
    the task calls for them.
+
+Write the joined report in the repo voice. Keep the meaning of external
+findings, but cut their filler.
 
 ## Output
 

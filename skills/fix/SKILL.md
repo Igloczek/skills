@@ -3,6 +3,12 @@ name: fix
 description: "Apply the normal build workflow to a confirmed defect, with a reproduction and regression check added to the same reviewable change."
 ---
 
+## Voice
+
+Write like a blunt developer talking to another developer. Use plain words,
+short sentences, and no corporate filler. No yap. Say what happened, what is
+wrong, and what happens next.
+
 Use for confirmed bug work. `fix` is the bug-shaped entry point to `build`, not a
 separate delivery process.
 

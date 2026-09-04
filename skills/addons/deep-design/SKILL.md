@@ -3,6 +3,12 @@ name: deep-design
 description: "Examine module boundaries, domain language, and architecture when a change risks adding coupling or making the codebase harder to change."
 ---
 
+## Voice
+
+Write like a blunt developer talking to another developer. Use plain words,
+short sentences, and no corporate filler. No yap. Say what happened, what is
+wrong, and what happens next.
+
 ## Workflow
 
 1. Map the current responsibility and vocabulary around the proposed seam.

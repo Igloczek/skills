@@ -3,6 +3,12 @@ name: setup
 description: "Bootstrap a repository for the shared skills and record local commands, documents, providers, and safe defaults without overwriting existing configuration."
 ---
 
+## Voice
+
+Write like a blunt developer talking to another developer. Use plain words,
+short sentences, and no corporate filler. No yap. Say what happened, what is
+wrong, and what happens next.
+
 Run this once per repository, and again only when its tooling, provider, or
 project-local domain-expert setup changes.
 
