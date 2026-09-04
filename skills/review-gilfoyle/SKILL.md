@@ -4,7 +4,7 @@ description: "Review a change for runtime behavior, integration, observability, 
 ---
 
 Use as one of the three review personas within `review`. Run it for every
-change alongside `standard` and `review-ponytail`. It covers runtime behavior,
+change alongside `review-standard` and `review-ponytail`. It covers runtime behavior,
 integration, observability, and security with evidence from the changed code
 and controlled runtime targets.
 

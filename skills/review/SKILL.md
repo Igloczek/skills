@@ -10,7 +10,7 @@ description: "Review a diff against repository standards and requested behavior,
 3. Review separately for requested behavior, standards/design, security,
    backward compatibility, test gaps, and applicable quality signals.
 4. Fan out three independent, read-only review personas over the same project
-   checkout, pinned diff, and repository instructions: `standard`,
+   checkout, pinned diff, and repository instructions: `review-standard`,
    `review-gilfoyle`, and `review-ponytail`. Run all three for every change.
    Use separate threads only for parallel execution; do not create
    persona-specific branches, worktrees, or environments.
@@ -34,7 +34,7 @@ The report must contain `blockers`, `majors`, `minors`, `spec_findings`,
 `standards_findings`, `test_gaps`, `quality_signals`, and `reviewers`.
 `quality_signals` must show the changed-code scope, the configured tool or
 reason, the status, and evidence. `reviewers` must show the status, findings,
-and focus for `standard`, `review-gilfoyle`, and `review-ponytail`, plus each
+and focus for `review-standard`, `review-gilfoyle`, and `review-ponytail`, plus each
 local domain expert when used.
 
 ## Rules

@@ -40,8 +40,8 @@ claim locks, labels, idempotent comments, and lock cleanup.
 ## review-engine
 
 Owner: `review` and `finish`. Review standards, requested behavior, security,
-compatibility, tests, and architecture; route the public operational and
-minimality lanes and local domain experts only when relevant. Run the three
+compatibility, tests, and architecture through `review-standard`; route the
+operational and minimality lanes and local domain experts only when relevant. Run the three
 core review personas on separate threads for every change, join their terminal
 results, and return a bounded, severity-ranked report with reviewer ownership
 preserved.

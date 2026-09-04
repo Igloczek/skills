@@ -49,6 +49,7 @@ context or design work when it needs them.
 | `build` | Core | Make the change and run feedback checks. |
 | `fix` | Core | Reproduce a bug, fix it, and add a regression check. |
 | `review` | Core | Look for broken behavior, security problems, compatibility issues, tests to add, and needless complexity. |
+| `review-standard` | Core | Review requested behavior, repository rules, compatibility, and tests. |
 | `verify` | Core | Run the checks that matter and show what passed. |
 | `finish` | Core | Handle the PR, checks, QA, and merge decision. |
 | `retro` | Core | Record what should change next time. |
@@ -119,7 +120,7 @@ flowchart TD
 
     subgraph review_stage["Three reviewers · every change · same snapshot"]
         direction LR
-        standard_review["standard<br/>behavior + rules"]
+        standard_review["review-standard<br/>behavior + rules"]
         review_gilfoyle["review-gilfoyle<br/>runtime + security"]
         review_ponytail["review-ponytail<br/>simplicity + scope"]
         review_result{"review result"}
@@ -152,8 +153,8 @@ flowchart TD
 
 The runner sends each box to an agent and passes the result to the next box.
 `review` runs three separate, read-only reviewers after every `build` or `fix`:
-`standard` checks behavior and project rules, `review-gilfoyle` checks runtime
-and security, and `review-ponytail` checks simplicity and scope. All three
+`review-standard` checks behavior and project rules, `review-gilfoyle` checks
+runtime and security, and `review-ponytail` checks simplicity and scope. All three
 use the same pinned diff, project checkout, and instructions. They can run in
 parallel and all three finish before the result goes to `verify`. Project
 experts give `shape`, `specify`, `build`, and `review` the rules they need.

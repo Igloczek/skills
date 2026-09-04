@@ -21,7 +21,7 @@ repo focused on those steps and the shared contracts they use.
 - Prefer composing existing skills over adding narrower or duplicate skills.
 - Keep `setup` separate from the delivery workflow. It stays project-local and
   agent-neutral; installation stays project-scoped.
-- Run the three review personas on every change: `standard`,
+- Run the three review personas on every change: `review-standard`,
   `review-gilfoyle`, and `review-ponytail`.
 - Preserve input validation, security, accessibility, data-loss protection,
   and explicit human control over irreversible actions.

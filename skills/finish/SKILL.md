@@ -30,7 +30,7 @@ PR: #<number> (link: <url>)
 ## Rules
 
 - Never force or administratively merge around a required gate.
-- Do not report readiness for a code change until `standard`,
+- Do not report readiness for a code change until `review-standard`,
   `review-gilfoyle`, and `review-ponytail` have returned terminal results. A
   domain-expert result is included when domain rules were involved.
 - Do not block on a quality warning, unconfigured signal, or legacy violation
