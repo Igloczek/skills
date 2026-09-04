@@ -9,26 +9,33 @@ Write like a blunt developer talking to another developer. Use plain words,
 short sentences, and no corporate filler. No yap. Say what happened, what is
 wrong, and what happens next.
 
+This is the first gate after `build` or `fix`. Check the product before code
+review. For user-facing work, check that it works, looks, and behaves as the
+request expects.
+
 ## Workflow
 
 1. Read the diff, acceptance criteria, and QA procedure; derive the smallest
-   scenario that proves the changed behavior.
+   scenario that proves the changed behavior and product fit.
 2. Classify the proof needed:
    - low risk: focused checks for docs, formatting, or mechanical changes;
    - medium risk: the changed behavior through its matching CLI, API, job, or
      UI surface;
    - high risk: the real path plus an independent check of the resulting
      state for data, access, money, or destructive behavior.
-3. Run fast configured unit, type, lint, integration, or end-to-end checks.
-4. For substantial or risky changes, run already-configured quality gates such
+3. When the change has an observable surface, exercise it with the configured
+   environment now. Check the real behavior, visual fit, interaction states,
+   and the QA procedure before code review. Use `ux-proof` when that extra
+   product or visual pass is useful.
+4. Run fast configured unit, type, lint, integration, or end-to-end checks.
+5. For substantial or risky changes, run already-configured quality gates such
    as coverage, complexity, mutation, or dependency checks. Do not add a tool
    just to satisfy this skill.
-5. When the change has an observable surface, exercise it with the configured
-   environment and capture the smallest reproducible artifact. Run the
-   human/system QA procedure when it applies.
-6. Diagnose failures from their evidence. Do not turn an infrastructure
+6. Capture the smallest reproducible artifact for the exercised surface. If
+   the product is wrong, route back to `build` or `fix` before code review.
+7. Diagnose failures from their evidence. Do not turn an infrastructure
    failure into a pass.
-7. Write a report and return the correct gate state.
+8. Write a report and return the correct gate state.
 
 ## Output
 

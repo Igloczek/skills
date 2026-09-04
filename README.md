@@ -28,11 +28,14 @@ This repo gives the work a simple shape:
 The core is a delivery path, not a list of unrelated tricks:
 
 ```text
-intake -> specify -> build -> review -> verify -> finish
+intake -> specify -> build -> verify -> review -> finish
 ```
 
 The agent can take a request through the path and leave a working, checked,
-reviewable change.
+reviewable change. `verify` comes right after code. It checks that the product
+works, looks, and behaves as intended. `review` comes after that and checks the
+implementation. A code review can send changed code back through `build` or
+`fix`, but the changed behavior must pass `verify` again.
 
 ### External skills stay upstream
 
@@ -50,7 +53,9 @@ Every change gets every available review skill. The baseline is:
 
 They see the same request and diff. The joiner keeps all findings and only
 normalizes their output shape. It does not pick one reviewer and pretend that
-is enough.
+is enough. Review is a code-quality pass after product verification. It can
+find real implementation defects, but it does not decide what the product
+should do.
 
 ### Bugs use the normal path
 
@@ -110,8 +115,8 @@ flowchart LR
 ## Workflow
 
 Start with `intake`. From there, use the smallest path that fits the request.
-`shape` and the add-ons are optional. `review` and `verify` are part of the
-normal delivery path.
+`shape` and the add-ons are optional. `verify` and `review` are part of the
+normal delivery path, in that order.
 
 ```mermaid
 %%{init: {"theme":"base","themeVariables":{"fontFamily":"ui-sans-serif,system-ui,sans-serif","lineColor":"#94a3b8","primaryColor":"#eef2ff","primaryTextColor":"#172033","primaryBorderColor":"#6366f1","secondaryColor":"#ecfdf5","tertiaryColor":"#f8fafc"}}}%%
@@ -133,8 +138,13 @@ flowchart TD
     specify -->|build| build
     specify -->|none| done
 
-    build --> review["review<br/>required"]
-    fix --> review
+    build --> verify["verify<br/>product + checks"]
+    fix --> verify
+
+    verify --> verify_result{"product result"}
+    verify_result -->|wrong or broken| product_rework["build / fix<br/>correct behavior"]
+    product_rework --> verify
+    verify_result -->|works| review["review<br/>required"]
 
     subgraph review_stage["All reviewers · every change · same snapshot"]
         direction LR
@@ -151,19 +161,17 @@ flowchart TD
     review_gilfoyle --> review_result
     review_ponytail --> review_result
 
-    review_result -->|approved| verify["verify<br/>required"]
-    review_result -->|changes needed| rework["build / fix<br/>address findings"]
-    rework --> review
+    review_result -->|approved| finish["finish<br/>PR + merge choice"]
+    review_result -->|changes needed| code_rework["build / fix<br/>address code findings"]
+    code_rework --> verify
 
-    verify -. check failed .-> rework
-    verify --> finish["finish<br/>PR + merge choice"]
     finish -. after delivery .-> retro["retro<br/>record what changed"]
 
     classDef core fill:#eef2ff,stroke:#6366f1,color:#1e1b4b,stroke-width:1.5px;
     classDef review fill:#ecfdf5,stroke:#059669,color:#064e3b,stroke-width:1.5px;
     classDef decision fill:#fff7ed,stroke:#f59e0b,color:#7c2d12,stroke-width:1.5px;
     classDef terminal fill:#f1f5f9,stroke:#475569,color:#0f172a,stroke-width:1.5px;
-    class request,intake,shape,specify,build,fix,review,rework,verify core;
+    class request,intake,shape,specify,build,fix,review,product_rework,code_rework,verify core;
     class standard_review,review_gilfoyle,review_ponytail review;
     class review_result decision;
     class finish,retro terminal;
@@ -210,11 +218,11 @@ experts from that project's own docs.
 | `review-gilfoyle` | Check runtime, operations, and security.             |
 | `review-ponytail` | Find code and dependencies to cut.                   |
 | `review-standard` | Check behavior, compatibility, security, and tests.  |
-| `review`          | Run every reviewer and join the results.             |
+| `review`          | Run every reviewer after product verification.       |
 | `setup`           | Find repo commands and repair project config.        |
 | `shape`           | Make fuzzy work clear.                               |
 | `specify`         | Write the contract and next small slice.             |
-| `verify`          | Run the checks that matter and show evidence.        |
+| `verify`          | Prove the product works before code review.          |
 
 ### Add-ons
 

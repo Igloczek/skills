@@ -15,6 +15,9 @@ dependencies, speculative flexibility, and avoidable complexity, but report any
 concrete defect you find. If the external `ponytail-review` or `ponytail` skill
 is available, invoke it directly and preserve its findings; only normalize its
 output into the contract below.
+In the normal workflow, run after `verify` has checked the product. Review the
+implementation against that intent. Do not trade away a working product for a
+smaller diff.
 
 ## Workflow
 

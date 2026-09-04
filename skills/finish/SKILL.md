@@ -1,6 +1,6 @@
 ---
 name: finish
-description: "Take one PR from its current state to done: review, checks, QA, merge, and cleanup."
+description: "Take one PR from its current state to done: product verification, review, checks, QA, merge, and cleanup."
 ---
 
 ## Voice
@@ -14,16 +14,18 @@ mutation; recovery, batch, and dry-run are modes of this workflow.
 
 ## Workflow
 
-1. Read the PR, linked issue/spec, every review result, checks, labels,
-   conflicts, and QA evidence.
-2. Do the next useful action: continue work, fix CI, run QA, resolve a conflict,
-   update the PR, or report readiness. Do not repeat a step that is already
-   done.
+1. Read the PR, linked issue/spec, current product verification, every review
+   result, checks, labels, conflicts, and QA evidence.
+2. Do the next useful action in this order: run or finish product verification,
+   continue work, fix CI, run code review, resolve a conflict, update the PR,
+   or report readiness. Do not repeat a step that is already done.
 3. Make the requested changes and re-check the PR.
-4. If the task calls for a merge and the real checks, QA, and conflicts are
+4. If code review changes behavior, run product verification again before
+   reporting readiness.
+5. If the task calls for a merge and the real checks, QA, and conflicts are
    good, merge it. If the repository or provider requires an approval, report
    that exact blocker instead of inventing or bypassing one.
-5. Run configured follow-up and release hooks after delivery.
+6. Run configured follow-up and release hooks after delivery.
 
 ## Output
 
@@ -36,12 +38,16 @@ PR: #<number> (link: <url>)
 
 ## Rules
 
-- Do not claim ready or merge while an actual required check, conflict, QA step,
-  or repository-required approval is unresolved. Do not invent extra gates.
+- Do not claim ready or merge while current product verification, an actual
+  required check, conflict, QA step, or repository-required approval is
+  unresolved. Do not invent extra gates.
 - Do not report readiness for a code change until `review-standard`,
   `review-gilfoyle`, and `review-ponytail`, plus any additional review skills
-  invoked for the change, have returned terminal results. A domain-expert result
-  is included when domain rules were involved.
+  invoked for the change, have returned terminal results after product
+  verification. A domain-expert result is included when domain rules were
+  involved.
+- Review findings are code feedback, not a new product contract. Re-verify any
+  behavior changed while addressing them.
 - Do not block on a quality warning, unconfigured signal, or legacy violation
   unless project policy or high-risk scope explicitly makes it a gate.
 - Never create a duplicate PR.

@@ -15,7 +15,8 @@ separate delivery process.
 ## Workflow
 
 1. Follow `build` for the branch or worktree, project instructions, acceptance
-   criteria, feedback checks, validation, review, and finish steps.
+   criteria, feedback checks, validation, product verification, review, and
+   finish steps.
 2. Before editing, reproduce the reported behavior with the smallest useful
    existing command or test and state the evidence-backed root cause.
 3. Add a regression check that fails for the reproduced defect, make the smallest

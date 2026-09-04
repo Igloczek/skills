@@ -9,30 +9,37 @@ Write like a blunt developer talking to another developer. Use plain words,
 short sentences, and no corporate filler. No yap. Say what happened, what is
 wrong, and what happens next.
 
+Run after `verify`. Product verification decides whether the change is right
+for the user. This skill checks the implementation against that verified
+intent. It does not invent product work.
+
 ## Workflow
 
 1. Pin the comparison point and confirm that the diff is the intended one.
 2. Read the originating request, issue or spec, acceptance criteria, and
    repository standards.
-3. Invoke every available review skill for every change. Always invoke
+3. Confirm that a current `verify` result covers the same head revision. If it
+   is missing or stale, run `verify` first. Do not use code review as a
+   substitute for product proof.
+4. Invoke every available review skill for every change. Always invoke
    `review-standard`, `review-gilfoyle`, and `review-ponytail`; also invoke any
    project-local or external review skills that are available. Use the runner's
    inventory or `npx skills list` to discover them; do not maintain a second
    registry. Do not recursively invoke this joining skill. Do not select or omit
    a lane based on risk, file type, diff size, or a heuristic.
-4. Give each reviewer the same original request, project snapshot, pinned diff,
+5. Give each reviewer the same original request, project snapshot, pinned diff,
    and relevant evidence. Do not rewrite the request to narrow what a reviewer
    may inspect or prescribe a review method for an external skill. Invoke an
    external skill through the normal runner or `npx skills`; only normalize its
    returned status, findings, scope, checks, and open items for this report.
-5. When changed behavior uses domain semantics, run each relevant local domain
+6. When changed behavior uses domain semantics, run each relevant local domain
    expert as additional context over the same snapshot. A missing optional
    source or target is `NOT_RUN`, not a reason to stop; use `BLOCKED` only when
    there is no reviewable change or required evidence.
-6. Wait for every reviewer and relevant domain expert to reach a terminal state.
+7. Wait for every reviewer and relevant domain expert to reach a terminal state.
    Preserve ownership and disagreements; do not let one review replace another
    or silently turn a missing result into approval.
-7. Deduplicate only identical findings, rank the rest by impact, cite the file
+8. Deduplicate only identical findings, rank the rest by impact, cite the file
    and reason, and return the composed verdict. Perform tracker mutations when
    the task calls for them.
 
@@ -42,7 +49,7 @@ findings, but cut their filler.
 ## Output
 
 ```text
-Status: APPROVED|CHANGES_REQUESTED|NEEDS_HUMAN
+Status: APPROVED|CHANGES_REQUESTED|NEEDS_VERIFY|NEEDS_HUMAN
 Quality: <signal=PASS|WARN|BLOCKED|NOT_RUN; evidence>
 
 blockers: <findings or none>
@@ -70,6 +77,9 @@ this skill; route fixes to `build` or `fix`.
 - Treat security and data-loss risks as blockers when evidenced.
 - Reviewers are read-only. Do not constrain an external reviewer's scope beyond
   the supplied target and the user's request.
+- Review does not redefine product intent. If a review finding changes behavior,
+  route the code through `build` or `fix`, then run `verify` again before
+  finish.
 - Do not let a simplicity suggestion remove validation, security,
   accessibility, data-loss protection, or an explicit acceptance criterion.
 - A quality `WARN` is not a blocker unless project policy or change risk makes it

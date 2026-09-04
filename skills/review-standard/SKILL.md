@@ -12,6 +12,8 @@ wrong, and what happens next.
 Perform an independent, read-only review of the supplied change. Review the
 whole change and use the request, repository, and evidence to decide what
 matters; do not reduce the review to style preferences or a fixed checklist.
+In the normal workflow, run after `verify` has checked the product. Review the
+implementation against that intent. Do not invent a different product goal.
 
 ## Workflow
 

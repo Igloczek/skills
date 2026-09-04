@@ -21,8 +21,9 @@ runs are modes of this skill, not separate commands.
    the agent write tests before, alongside, or after implementation when that
    is the clearest route to a verified result.
 4. Run the cheapest configured feedback after each meaningful slice and keep a
-   concise progress record. Leave cleanup, hardening, and system proof to the
-   appropriate review or verification step.
+   concise progress record. When the code for the slice is written, hand it to
+   `verify` before code review. For user-facing work, prove the real flow there
+   before spending time on code-quality review.
 5. When a check fails, use its evidence, change the approach when needed, and
    keep going. Record the useful failure and next move; do not create a failure
    ceremony or stop just because the first approach was wrong.
@@ -38,7 +39,7 @@ Report changed files, tests, validation, remaining risks, and:
 
 ```text
 PR: #<number> (link: <url>)
-Status: READY_FOR_REVIEW|BLOCKED|NEEDS_HUMAN
+Status: READY_FOR_VERIFY|BLOCKED|NEEDS_HUMAN
 ```
 
 ## Rules

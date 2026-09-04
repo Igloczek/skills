@@ -16,9 +16,10 @@ it.
 
 This is a lightweight SDLC for a solo developer. Skills are connected steps,
 not unrelated tasks. Start at `intake`, use the smallest path that fits, and
-pass useful output to the next step. The endpoint is a working, checked,
-reviewable PR. The `review` step always runs every available reviewer as set
-out below.
+pass useful output to the next step. After `build` or `fix`, `verify` checks
+that the product works, looks, and behaves as intended. Only then does `review`
+check the code. The endpoint is a working, checked, reviewable PR. The
+`review` step always runs every available reviewer as set out below.
 
 ## Voice
 
@@ -60,12 +61,17 @@ Never use em dashes, semicolons, and other "complex" sentence constructions.
   install, update, or version lifecycle here.
 - `fix` uses the normal `build` path. Add a reproduction and regression check;
   do not invent a bug-only process.
+- Run `verify` immediately after code is written and before code review. For
+  user-facing work, prove the real flow, including product behavior and visual
+  fit when the project supports it.
 - Run every available review skill on every change. Always run
   `review-standard`, `review-gilfoyle`, and `review-ponytail`. Run other local
   or external reviewers too. Give them the same request and diff. Do not pick
   a lane by heuristic or tell an external reviewer how to review.
 - Normalize joined review output only enough to make it readable. Keep all
-  findings and disagreements.
+  findings and disagreements. Review checks the implementation against the
+  verified intent. It does not redefine the product. If review changes code,
+  run `verify` again before finish.
 
 ## Real safeguards
 
