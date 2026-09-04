@@ -4,10 +4,7 @@ A small workflow for AI coding agents that need to ship code, not just produce
 a clever answer.
 
 This collection covers one change from request to PR. It is made for a solo
-developer: one owner, one repo, and an agent with enough room to do the job.
-
-`README.md` is the human overview. `AGENTS.md` holds the rules for agents
-working on this collection.
+developer: one owner, one repo, and AI agents with enough room to do the job.
 
 ## Why this exists
 
@@ -17,14 +14,11 @@ usually left to luck.
 
 This repo gives the work a simple shape:
 
-- small skills with clear jobs;
-- stable output for the next step;
-- one normal path from request to PR;
-- add-ons only when the work needs them;
-- project-specific rules kept in the project, not baked into the collection.
-
-It is not a second software process. It is a set of instructions a runner can
-load when an agent is doing real work.
+- small skills with clear jobs
+- stable output for the next step
+- one normal path from request to PR
+- add-ons only when the work needs them
+- project-specific rules kept in the project, not baked into the collection
 
 ## What is different
 
@@ -202,52 +196,39 @@ experts from that project's own docs.
 
 ### Core
 
-| Skill | Does |
-| --- | --- |
-| `setup` | Find repo commands and repair project config. |
-| `intake` | Classify the request and choose the next step. |
-| `shape` | Make fuzzy work clear. |
-| `specify` | Write the contract and next small slice. |
-| `build` | Implement the change and run checks. |
-| `fix` | Reproduce and repair a bug on the normal build path. |
-| `review` | Run every reviewer and join the results. |
-| `review-standard` | Check behavior, compatibility, security, and tests. |
-| `verify` | Run the checks that matter and show evidence. |
-| `finish` | Take the PR to the requested end state. |
-| `retro` | Record useful lessons after delivery. |
-| `review-gilfoyle` | Check runtime, operations, and security. |
-| `review-ponytail` | Find code and dependencies to cut. |
+| Skill             | Does                                                 |
+| ----------------- | ---------------------------------------------------- |
+| `build`           | Implement the change and run checks.                 |
+| `finish`          | Take the PR to the requested end state.              |
+| `fix`             | Reproduce and repair a bug on the normal build path. |
+| `intake`          | Classify the request and choose the next step.       |
+| `retro`           | Record useful lessons after delivery.                |
+| `review-gilfoyle` | Check runtime, operations, and security.             |
+| `review-ponytail` | Find code and dependencies to cut.                   |
+| `review-standard` | Check behavior, compatibility, security, and tests.  |
+| `review`          | Run every reviewer and join the results.             |
+| `setup`           | Find repo commands and repair project config.        |
+| `shape`           | Make fuzzy work clear.                               |
+| `specify`         | Write the contract and next small slice.             |
+| `verify`          | Run the checks that matter and show evidence.        |
 
 ### Add-ons
 
-| Skill | Does |
-| --- | --- |
-| `how` | Trace existing code and data flow. |
-| `why` | Recover intent from code, docs, and history. |
-| `prototype` | Answer one design question with throwaway code. |
-| `research` | Check outside facts with sources. |
-| `deep-design` | Check module boundaries before a risky change. |
-| `ux-proof` | Check a user flow in the real UI. |
-| `wayfinder` | Split genuinely multi-session work. |
-| `ui-dev` | Build UI changes with basic accessibility. |
-
-## Checks
-
-Before delivery, run:
-
-```bash
-git diff --check
-bun run check
-```
-
-Use project-configured checks when they exist. The collection reports warnings
-and missing optional tooling; it does not turn them into fake blockers.
+| Skill         | Does                                            |
+| ------------- | ----------------------------------------------- |
+| `deep-design` | Check module boundaries before a risky change.  |
+| `how`         | Trace existing code and data flow.              |
+| `prototype`   | Answer one design question with throwaway code. |
+| `research`    | Check outside facts with sources.               |
+| `ui-dev`      | Build UI changes with basic accessibility.      |
+| `ux-proof`    | Check a user flow in the real UI.               |
+| `wayfinder`   | Split genuinely multi-session work.             |
+| `why`         | Recover intent from code, docs, and history.    |
 
 ## Sources
 
 Ideas and useful patterns came from:
 
-- [vercel-labs/skills](https://github.com/vercel-labs/skills)
 - [Cursor's pstack skills](https://github.com/cursor/plugins/tree/main/pstack)
 - [open-mercato/skills](https://github.com/open-mercato/skills)
 - [mattpocock/skills](https://github.com/mattpocock/skills)

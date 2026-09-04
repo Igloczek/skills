@@ -21,6 +21,8 @@ result first. Then say what failed, what was checked, and what happens next.
 This applies to every skill, report, status, comment, handoff, and commit
 message. Keep the tone direct without hiding a real risk or making up facts.
 
+Never use em dashes, semicolons, and other "complex" sentence constructions.
+
 ## Autonomy
 
 - Do normal in-scope work without asking: inspect, edit, run commands, install
