@@ -129,15 +129,12 @@ flowchart TD
     shape -->|intake| intake
     shape -->|specify| specify["specify<br/>write checks + plan"]
     shape -->|build| build["build<br/>implement or repair"]
-    shape -->|none| done(["no code change"])
 
     intake -->|specify| specify
     intake -->|build| build
-    intake -->|none| done
 
     specify -->|shape| shape
     specify -->|build| build
-    specify -->|none| done
 
     build --> verify["verify<br/>product + checks"]
     verify --> verify_result{"product result"}
