@@ -1,10 +1,11 @@
 # Skills
 
-A small workflow for AI coding agents that need to ship code, not just produce
-a clever answer.
+A lightweight SDLC for solo developers and AI coding agents. It keeps the useful
+engineering steps and drops the corporate process bullshit.
 
-This collection covers one change from request to PR. It is made for a solo
-developer: one owner, one repo, and AI agents with enough room to do the job.
+This is a system, not a bag of interesting tasks. A request enters the flow,
+each step leaves something useful for the next one, and the flow ends with a
+working, checked, reviewable PR.
 
 ## Why this exists
 
@@ -169,6 +170,9 @@ flowchart TD
 ```
 
 ## Concepts
+
+The roster is not a menu. Start at `intake`. Add-ons plug into the flow only
+when they solve a real need.
 
 ### Core skills
 

@@ -12,6 +12,14 @@ input as possible. Every rule must earn its place: help ship better code, catch
 a real problem, or keep the next step clear. If it only adds ceremony, delete
 it.
 
+## System
+
+This is a lightweight SDLC for a solo developer. Skills are connected steps,
+not unrelated tasks. Start at `intake`, use the smallest path that fits, and
+pass useful output to the next step. The endpoint is a working, checked,
+reviewable PR. The `review` step always runs every available reviewer as set
+out below.
+
 ## Voice
 
 Use blunt developer language. Plain words. Short sentences. Direct verbs. No
