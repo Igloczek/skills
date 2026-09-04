@@ -30,12 +30,11 @@ providers.
    layout, documentation paths, test/lint/build commands, tracker, and browser
    setup if present.
 2. Detect whether the repository has domain-specific behavior or a UI. If
-   domain expertise is useful, ask for each expert's role, authoritative source
-   paths, boundary, and local destination. Allow no experts or multiple experts;
-   use `none` when domain expertise is unnecessary.
-3. Show detected values and the proposed domain-expert routes. A project may be
-   ready with no domain experts. For each configured expert, require a named
-   role and readable sources.
+   domain expertise is useful and the role, sources, boundary, and destination
+   are clear, create the local expert. Otherwise continue without one and ask
+   only when the missing decision changes correctness.
+3. Use the detected values and routes. A project may be ready with no domain
+   experts; do not wait for a ceremony to prove that.
 4. Write or repair `.ai/skills.json` from
    [`references/skills-config.md`](references/skills-config.md). Preserve
    existing values, record detected validation and feedback commands in their
@@ -47,12 +46,13 @@ providers.
    domain-expert skill. Do not create local copies of public skills.
 6. Run `scripts/check.ts --require-setup`. If it reports a malformed or missing
    setup value, repair that setup value and rerun the check until it is ready.
-   Do not invent a command, source, or domain rule; report missing information
-   that only the owner can supply.
+   Use the best available command, source, or domain rule. Ask only for missing
+   information that cannot be inferred and blocks this setup.
 
 If the initializer cannot access the project or `.ai`, report its `Open:` items
-and stop. A configuration check failure is a self-healing setup task when the
-missing value can be derived from the repository.
+and use a fallback when possible. A configuration check failure is a
+self-healing setup task when the missing value can be derived from the
+repository.
 
 ## Output
 
@@ -70,12 +70,11 @@ paths or `none`, and remaining gaps. End with `Status: READY` or
   collection.
 - Each domain expert must be grounded in project sources. A role such as
   `billing-specialist` is created inside the consuming project, not here.
-- Missing source paths or a usable target is a visible setup gap, not permission
-  to create a weaker substitute.
+- Missing source paths or a usable target are a visible gap. Use the best
+  available substitute, record the gap, and ask only when it blocks correctness.
 - Do not install mutation, complexity, architecture, or other quality tooling
-  by default; record what the project already supports and let later workflows
-  choose checks proportionally.
-- Do not create tracker labels, branches, hooks, or browser processes unless
-  the user explicitly enables that action.
-- A missing owner decision or unavailable source is a visible setup gap, not
-  permission to guess.
+  unless it is useful for this project; use what is already there first.
+- Create tracker labels, branches, hooks, or browser processes when the work
+  needs them. Do not create unrelated setup.
+- Make a reversible assumption when an owner decision or source is missing. Ask
+  only when that decision changes the current work.

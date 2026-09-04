@@ -15,8 +15,9 @@ separate delivery process.
 3. Add a regression check that fails for the reproduced defect, make the smallest
    safe fix at the owning boundary, and rerun the regression plus the normal
    build checks.
-4. If the defect cannot be reproduced, stop without a speculative patch and
-   report the missing evidence or environment.
+4. If the defect does not reproduce, inspect the code, logs, and environment;
+   use the best supported hypothesis. Make a fix only when the evidence supports
+   it, otherwise report that no safe fix was found.
 
 ## Output
 
@@ -34,8 +35,9 @@ Include reproduction, root cause, regression, validation, and remaining risk.
 
 ## Rules
 
-- Do not change behavior without a reproduction or a documented reason.
-- Do not hide a failed reproduction behind a speculative patch.
+- Do not change behavior without a reproduction or a documented reason from
+  code, logs, or the environment.
+- Do not hide uncertainty behind a speculative patch.
 - Do not invent a separate bug-only branch, review, verification, or release
   process; use the same `build` path.
 - Never merge the resulting PR.

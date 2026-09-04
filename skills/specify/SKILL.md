@@ -9,7 +9,8 @@ description: "Turn an actionable brief or feature issue into a stable contract a
    vocabulary.
 2. Define goal, non-goals, behavior, acceptance criteria, interfaces,
    compatibility constraints, risks, and open questions.
-3. Resolve questions with the user or record explicit reversible assumptions.
+3. Resolve questions with the user only when they change the contract and
+   cannot be made reversible; otherwise record the assumption and continue.
 4. Define the next one or two vertical, testable slices and note blocking edges;
    keep later tasks provisional until implementation feedback exposes what they
    actually need.

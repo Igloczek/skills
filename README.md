@@ -14,6 +14,21 @@ set the scope, write a plan, change the code, review it, run checks, and finish
 the PR. The runner handles execution; this repo holds the instructions for the
 steps.
 
+## Working style
+
+This is for one person. No committee, no approval theatre.
+
+The agent should finish the job. Normal work needs no permission: read, edit,
+run commands, install what is needed, create branches, commit, push, and open
+or update PRs when the task calls for it.
+
+Make a reasonable assumption and keep moving. Ask only for a missing credential
+or decision, a destructive or irreversible action, or a real scope change. A
+missing optional tool is not a blocker. Do not invent role gates, handoffs,
+review limits, or security-by-obscurity rules. Keep real validation, security,
+accessibility, and data-loss protection. Use plain words and concrete commands;
+skip corporate prose.
+
 ## Install in a project
 
 Make the skills available to the agent runner in the project:
@@ -198,16 +213,20 @@ invoice can be voided, needs a credit note, or needs specific fields.
 
 ## What each step records
 
-Each skill that changes files records:
+Each step records only what the next step needs:
 
-- what it reads and writes, what it can change, and how it ends;
-- a request for confirmation before destructive or irreversible actions;
-- prompts, files, comments, and reports stay free of secrets;
-- `Status:`, `Next:`, `Spec:`, `Issue:`, and `PR:` when another skill needs the result;
-- a clear stop when a required tool, command, or file is missing.
+- input, files changed, commands run, result, and next action;
+- real unknowns and decisions, without a process diary;
+- no secrets in prompts, files, comments, or reports;
+- `Status:`, `Next:`, `Spec:`, `Issue:`, and `PR:` when another step needs the
+  result.
 
-Merging stays under the user's control. UI work gets UI checks; other changes
-use the checks for their code and systems.
+Stop only for a real missing credential or decision, a destructive action, or a
+scope change. Use a fallback and report it when an optional tool or artifact is
+missing.
+
+Merge when the task calls for it. UI work gets UI checks; other changes use the
+checks for their code and systems.
 
 Quality numbers are signals for changed code. The existing repo tools provide
 them, and review reports a warning or a missing check separately from a failed

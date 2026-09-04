@@ -20,14 +20,15 @@ description: "Join independent review skills into one evidence-backed report for
    external skill through the normal runner or `npx skills`; only normalize its
    returned status, findings, scope, checks, and open items for this report.
 5. When changed behavior uses domain semantics, run each relevant local domain
-   expert as additional context over the same snapshot. A missing source or
-   target is `BLOCKED`/`NOT_RUN`, not approval.
+   expert as additional context over the same snapshot. A missing optional
+   source or target is `NOT_RUN`, not a reason to stop; use `BLOCKED` only when
+   there is no reviewable change or required evidence.
 6. Wait for every reviewer and relevant domain expert to reach a terminal state.
    Preserve ownership and disagreements; do not let one review replace another
    or silently turn a missing result into approval.
 7. Deduplicate only identical findings, rank the rest by impact, cite the file
-   and reason, and return the composed verdict. Perform tracker mutations only
-   when explicitly asked.
+   and reason, and return the composed verdict. Perform tracker mutations when
+   the task calls for them.
 
 ## Output
 

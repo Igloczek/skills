@@ -1,6 +1,6 @@
 ---
 name: build
-description: "Implement a brief or specification in an isolated branch, using small feedback-driven steps, tests, and the repository validation gate."
+description: "Implement a brief or specification in an isolated branch, using small feedback-driven steps, tests, and the repo's checks."
 ---
 
 This is the implementation engine. Short, long, autonomous, resume, and loop
@@ -17,10 +17,9 @@ runs are modes of this skill, not separate commands.
 4. Run the cheapest configured feedback after each meaningful slice and keep a
    concise progress record. Leave cleanup, hardening, and system proof to the
    appropriate review or verification step.
-5. If the same check fails repeatedly without new evidence, stop that
-   trajectory. Record the last successful check, current failure, attempts,
-   next hypothesis, and resume location before starting a fresh focused
-   context.
+5. When a check fails, use its evidence, change the approach when needed, and
+   keep going. Record the useful failure and next move; do not create a failure
+   ceremony or stop just because the first approach was wrong.
 6. Commit coherent changes and open or update one reviewable PR.
 
 When a change touches UI, use the public `ui-dev` skill. Consult the project's
@@ -40,6 +39,9 @@ Status: READY_FOR_REVIEW|BLOCKED|NEEDS_HUMAN
 
 - Never merge the PR.
 - Do not edit a spec PR with implementation code.
-- Keep the work resumable and release claims/temporary processes on exit.
-- Stop when a required command, provider, or acceptance criterion is missing.
+- Leave a clean, reviewable branch or PR and release temporary processes on
+  exit.
+- If a command or provider is missing, use a sensible available alternative and
+  report the gap. Stop only when the missing thing is truly required and cannot
+  be replaced.
 - Prefer repository checks and compact handoffs over long process instructions.

@@ -27,8 +27,9 @@ commands, and providers contain only non-secret descriptors or names.
 
 - `version` is the config schema version and is `1`; it does not pin external
   skills.
-- `commands.validation` is the ordered full gate and must contain at least one
-  command. `commands.feedback` is optional and contains cheaper focused checks.
+- `commands.validation` is the ordered validation command list and must contain
+  at least one command. `commands.feedback` is optional and contains cheaper
+  focused checks.
 - `providers` is an object. Omit unavailable providers from that object; use an
   empty object when none are available. Values must be non-empty names or
   descriptors and must never contain credentials.

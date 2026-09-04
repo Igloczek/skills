@@ -9,7 +9,8 @@ is not yet crisp.
 ## Workflow
 
 1. State the problem and desired outcome in plain language.
-2. Ask one question at a time only when the answer changes the contract.
+2. Ask only when the answer changes the contract and cannot be safely assumed;
+   otherwise record a reversible assumption and continue.
 3. Consider doing nothing, reusing an existing capability, and the smallest
    reversible option.
 4. Record alternatives, non-goals, risks, and unresolved questions.
@@ -26,6 +27,7 @@ Brief: <repo-relative-path|none>
 
 ## Rules
 
-- Do not write implementation code or create a tracker item without approval.
+- Shape the work, do not implement it. Create a tracker item when the request
+  calls for one; otherwise do not create one for ceremony.
 - Do not hide an assumption behind confident prose.
 - If no meaningful work remains, use `Next: none`.

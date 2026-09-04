@@ -7,14 +7,14 @@ paths. They are not part of this public skill collection.
 
 ## Lifecycle
 
-1. Detect whether any domain-specific behavior needs expert context. Ask for a
-   role, slug, authoritative sources, boundary, and local destination for each
-   requested expert.
+1. Detect whether any domain-specific behavior needs expert context. If the
+   role, sources, boundary, and local destination are clear from the project,
+   use them. Ask only when a missing decision would change correctness.
 2. Render each local skill from `skills/setup/references/domain-expert.md`.
 3. Record the local paths and sources in `.ai/skills.json`; preserve existing
-   custom experts unless the owner explicitly approves an update.
-4. A project may have no domain experts. For each configured expert, require a
-   named role and readable sources before `setup` returns `READY`.
+   custom experts and repair obvious config mistakes.
+4. A project may have no domain experts. A missing optional expert is not a
+   reason to stop unrelated work.
 
 ## Contract
 
