@@ -17,7 +17,7 @@ is not yet crisp.
 
 ## Output
 
-Write an optional brief under the configured docs path and end with:
+Write an optional brief under configured `paths.briefs` and end with:
 
 ```text
 Next: intake|specify|build|none

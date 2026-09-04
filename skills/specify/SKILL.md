@@ -16,8 +16,8 @@ description: "Turn an actionable brief or feature issue into a stable contract a
 5. For observable behavior, express acceptance as Given/When/Then or an
    equivalent executable scenario and add a short human/system QA procedure
    when that flow needs end-to-end proof.
-6. Review the simplest viable design and publish the spec to the configured
-   docs path. A design-only PR is optional and must contain no implementation.
+6. Review the simplest viable design and publish the spec to configured
+   `paths.specs`. A design-only PR is optional and must contain no implementation.
 
 ## Output
 

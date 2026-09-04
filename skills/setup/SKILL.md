@@ -16,7 +16,9 @@ skill directories, and installs missing upstream companions from
 a narrower target than the default `*` (all supported agents). Do not recreate
 these checks manually.
 
-After writing `.ai/skills.json`, run the bundled [`scripts/check.ts`](scripts/check.ts)
+Write `.ai/skills.json` using the complete
+[`references/skills-config.md`](references/skills-config.md) contract, then run
+the bundled [`scripts/check.ts`](scripts/check.ts)
 with `--require-setup`. It performs the read-only project preflight: validates
 the setup config shape, configured command/provider inventories, any configured
 domain experts and their sources, and the project root. It does not execute
@@ -34,8 +36,11 @@ commands or connect to providers.
 3. Show detected values and the proposed domain-expert routes. A project may be
    ready with no domain experts. For each configured expert, require a named
    role and readable sources.
-4. With confirmation, write `.ai/skills.json`. Preserve existing files and
-   keep credentials as environment-variable names or ignored file paths.
+4. Write `.ai/skills.json` from `references/skills-config.md` without pausing for
+   confirmation; invoking `setup` authorizes this reversible project-local edit.
+   Preserve existing values, record the detected validation and feedback
+   commands in their defined fields, and keep credentials as environment-variable
+   names or ignored file paths.
 5. Read [domain-expert.md](references/domain-expert.md) when one or more domain
    experts are needed. Create or update each confirmed project-local
    domain-expert skill. Do not create local copies of public skills.

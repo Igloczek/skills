@@ -10,8 +10,8 @@ description: "Turn work larger than one agent session into a small decision map 
 3. Resolve one blocking decision at a time and update the map.
 4. For work spanning sessions, keep one short resume note with the branch or
    worktree, last verified commit, current frontier, next action, and artifact
-   locations. Use `.ai/work/<slug>/resume.md`; do not create it for ordinary
-   tasks.
+   locations. Use configured `paths.work/<slug>/resume.md`; do not create it for
+   ordinary tasks.
 5. Hand the resolved frontier to `specify` and keep the map available for
    future `build` sessions.
 

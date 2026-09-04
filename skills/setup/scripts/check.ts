@@ -104,20 +104,40 @@ function configuredDescriptor(value: unknown): boolean {
 
 function configuredEntries(config: Record<string, unknown>, key: string): number {
   const value = config[key];
-  if (value === undefined || value === null) return 0;
-  if (Array.isArray(value)) {
-    if (value.some(entry => !configuredDescriptor(entry))) {
-      throw new Error(`${key} contains an empty or invalid descriptor`);
-    }
-    return value.length;
-  }
-  if (!isRecord(value)) throw new Error(`${key} must be an object or array`);
+  if (!isRecord(value)) throw new Error(`${key} must be an object`);
   for (const [name, descriptor] of Object.entries(value)) {
     if (!name.trim() || !configuredDescriptor(descriptor)) {
       throw new Error(`${key} contains an empty or invalid descriptor`);
     }
   }
   return Object.keys(value).length;
+}
+
+function configuredCommands(config: Record<string, unknown>): { feedback: number; validation: number } {
+  const value = config.commands;
+  if (!isRecord(value)) throw new Error('commands must be an object');
+  const { feedback, validation } = value;
+  if (!Array.isArray(validation) || validation.length === 0
+    || validation.some(command => typeof command !== 'string' || !command.trim())) {
+    throw new Error('commands.validation must be a non-empty string array');
+  }
+  if (feedback !== undefined && (!Array.isArray(feedback)
+    || feedback.some(command => typeof command !== 'string' || !command.trim()))) {
+    throw new Error('commands.feedback must be a string array');
+  }
+  return { validation: validation.length, feedback: feedback?.length || 0 };
+}
+
+function configuredPaths(config: Record<string, unknown>, projectDir: string): number {
+  const value = config.paths;
+  if (!isRecord(value)) throw new Error('paths must be an object');
+  const required = ['briefs', 'specs', 'research', 'work'];
+  for (const key of required) {
+    const path = value[key];
+    if (typeof path !== 'string' || !path.trim()) throw new Error(`paths.${key} must be a path`);
+    projectPath(projectDir, path);
+  }
+  return required.length;
 }
 
 function domainExperts(config: Record<string, unknown>): DomainExpert[] {
@@ -173,10 +193,13 @@ function main(): void {
 
   if (config) {
     try {
-      const commandCount = configuredEntries(config, 'commands');
+      if (config.version !== 1) throw new Error('version must be 1');
+      const commandCount = configuredCommands(config);
       const providerCount = configuredEntries(config, 'providers');
-      console.log(`COMMANDS: ${commandCount || 'NONE'}`);
+      const pathCount = configuredPaths(config, projectDir);
+      console.log(`COMMANDS: validation=${commandCount.validation}, feedback=${commandCount.feedback}`);
       console.log(`PROVIDERS: ${providerCount || 'NONE'}`);
+      console.log(`PATHS: ${pathCount}`);
       const experts = domainExperts(config);
       if (experts.length === 0) {
         console.log('DOMAIN_EXPERTS: NONE');
