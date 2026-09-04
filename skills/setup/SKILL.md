@@ -8,9 +8,8 @@ project-local domain-expert setup changes.
 
 Start by running the bundled [`scripts/init.ts`](scripts/init.ts) with the
 project as its working directory, using Bun or `node --experimental-strip-types`.
-It performs the repeatable bootstrap: checks
-the project root and known signals, creates `.ai` when needed, checks project
-skill directories, and installs missing upstream companions from
+It checks the project root, known signals, `.ai`, and available upstream
+companions from
 [`references/external-skills.json`](references/external-skills.json). Use
 `--dry-run` to inspect the result without changing anything; pass `--agent` for
 a narrower target than the default `*` (all supported agents). Do not recreate
@@ -29,22 +28,30 @@ commands or connect to providers.
 1. Read the repository's instructions and inspect its package manager, source
    layout, documentation paths, test/lint/build commands, tracker, and browser
    setup if present.
-2. Detect whether the repository has domain-specific behavior or a UI. If
+2. Detect whether the repository has domain-specific behavior or a UI. Select
+   the `review` companion group for the core review workflow and add `ui` only
+   when the repository has user-interface work. If
    domain expertise is useful, ask for each expert's role, authoritative source
    paths, boundary, and local destination. Allow no experts or multiple experts;
    offer `none` when domain expertise is unnecessary.
 3. Show detected values and the proposed domain-expert routes. A project may be
    ready with no domain experts. For each configured expert, require a named
    role and readable sources.
-4. Write `.ai/skills.json` from `references/skills-config.md` without pausing for
+4. Run `scripts/init.ts --companions review` and append `,ui` when UI companions
+   are needed. Do not pause for confirmation: invoking `setup` authorizes the
+   selected project-local installs. Commit the generated `skills-lock.json`;
+   it records the resolved source ref and content hash used by the supported
+   CLI. Use `--refresh` only when dependency refresh is part of the request,
+   then review and commit the lock change.
+5. Write `.ai/skills.json` from `references/skills-config.md` without pausing for
    confirmation; invoking `setup` authorizes this reversible project-local edit.
    Preserve existing values, record the detected validation and feedback
    commands in their defined fields, and keep credentials as environment-variable
    names or ignored file paths.
-5. Read [domain-expert.md](references/domain-expert.md) when one or more domain
+6. Read [domain-expert.md](references/domain-expert.md) when one or more domain
    experts are needed. Create or update each confirmed project-local
    domain-expert skill. Do not create local copies of public skills.
-6. Run `scripts/check.ts --require-setup` and check that configured command and
+7. Run `scripts/check.ts --require-setup` and check that configured command and
    provider inventories, sources, and generated domain experts have usable
    descriptors and paths. Do not invent a command, source, or domain rule;
    report missing configuration instead.
@@ -62,6 +69,8 @@ paths or `none`, and remaining gaps. End with `Status: READY` or
 
 - Never print, commit, or store a secret.
 - `--dry-run` must make no changes.
+- Install only selected companion groups. Do not silently refresh an existing
+  install or ignore a changed `skills-lock.json` in the final diff.
 - Never publish project-local domain experts or copy public-skill text into this
   collection.
 - Each domain expert must be grounded in project sources. A role such as

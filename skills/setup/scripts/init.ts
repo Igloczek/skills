@@ -7,13 +7,16 @@ type Dependency = {
   name: string;
   source: string;
   skill?: string | null;
+  group: string;
   usedBy: string[];
 };
 
 type Options = {
   agent: string;
+  companions: Set<string>;
   dryRun: boolean;
   projectDir: string;
+  refresh: boolean;
 };
 
 type DirectoryEntry = {
@@ -39,21 +42,29 @@ const manifestFiles = [
 const projectDirectories = ['src', 'app', 'lib', 'server', 'web', 'test', 'tests', 'docs'];
 
 function usage(): void {
-  console.log('Usage: bun init.ts [--project-dir <path>] [--agent <name|*>] [--dry-run]');
-  console.log('   or: node --experimental-strip-types init.ts [--project-dir <path>] [--agent <name|*>] [--dry-run]');
+  console.log('Usage: bun init.ts [--project-dir <path>] [--agent <name|*>] [--companions <group,...>] [--refresh] [--dry-run]');
+  console.log('   or: node --experimental-strip-types init.ts [same options]');
 }
 
 function parseArgs(argv: string[]): Options {
   const options: Options = {
     agent: process.env.SKILLS_AGENT || '*',
+    companions: new Set(),
     dryRun: false,
     projectDir: process.cwd(),
+    refresh: false,
   };
 
   for (let index = 0; index < argv.length; index += 1) {
     const argument = argv[index];
     if (argument === '--dry-run') {
       options.dryRun = true;
+    } else if (argument === '--refresh') {
+      options.refresh = true;
+    } else if (argument === '--companions') {
+      const groups = argv[++index];
+      if (!groups) throw new Error('--companions needs a comma-separated group list');
+      for (const group of groups.split(',')) options.companions.add(group.trim());
     } else if (argument === '--project-dir' || argument === '-p') {
       options.projectDir = argv[++index];
     } else if (argument === '--agent' || argument === '-a') {
@@ -70,6 +81,9 @@ function parseArgs(argv: string[]): Options {
   if (!options.agent || (options.agent !== '*' && !/^[a-z0-9][a-z0-9_-]*$/i.test(options.agent))) {
     throw new Error('--agent must be * or a simple agent name');
   }
+  if ([...options.companions].some(group => !/^[a-z0-9][a-z0-9-]*$/i.test(group))) {
+    throw new Error('--companions contains an invalid group');
+  }
   return options;
 }
 
@@ -81,6 +95,7 @@ function validateManifest(): void {
   const names = new Set<string>();
   for (const dependency of dependencies) {
     if (!dependency.name || !/^[a-z0-9][a-z0-9-]*$/i.test(dependency.name)
+      || !dependency.group || !/^[a-z0-9][a-z0-9-]*$/i.test(dependency.group)
       || !dependency.source || names.has(dependency.name)) {
       throw new Error('external skill manifest contains an invalid or duplicate entry');
     }
@@ -160,6 +175,17 @@ function install(dependency: Dependency, options: Options, projectDir: string): 
   return null;
 }
 
+function refresh(dependency: Dependency, projectDir: string): string | null {
+  const executable = process.platform === 'win32' ? 'bunx.exe' : 'bunx';
+  const result = spawnSync(executable, ['skills', 'update', dependency.name, '--project', '--yes'], {
+    cwd: projectDir,
+    stdio: 'inherit',
+  });
+  if (result.error) return result.error.message;
+  if (result.status !== 0) return `updater exited with status ${result.status}`;
+  return null;
+}
+
 function main(): void {
   validateManifest();
   const options = parseArgs(process.argv.slice(2));
@@ -183,10 +209,33 @@ function main(): void {
   const aiStatus = aiDirectoryExists ? 'READY' : options.dryRun ? 'WOULD_CREATE' : 'CREATED';
   console.log(`AI_CONFIG_DIR: ${aiDirectory} (${aiStatus})`);
   console.log(`SKILL_AGENTS: ${options.agent}`);
+  const groups = new Set(dependencies.map(dependency => dependency.group));
+  const unknownGroups = [...options.companions].filter(group => !groups.has(group));
+  if (unknownGroups.length > 0) throw new Error(`unknown companion groups: ${unknownGroups.join(', ')}`);
+  console.log(`COMPANION_GROUPS: ${[...groups].join(', ')}`);
+  console.log(`SELECTED_COMPANIONS: ${[...options.companions].join(', ') || 'NONE'}`);
 
   for (const dependency of dependencies) {
+    if (!options.companions.has(dependency.group)) {
+      console.log(`SKILL: ${dependency.name} AVAILABLE (${dependency.group}; used by ${dependency.usedBy.join(', ')})`);
+      continue;
+    }
+
     const existingRoot = installedAt(dependency.name, projectDir);
     if (existingRoot) {
+      if (options.refresh) {
+        if (options.dryRun) {
+          console.log(`SKILL: ${dependency.name} WOULD_REFRESH (${existingRoot})`);
+          continue;
+        }
+        console.log(`SKILL: ${dependency.name} REFRESHING (${existingRoot})`);
+        const error = refresh(dependency, projectDir);
+        if (error) {
+          failures.push(`${dependency.name}: ${error}`);
+          console.error(`SKILL: ${dependency.name} FAILED (${error})`);
+          continue;
+        }
+      }
       console.log(`SKILL: ${dependency.name} READY (${existingRoot}; used by ${dependency.usedBy.join(', ')})`);
       continue;
     }
@@ -206,6 +255,13 @@ function main(): void {
     } else {
       console.log(`SKILL: ${dependency.name} READY (${installedRoot})`);
     }
+  }
+
+  const lockfile = join(projectDir, 'skills-lock.json');
+  if (options.companions.size > 0) {
+    const lockStatus = existsSync(lockfile) ? 'READY' : options.dryRun ? 'WOULD_CREATE' : 'MISSING';
+    console.log(`SKILLS_LOCK: ${lockfile} (${lockStatus})`);
+    if (!options.dryRun && !existsSync(lockfile)) failures.push('skills-lock.json: missing after companion installation');
   }
 
   if (options.dryRun) {

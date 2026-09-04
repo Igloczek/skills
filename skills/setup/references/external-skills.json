@@ -2,23 +2,27 @@
   {
     "name": "gilfoyle",
     "source": "axiomhq/gilfoyle/skill",
+    "group": "review",
     "usedBy": ["review-gilfoyle"]
   },
   {
     "name": "ponytail-review",
-    "source": "DietrichGebert/ponytail",
+    "source": "https://github.com/DietrichGebert/ponytail/tree/v4.9.0",
     "skill": "ponytail-review",
+    "group": "review",
     "usedBy": ["review-ponytail"]
   },
   {
     "name": "design-taste-frontend",
     "source": "Leonxlnx/taste-skill",
     "skill": "design-taste-frontend",
+    "group": "ui",
     "usedBy": ["ui-dev"]
   },
   {
     "name": "make-interfaces-feel-better",
     "source": "jakubkrehel/make-interfaces-feel-better",
+    "group": "ui",
     "usedBy": ["ui-dev"]
   }
 ]
