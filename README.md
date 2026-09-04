@@ -141,8 +141,7 @@ flowchart TD
 
     build --> verify["verify<br/>product + checks"]
     verify --> verify_result{"product result"}
-    verify_result -->|wrong or broken| product_rework["build<br/>correct behavior"]
-    product_rework --> verify
+    verify_result -->|wrong or broken| build
     verify_result -->|works| review["review<br/>required"]
 
     subgraph review_stage["All reviewers · every change · same snapshot"]
@@ -161,8 +160,7 @@ flowchart TD
     review_ponytail --> review_result
 
     review_result -->|approved| finish["finish<br/>PR + merge choice"]
-    review_result -->|changes needed| code_rework["build<br/>address code findings"]
-    code_rework --> verify
+    review_result -->|changes needed| build
 
     finish -. after delivery .-> retro["retro<br/>record what changed"]
 
@@ -170,9 +168,9 @@ flowchart TD
     classDef review fill:#ecfdf5,stroke:#059669,color:#064e3b,stroke-width:1.5px;
     classDef decision fill:#fff7ed,stroke:#f59e0b,color:#7c2d12,stroke-width:1.5px;
     classDef terminal fill:#f1f5f9,stroke:#475569,color:#0f172a,stroke-width:1.5px;
-    class request,intake,shape,specify,build,review,product_rework,code_rework,verify core;
+    class request,intake,shape,specify,build,review,verify core;
     class standard_review,review_gilfoyle,review_ponytail review;
-    class review_result decision;
+    class verify_result,review_result decision;
     class finish,retro terminal;
 ```
 
