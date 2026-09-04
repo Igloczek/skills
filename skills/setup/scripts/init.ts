@@ -7,6 +7,7 @@ type Dependency = {
   name: string;
   source: string;
   skill?: string | null;
+  usedBy: string[];
 };
 
 type Options = {
@@ -85,6 +86,10 @@ function validateManifest(): void {
     }
     if (dependency.skill !== undefined && dependency.skill !== null && !dependency.skill) {
       throw new Error(`invalid selected skill for ${dependency.name}`);
+    }
+    if (!Array.isArray(dependency.usedBy) || dependency.usedBy.length === 0
+      || dependency.usedBy.some(name => !/^[a-z0-9][a-z0-9-]*$/i.test(name))) {
+      throw new Error(`invalid usedBy list for ${dependency.name}`);
     }
     names.add(dependency.name);
   }
@@ -182,12 +187,12 @@ function main(): void {
   for (const dependency of dependencies) {
     const existingRoot = installedAt(dependency.name, projectDir);
     if (existingRoot) {
-      console.log(`SKILL: ${dependency.name} READY (${existingRoot})`);
+      console.log(`SKILL: ${dependency.name} READY (${existingRoot}; used by ${dependency.usedBy.join(', ')})`);
       continue;
     }
 
     if (options.dryRun) {
-      console.log(`SKILL: ${dependency.name} WOULD_INSTALL (${dependency.source})`);
+      console.log(`SKILL: ${dependency.name} WOULD_INSTALL (${dependency.source}; used by ${dependency.usedBy.join(', ')})`);
       continue;
     }
 

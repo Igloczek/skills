@@ -5,9 +5,9 @@
     "usedBy": ["review-gilfoyle"]
   },
   {
-    "name": "ponytail",
+    "name": "ponytail-review",
     "source": "DietrichGebert/ponytail",
-    "skill": "ponytail",
+    "skill": "ponytail-review",
     "usedBy": ["review-ponytail"]
   },
   {

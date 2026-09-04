@@ -12,6 +12,12 @@ Use the same project snapshot, pinned diff, and repository instructions as the
 other review lanes. This skill has a different focus, not a different
 environment or branch.
 
+When runtime evidence, logs, metrics, traces, or incident data are in scope,
+invoke the installed `gilfoyle` companion and follow its initialization,
+discovery-before-querying, secret-handling, query-cost, and evidence-link rules.
+Do not invoke it for a code-only review. A missing required companion is
+`BLOCKED`, not permission to guess.
+
 ## Workflow
 
 1. Pin the base revision, read the task/spec, repository instructions, handoff,

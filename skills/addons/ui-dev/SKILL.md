@@ -4,9 +4,11 @@ description: "Implement interface changes with project contracts, accessible sta
 ---
 
 Use for components, routes, forms, responsive layout, user-visible states, and
-interaction. Companion guidance may come from `design-taste-frontend` and
-`make-interfaces-feel-better` when those skills are installed; neither replaces
-the project's framework or explicit requirements.
+interaction. Invoke `design-taste-frontend` when the work needs design direction
+or a redesign audit. Invoke `make-interfaces-feel-better` when it changes visual
+details, typography, icons, surfaces, or motion. Record a required missing
+companion as `BLOCKED`. Neither companion replaces the project's framework or
+explicit requirements.
 
 ## Workflow
 

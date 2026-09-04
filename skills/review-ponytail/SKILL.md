@@ -11,6 +11,10 @@ Use the same project snapshot, pinned diff, and repository instructions as the
 other review lanes. This skill has a different focus, not a different
 environment or branch.
 
+Invoke the installed `ponytail-review` companion for the complexity pass, then
+translate its evidence into this skill's output contract. If the companion is
+missing, return `BLOCKED`; do not silently substitute a different review mode.
+
 ## Workflow
 
 1. Pin the base revision and read the task/spec, project guardrails, current
