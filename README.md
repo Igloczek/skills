@@ -120,54 +120,47 @@ Start with `intake`. From there, use the smallest path that fits the request.
 `shape` and the add-ons are optional. `verify` and `review` are part of the
 normal delivery path, in that order.
 
+Each box is a skill. Arrow labels explain when to take that path. The `review`
+group runs all available reviewers and combines their findings into one result.
+
 ```mermaid
 %%{init: {"theme":"base","themeVariables":{"fontFamily":"ui-sans-serif,system-ui,sans-serif","lineColor":"#94a3b8","primaryColor":"#eef2ff","primaryTextColor":"#172033","primaryBorderColor":"#6366f1","secondaryColor":"#ecfdf5","tertiaryColor":"#f8fafc"}}}%%
 flowchart TD
-    request["request"] --> intake["intake<br/>classify work"]
+    intake["intake<br/>understand the request"]
+    shape["shape<br/>clarify the scope"]
+    specify["specify<br/>define behavior + checks"]
+    build["build<br/>implement or repair"]
+    verify["verify<br/>check the working product"]
+    finish["finish<br/>deliver the PR"]
+    retro["retro<br/>capture useful lessons"]
 
-    intake -->|shape| shape["shape<br/>set scope"]
-    shape -->|intake| intake
-    shape -->|specify| specify["specify<br/>write checks + plan"]
-    shape -->|build| build["build<br/>implement or repair"]
-
-    intake -->|specify| specify
-    intake -->|build| build
-
-    specify -->|shape| shape
-    specify -->|build| build
-
-    build --> verify["verify<br/>product + checks"]
-    verify --> verify_result{"product result"}
-    verify_result -->|wrong or broken| build
-    verify_result -->|works| review["review<br/>required"]
-
-    subgraph review_stage["All reviewers · every change · same snapshot"]
+    subgraph review["review · run all reviewers and combine findings"]
         direction LR
         standard_review["review-standard<br/>behavior + rules"]
         review_gilfoyle["review-gilfoyle<br/>runtime + security"]
-        review_ponytail["review-ponytail<br/>simplicity + scope"]
-        review_result{"review result"}
+        review_ponytail["review-ponytail<br/>simplicity + dependencies"]
     end
 
-    review --> standard_review
-    review --> review_gilfoyle
-    review --> review_ponytail
-    standard_review --> review_result
-    review_gilfoyle --> review_result
-    review_ponytail --> review_result
+    intake -->|scope unclear| shape
+    intake -->|needs a contract| specify
+    intake -->|ready to implement| build
+    shape -->|needs a contract| specify
+    shape -->|ready to implement| build
+    specify -->|scope needs rethinking| shape
+    specify -->|contract ready| build
 
-    review_result -->|approved| finish["finish<br/>PR + merge choice"]
-    review_result -->|changes needed| build
-
-    finish -. after delivery .-> retro["retro<br/>record what changed"]
+    build -->|implementation ready| verify
+    verify -->|wrong or broken| build
+    verify -->|checks pass| review
+    review -->|changes needed| build
+    review -->|approved| finish
+    finish -. after delivery .-> retro
 
     classDef core fill:#eef2ff,stroke:#6366f1,color:#1e1b4b,stroke-width:1.5px;
     classDef review fill:#ecfdf5,stroke:#059669,color:#064e3b,stroke-width:1.5px;
-    classDef decision fill:#fff7ed,stroke:#f59e0b,color:#7c2d12,stroke-width:1.5px;
     classDef terminal fill:#f1f5f9,stroke:#475569,color:#0f172a,stroke-width:1.5px;
-    class request,intake,shape,specify,build,review,verify core;
+    class intake,shape,specify,build,verify core;
     class standard_review,review_gilfoyle,review_ponytail review;
-    class verify_result,review_result decision;
     class finish,retro terminal;
 ```
 
