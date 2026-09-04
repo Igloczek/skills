@@ -1,35 +1,85 @@
 # Skills
 
-Small skills for one developer and an AI agent. They turn a request into code,
-checks, review, and a PR.
+A small workflow for AI coding agents that need to ship code, not just produce
+a clever answer.
 
-## Working style
+This collection covers one change from request to PR. It is made for a solo
+developer: one owner, one repo, and an agent with enough room to do the job.
 
-One owner. No committee.
+`README.md` is the human overview. `AGENTS.md` holds the rules for agents
+working on this collection.
 
-The agent should finish the job. Normal work needs no permission: read, edit,
-run commands, install what is needed, create branches, commit, push, and open
-or update PRs when the task calls for it.
+## Why this exists
 
-Make a reasonable assumption and keep moving. Ask only for a missing credential
-or decision, a destructive or irreversible action, or a real scope change. A
-missing optional tool is not a blocker.
+Many skill collections are prompt drawers. Pick a skill, run it, and work out
+the rest yourself. The useful parts are there, but the handoff between them is
+usually left to luck.
 
-No approval theatre, fake handoffs, role gates, review limits, or security by
-obscurity. Keep real validation, security, accessibility, and data-loss
-protection. Use plain words, short sentences, and concrete commands. No yap.
-This voice applies to every skill, report, status, comment, and handoff.
+This repo gives the work a simple shape:
+
+- small skills with clear jobs;
+- stable output for the next step;
+- one normal path from request to PR;
+- add-ons only when the work needs them;
+- project-specific rules kept in the project, not baked into the collection.
+
+It is not a second software process. It is a set of instructions a runner can
+load when an agent is doing real work.
+
+## What is different
+
+### Workflow first
+
+The core is a delivery path, not a list of unrelated tricks:
+
+```text
+intake -> specify -> build -> review -> verify -> finish
+```
+
+The agent can take a request through the path and leave a working, checked,
+reviewable change.
+
+### External skills stay upstream
+
+This repo does not copy what the upstream [`npx skills`](https://github.com/vercel-labs/skills)
+tool already does. Discover, install, and use external skills with that CLI.
+There is no local registry, pin file, updater, or lifecycle wrapper here.
+
+### Reviews are additive
+
+Every change gets every available review skill. The baseline is:
+
+- `review-standard` for normal correctness;
+- `review-gilfoyle` for runtime, operations, and security;
+- `review-ponytail` for code and dependency bloat.
+
+They see the same request and diff. The joiner keeps all findings and only
+normalizes their output shape. It does not pick one reviewer and pretend that
+is enough.
+
+### Bugs use the normal path
+
+`fix` is `build` with a reproduction and a regression check. There is no special
+bug-only loop, branch, review, or verification system.
+
+### Setup repairs itself
+
+`setup` inspects the project, writes or repairs `.ai/skills.json`, and reruns
+its check. There is no separate setup-verification skill.
 
 ## Install
+
+Add the public skills to a project:
 
 ```bash
 npx skills add igloczek/skills --skill '*' --agent '*' --yes
 ```
 
-Run `setup` once in the project. It finds the repo commands and writes or
-repairs `.ai/skills.json`.
+Then run `setup` once in that project. A runner such as
+[Cezar](https://github.com/open-mercato/cezar) can load the skills as workflow
+steps.
 
-Use the upstream CLI for external skills:
+For external skills, use the upstream CLI directly:
 
 ```bash
 npx skills find <query>
@@ -37,13 +87,10 @@ npx skills add <source> --skill <name> --agent <agent> --yes
 npx skills use <source> --skill <name>
 ```
 
-This repo does not keep another registry, lockfile, version pin, installer, or
-updater for external skills.
-
 ## Setup
 
-Run `setup` once in a project. It scans the repo, writes or repairs the local
-config, and makes the next run easier.
+Setup is deliberately boring: inspect the repo, record useful commands and
+paths, and add a local domain expert only when the project needs one.
 
 ```mermaid
 %%{init: {"theme":"base","themeVariables":{"fontFamily":"ui-sans-serif,system-ui,sans-serif","lineColor":"#94a3b8","primaryColor":"#eef2ff","primaryTextColor":"#172033","primaryBorderColor":"#6366f1","secondaryColor":"#ecfdf5","tertiaryColor":"#fff7ed"}}}%%
@@ -65,11 +112,11 @@ flowchart LR
     class ready terminal;
 ```
 
-## Flow
+## Workflow
 
-```text
-intake -> specify -> build -> review -> verify -> finish
-```
+Start with `intake`. From there, use the smallest path that fits the request.
+`shape` and the add-ons are optional. `review` and `verify` are part of the
+normal delivery path.
 
 ```mermaid
 %%{init: {"theme":"base","themeVariables":{"fontFamily":"ui-sans-serif,system-ui,sans-serif","lineColor":"#94a3b8","primaryColor":"#eef2ff","primaryTextColor":"#172033","primaryBorderColor":"#6366f1","secondaryColor":"#ecfdf5","tertiaryColor":"#f8fafc"}}}%%
@@ -127,73 +174,74 @@ flowchart TD
     class finish,retro terminal;
 ```
 
-- Use `shape` before `specify` or `build` when the request is fuzzy.
-- Use `fix` for a bug. It follows the `build` path and adds reproduction plus a
-  regression check. It is not a second delivery system.
-- Use add-ons only when they help: `how`, `why`, `research`, `prototype`,
-  `deep-design`, `ux-proof`, `wayfinder`, or `ui-dev`.
-- `setup` repairs its own config. There is no setup-verification skill.
-- Merge only when the task calls for it.
+## Concepts
 
-## Skills
+### Core skills
 
-| Skill | Type | Does |
-| --- | --- | --- |
-| `setup` | Core | Find repo commands and repair project config. |
-| `intake` | Core | Classify the request and choose the next step. |
-| `shape` | Core | Make fuzzy work clear. |
-| `specify` | Core | Write the contract and next small slice. |
-| `build` | Core | Implement the change and run checks. |
-| `fix` | Core | Reproduce and repair a bug on the normal build path. |
-| `review` | Core | Run every reviewer and join the results. |
-| `review-standard` | Core | Check behavior, compatibility, security, and tests. |
-| `verify` | Core | Run the checks that matter and show evidence. |
-| `finish` | Core | Take the PR to the requested end state. |
-| `retro` | Core | Record useful lessons after delivery. |
-| `review-gilfoyle` | Core | Check runtime, operations, and security. |
-| `review-ponytail` | Core | Find code and dependencies to cut. |
-| `how` | Add-on | Trace existing code and data flow. |
-| `why` | Add-on | Recover intent from code, docs, and history. |
-| `prototype` | Add-on | Answer one design question with throwaway code. |
-| `research` | Add-on | Check outside facts with sources. |
-| `deep-design` | Add-on | Check module boundaries before a risky change. |
-| `ux-proof` | Add-on | Check a user flow in the real UI. |
-| `wayfinder` | Add-on | Split genuinely multi-session work. |
-| `ui-dev` | Add-on | Build UI changes with basic accessibility. |
+These make up the normal path. They are useful on most changes.
 
-## Review
+### Add-ons
 
-Every change gets every available review skill. Always run:
+These answer a specific need: understand old code, check outside facts, try a
+UI idea, split long work, or inspect a design seam. Do not run them just because
+they exist.
 
-- `review-standard`
-- `review-gilfoyle`
-- `review-ponytail`
+### Contracts
 
-Run project-local and external reviewers too. Give them the same request,
-checkout, and diff. Do not choose lanes by risk, file type, or diff size. Do not
-tell an external reviewer how to do its job. Normalize only the returned output
-shape.
+Every public skill has a name, a short description, a workflow, and an output
+shape. That is enough for a runner to pass one step to the next without making
+each agent rediscover the whole process.
 
-## Setup and project rules
+### Project-local context
 
-Project-specific rules stay in the consuming project. `setup` can create local
-domain experts from local docs. They are context for the work, not a reason to
-stop unrelated work. Do not copy them into this repo.
+The collection stays generic. Repo-specific commands, paths, provider details,
+and domain rules live in the consuming project. `setup` can create local domain
+experts from that project's own docs.
+
+## Skill roster
+
+### Core
+
+| Skill | Does |
+| --- | --- |
+| `setup` | Find repo commands and repair project config. |
+| `intake` | Classify the request and choose the next step. |
+| `shape` | Make fuzzy work clear. |
+| `specify` | Write the contract and next small slice. |
+| `build` | Implement the change and run checks. |
+| `fix` | Reproduce and repair a bug on the normal build path. |
+| `review` | Run every reviewer and join the results. |
+| `review-standard` | Check behavior, compatibility, security, and tests. |
+| `verify` | Run the checks that matter and show evidence. |
+| `finish` | Take the PR to the requested end state. |
+| `retro` | Record useful lessons after delivery. |
+| `review-gilfoyle` | Check runtime, operations, and security. |
+| `review-ponytail` | Find code and dependencies to cut. |
+
+### Add-ons
+
+| Skill | Does |
+| --- | --- |
+| `how` | Trace existing code and data flow. |
+| `why` | Recover intent from code, docs, and history. |
+| `prototype` | Answer one design question with throwaway code. |
+| `research` | Check outside facts with sources. |
+| `deep-design` | Check module boundaries before a risky change. |
+| `ux-proof` | Check a user flow in the real UI. |
+| `wayfinder` | Split genuinely multi-session work. |
+| `ui-dev` | Build UI changes with basic accessibility. |
 
 ## Checks
 
-Before delivery:
+Before delivery, run:
 
 ```bash
 git diff --check
 bun run check
 ```
 
-Use project-configured checks when they exist. Warnings are warnings. Missing
-optional tooling is a note, not a fake blocker.
-
-Steps leave only what the next step needs: changed files, commands, result,
-status, and next action. No process diary.
+Use project-configured checks when they exist. The collection reports warnings
+and missing optional tooling; it does not turn them into fake blockers.
 
 ## Sources
 

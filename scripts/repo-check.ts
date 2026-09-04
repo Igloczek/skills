@@ -60,7 +60,7 @@ function main(): void {
   }
 
   const readme = readFileSync(join(root, 'README.md'), 'utf8');
-  const roster = [...readme.matchAll(/^\| `([a-z0-9-]+)` \| (?:Core|Add-on) \|/gm)].map(match => match[1]);
+  const roster = [...readme.matchAll(/^\| `([a-z0-9-]+)` \|/gm)].map(match => match[1]);
   if (new Set(roster).size !== roster.length) fail('README skill roster contains a duplicate');
   const missingFromReadme = [...names].filter(name => !roster.includes(name));
   const missingFromSkills = roster.filter(name => !names.has(name));
