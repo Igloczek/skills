@@ -19,11 +19,15 @@ steps.
 Make the skills available to the agent runner in the project:
 
 ```bash
-bunx skills add igloczek/skills --skill '*' --agent '*' --yes
+npx skills add igloczek/skills --skill '*' --agent '*' --yes
 ```
 
 Then run `setup` once in the project. It looks at the repo and records the
 commands and tools the runner should use. New work starts with `intake`.
+
+External skills are discovered, installed, updated, or used with the upstream
+`npx skills` CLI. This repository does not maintain a second registry, lockfile,
+version policy, or lifecycle around them.
 
 With Cezar, these Markdown files become workflow steps. A basic chain is:
 
@@ -49,6 +53,7 @@ context or design work when it needs them.
 | `build` | Core | Make the change and run feedback checks. |
 | `fix` | Core | Reproduce a bug, fix it, and add a regression check. |
 | `review` | Core | Look for broken behavior, security problems, compatibility issues, tests to add, and needless complexity. |
+| `review-standard` | Core | Review requested behavior, repository rules, compatibility, and tests. |
 | `verify` | Core | Run the checks that matter and show what passed. |
 | `finish` | Core | Handle the PR, checks, QA, and merge decision. |
 | `retro` | Core | Record what should change next time. |
@@ -117,9 +122,9 @@ flowchart TD
     build --> review["review<br/>required"]
     fix --> review
 
-    subgraph review_stage["Three reviewers · every change · same snapshot"]
+    subgraph review_stage["All reviewers · every change · same snapshot"]
         direction LR
-        standard_review["standard<br/>behavior + rules"]
+        standard_review["review-standard<br/>behavior + rules"]
         review_gilfoyle["review-gilfoyle<br/>runtime + security"]
         review_ponytail["review-ponytail<br/>simplicity + scope"]
         review_result{"review result"}
@@ -151,12 +156,19 @@ flowchart TD
 ```
 
 The runner sends each box to an agent and passes the result to the next box.
-`review` runs three separate, read-only reviewers after every `build` or `fix`:
-`standard` checks behavior and project rules, `review-gilfoyle` checks runtime
-and security, and `review-ponytail` checks simplicity and scope. All three
-use the same pinned diff, project checkout, and instructions. They can run in
-parallel and all three finish before the result goes to `verify`. Project
-experts give `shape`, `specify`, `build`, and `review` the rules they need.
+`review` invokes every available review skill after every `build` or `fix`, with
+`review-standard`, `review-gilfoyle`, and `review-ponytail` as the baseline.
+Reviewers receive the same pinned diff, project checkout, and original request;
+the review skill does not narrow their scope or prescribe an external reviewer's
+method. External skills are invoked through the normal runner or `npx skills`,
+and only their returned shape is normalized before the findings are joined.
+All reviewers finish before the result goes to `verify`. Project experts give
+`shape`, `specify`, `build`, and `review` the rules they need.
+
+`fix` uses the same delivery path as `build`; it only adds a reproduction and a
+regression check for the confirmed defect. `setup` repairs its own project
+configuration by rerunning its read-only check after each fixable gap. It does
+not create a separate setup-verification skill.
 
 The other add-ons fit around the core path: `how` and `why` help before shaping,
 `research` checks outside facts, `prototype` tries an idea, `wayfinder` splits
@@ -206,6 +218,7 @@ boundary and narrowed before the domain code uses it.
 
 The core workflow started with ideas from:
 
+- [vercel-labs/skills](https://github.com/vercel-labs/skills)
 - [Cursor's pstack skills](https://github.com/cursor/plugins/tree/main/pstack)
 - [open-mercato/skills](https://github.com/open-mercato/skills)
 - [mattpocock/skills](https://github.com/mattpocock/skills)

@@ -29,8 +29,9 @@ workflow to consume.
 ## change-executor
 
 Owner: `build` and `fix`. Work in an isolated branch/worktree, take small
-feedback-driven steps, reset an unproductive context trajectory with a compact
-handoff, run the configured validation, and leave a reviewable branch or PR.
+feedback-driven steps, run the configured validation, and leave a reviewable
+branch or PR. `fix` uses the same executor and adds only a reproduced symptom
+and regression check.
 
 ## tracker-lifecycle
 
@@ -40,11 +41,12 @@ claim locks, labels, idempotent comments, and lock cleanup.
 ## review-engine
 
 Owner: `review` and `finish`. Review standards, requested behavior, security,
-compatibility, tests, and architecture; route the public operational and
-minimality lanes and local domain experts only when relevant. Run the three
-core review personas on separate threads for every change, join their terminal
-results, and return a bounded, severity-ranked report with reviewer ownership
-preserved.
+compatibility, tests, architecture, operations, and minimality through every
+available review skill. Always run `review-standard`, `review-gilfoyle`, and
+`review-ponytail`; invoke additional project-local or external reviewers through
+the normal runner or `npx skills`. Do not narrow a reviewer's scope or omit a
+lane based on a heuristic. Join terminal results, normalize only the output
+shape, and preserve reviewer ownership and disagreements.
 
 ## evidence-engine
 

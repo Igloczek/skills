@@ -21,8 +21,10 @@ repo focused on those steps and the shared contracts they use.
 - Prefer composing existing skills over adding narrower or duplicate skills.
 - Keep `setup` separate from the delivery workflow. It stays project-local and
   agent-neutral; installation stays project-scoped.
-- Run the three review personas on every change: `standard`,
-  `review-gilfoyle`, and `review-ponytail`.
+- Run every available review skill on every change, including the baseline
+  `review-standard`, `review-gilfoyle`, and `review-ponytail` lanes. Do not omit
+  a lane based on a heuristic; invoke external skills through `npx skills` and
+  normalize their output only when joining the report.
 - Preserve input validation, security, accessibility, data-loss protection,
   and explicit human control over irreversible actions.
 - Treat quality metrics as changed-surface signals. Use configured tools only;
