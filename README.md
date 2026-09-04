@@ -40,10 +40,91 @@ npx skills use <source> --skill <name>
 This repo does not keep another registry, lockfile, version pin, installer, or
 updater for external skills.
 
+## Setup
+
+Run `setup` once in a project. It scans the repo, writes or repairs the local
+config, and makes the next run easier.
+
+```mermaid
+%%{init: {"theme":"base","themeVariables":{"fontFamily":"ui-sans-serif,system-ui,sans-serif","lineColor":"#94a3b8","primaryColor":"#eef2ff","primaryTextColor":"#172033","primaryBorderColor":"#6366f1","secondaryColor":"#ecfdf5","tertiaryColor":"#fff7ed"}}}%%
+flowchart LR
+    setup["setup<br/>once per repository"] --> inspect["inspect<br/>commands + docs"]
+    inspect --> configure["configure<br/>useful defaults"]
+    configure --> domain{"project rules useful?"}
+    domain -->|yes| domain_experts["project experts<br/>local only"]
+    domain -->|no| ready(["repository ready"])
+    domain_experts --> ready
+
+    classDef core fill:#eef2ff,stroke:#6366f1,color:#1e1b4b,stroke-width:1.5px;
+    classDef decision fill:#fff7ed,stroke:#f59e0b,color:#7c2d12,stroke-width:1.5px;
+    classDef local fill:#fff7ed,stroke:#f59e0b,color:#7c2d12,stroke-width:1.5px,stroke-dasharray:5 5;
+    classDef terminal fill:#f1f5f9,stroke:#475569,color:#0f172a,stroke-width:1.5px;
+    class setup,inspect,configure core;
+    class domain decision;
+    class domain_experts local;
+    class ready terminal;
+```
+
 ## Flow
 
 ```text
 intake -> specify -> build -> review -> verify -> finish
+```
+
+```mermaid
+%%{init: {"theme":"base","themeVariables":{"fontFamily":"ui-sans-serif,system-ui,sans-serif","lineColor":"#94a3b8","primaryColor":"#eef2ff","primaryTextColor":"#172033","primaryBorderColor":"#6366f1","secondaryColor":"#ecfdf5","tertiaryColor":"#f8fafc"}}}%%
+flowchart TD
+    request["request"] --> intake["intake<br/>classify work"]
+
+    intake -->|shape| shape["shape<br/>set scope"]
+    shape -->|intake| intake
+    shape -->|specify| specify["specify<br/>write checks + plan"]
+    shape -->|build| build["build<br/>implement"]
+    shape -->|none| done(["no code change"])
+
+    intake -->|specify| specify
+    intake -->|build| build
+    intake -->|fix| fix["fix<br/>reproduce + repair"]
+    intake -->|none| done
+
+    specify -->|shape| shape
+    specify -->|build| build
+    specify -->|none| done
+
+    build --> review["review<br/>required"]
+    fix --> review
+
+    subgraph review_stage["All reviewers · every change · same snapshot"]
+        direction LR
+        standard_review["review-standard<br/>behavior + rules"]
+        review_gilfoyle["review-gilfoyle<br/>runtime + security"]
+        review_ponytail["review-ponytail<br/>simplicity + scope"]
+        review_result{"review result"}
+    end
+
+    review --> standard_review
+    review --> review_gilfoyle
+    review --> review_ponytail
+    standard_review --> review_result
+    review_gilfoyle --> review_result
+    review_ponytail --> review_result
+
+    review_result -->|approved| verify["verify<br/>required"]
+    review_result -->|changes needed| rework["build / fix<br/>address findings"]
+    rework --> review
+
+    verify -. check failed .-> rework
+    verify --> finish["finish<br/>PR + merge choice"]
+    finish -. after delivery .-> retro["retro<br/>record what changed"]
+
+    classDef core fill:#eef2ff,stroke:#6366f1,color:#1e1b4b,stroke-width:1.5px;
+    classDef review fill:#ecfdf5,stroke:#059669,color:#064e3b,stroke-width:1.5px;
+    classDef decision fill:#fff7ed,stroke:#f59e0b,color:#7c2d12,stroke-width:1.5px;
+    classDef terminal fill:#f1f5f9,stroke:#475569,color:#0f172a,stroke-width:1.5px;
+    class request,intake,shape,specify,build,fix,review,rework,verify core;
+    class standard_review,review_gilfoyle,review_ponytail review;
+    class review_result decision;
+    class finish,retro terminal;
 ```
 
 - Use `shape` before `specify` or `build` when the request is fuzzy.
