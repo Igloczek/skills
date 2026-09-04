@@ -19,7 +19,9 @@ description: "Verify a change with repository tests and, when it is user-facing,
    just to satisfy this skill.
 5. When the change has an observable surface, exercise it with the configured
    environment and capture the smallest reproducible artifact. Run the
-   human/system QA procedure when it applies.
+   human/system QA procedure when it applies. If no repeatable control surface
+   exists, return `NEEDS_QA` with the missing prerequisite and route once to
+   `verification-setup`; after it returns `READY`, rerun this workflow.
 6. Diagnose failures from their evidence. Do not turn an infrastructure
    failure into a pass.
 7. Write a report and return the correct gate state.
@@ -29,6 +31,7 @@ description: "Verify a change with repository tests and, when it is user-facing,
 ```text
 Risk: LOW|MEDIUM|HIGH
 Scenario: <what was exercised>
+Control: <configured verification skill or repository harness|missing>
 Checks: <commands and observed results>
 Gates: <name=PASS|FAIL|SKIPPED|NOT_CONFIGURED; evidence>
 Quality: <signal=PASS|WARN|BLOCKED|NOT_RUN; evidence>

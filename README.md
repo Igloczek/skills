@@ -57,6 +57,7 @@ context or design work when it needs them.
 | `why` | Add-on | Use the docs, code, and history to find the likely intent. |
 | `prototype` | Add-on | Answer one design or interaction question with throwaway code. |
 | `research` | Add-on | Research an uncertain question and cite the sources. |
+| `verification-setup` | Add-on | Create a project-local way to launch, drive, observe, and clean up real behavior. |
 | `deep-design` | Add-on | Check how the parts fit before a risky change. |
 | `ux-proof` | Add-on | Check a user-facing change against the existing UI. |
 | `wayfinder` | Add-on | Break big work into smaller pieces that can be resumed. |
@@ -161,8 +162,9 @@ experts give `shape`, `specify`, `build`, and `review` the rules they need.
 
 The other add-ons fit around the core path: `how` and `why` help before shaping,
 `research` checks outside facts, `prototype` tries an idea, `wayfinder` splits
-large work, `deep-design` checks how parts fit, `ui-dev` handles UI changes,
-and `ux-proof` checks the user flow.
+large work, `deep-design` checks how parts fit, `verification-setup` creates a
+missing control surface, `ui-dev` handles UI changes, and `ux-proof` checks the
+user flow.
 
 ## What I check
 
