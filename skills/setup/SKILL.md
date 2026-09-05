@@ -35,28 +35,29 @@ providers.
 
 1. Read the repository's instructions and inspect its package manager, source
    layout, documentation paths, test/lint/build commands, tracker, and browser
-   setup if present. Check that `rg`, `jq`, `yq` (Mike Farah), and `fd` run in
-   the agent's shell. Install missing tools with the system package manager
+   setup if present.
+2. Check that `rg`, `jq`, `yq` (Mike Farah), and `fd` run in the agent's shell.
+   Install missing tools with the system package manager
    and verify with `--version`. Add their working command names and uses to
    the project's `AGENTS.md`, preserving existing instructions. Tell agents
    to prefer them over one-off scripts for text search, JSON, YAML, and file
    discovery.
-2. Detect whether the repository has domain-specific behavior or a UI. If
+3. Detect whether the repository has domain-specific behavior or a UI. If
    domain expertise is useful and the role, sources, boundary, and destination
    are clear, create the local expert. Otherwise continue without one and ask
    only when the missing decision changes correctness.
-3. Use the detected values and routes. A project may be ready with no domain
+4. Use the detected values and routes. A project may be ready with no domain
    experts; do not wait for a ceremony to prove that.
-4. Write or repair `.ai/skills.json` from
+5. Write or repair `.ai/skills.json` from
    [`references/skills-config.md`](references/skills-config.md). Preserve
    existing values, record detected validation and feedback commands in their
    defined fields, and keep credentials as environment-variable names or
    ignored file paths. This project-local repair is part of setup; do not pause
    for a second verification skill.
-5. Read [domain-expert.md](references/domain-expert.md) when one or more domain
+6. Read [domain-expert.md](references/domain-expert.md) when one or more domain
    experts are needed. Create or update each confirmed project-local
    domain-expert skill. Do not create local copies of public skills.
-6. Run `scripts/check.ts --require-setup`. If it reports a malformed or missing
+7. Run `scripts/check.ts --require-setup`. If it reports a malformed or missing
    setup value, repair that setup value and rerun the check until it is ready.
    Use the best available command, source, or domain rule. Ask only for missing
    information that cannot be inferred and blocks this setup.
