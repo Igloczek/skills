@@ -221,22 +221,6 @@ Every public skill has a name, a short description, a workflow, and an output
 shape. That is enough for a runner to pass one step to the next without making
 each agent rediscover the whole process.
 
-Every public skill has a `version` in its frontmatter, initially `0.1.0`.
-Use `MAJOR.MINOR.PATCH`: bump the changed skill's patch for corrections, minor
-for backward-compatible additions, and major for breaking contract changes.
-Changes to bundled references or scripts also count as changes to their skill.
-Versions are independent of the repository package version.
-
-### Evidence retention
-
-Evidence belongs in runner artifact storage or temporary storage by default,
-with commands and results in the handoff. Before keeping an artifact in a PR,
-ask: **Would a developer six months from now need this to understand a decision,
-operate the tool, or reproduce a meaningful check?** Keep the smallest useful
-form when warranted or explicitly required. Exclude raw logs, test output,
-and scratch reports by default. `verify` defines retention, `build` applies
-it before committing, and `finish` checks the final diff.
-
 ### Project-local context
 
 The collection stays generic. Repo-specific commands, paths, provider details,

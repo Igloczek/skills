@@ -66,7 +66,9 @@ Never use em dashes, semicolons, and other "complex" sentence constructions.
 - Every public skill in `skills/` is a contract. Keep valid frontmatter with a
   unique `name`, a `version` in `MAJOR.MINOR.PATCH` form, clear `description`,
   `## Voice`, and `## Output`. Bump the skill version when its instructions or
-  bundled resources change.
+  bundled resources change. Use patch for corrections, minor for compatible
+  additions, and major for breaking contracts. Skill versions are independent
+  of the package version.
 - Keep public skills generic. Project-specific rules and domain experts belong
   in the consuming project.
 - Use existing skills before adding a new one. Do not add a dependency,
