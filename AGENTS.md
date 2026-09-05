@@ -86,6 +86,11 @@ Never use em dashes, semicolons, and other "complex" sentence constructions.
   changes. Use patch for corrections, minor for compatible additions, and major
   for breaking contracts, including bundled resources. Skill versions are
   independent of the package version.
+- Before opening or updating a PR, check every changed skill and its bundled
+  resources for a version bump. Use the last release as the baseline, or the
+  PR base branch when no release exists. Bump changed behavior automatically
+  in the same PR. Keep an existing bump while iterating. Do not wait for the
+  owner to request it.
 - Keep public skills generic. Project-specific rules and domain experts belong
   in the consuming project.
 - Use existing skills before adding a new one. Do not add a dependency,

@@ -1,6 +1,6 @@
 ---
 name: setup
-version: 0.1.0
+version: 0.2.0
 description: "Bootstrap a repository for the shared skills, install useful CLI tools, and record local commands, documents, providers, and safe defaults without overwriting existing configuration."
 ---
 
