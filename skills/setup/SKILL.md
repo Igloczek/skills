@@ -35,7 +35,12 @@ providers.
 
 1. Read the repository's instructions and inspect its package manager, source
    layout, documentation paths, test/lint/build commands, tracker, and browser
-   setup if present. Complete the machine tools step below.
+   setup if present. Check that `rg`, `jq`, `yq` (Mike Farah), and `fd` run in
+   the agent's shell. Install missing tools with the system package manager
+   and verify with `--version`. Add their working command names and uses to
+   the project's `AGENTS.md`, preserving existing instructions. Tell agents
+   to prefer them over one-off scripts for text search, JSON, YAML, and file
+   discovery.
 2. Detect whether the repository has domain-specific behavior or a UI. If
    domain expertise is useful and the role, sources, boundary, and destination
    are clear, create the local expert. Otherwise continue without one and ask
@@ -61,44 +66,10 @@ and use a fallback when possible. A configuration check failure is a
 self-healing setup task when the missing value can be derived from the
 repository.
 
-## Machine tools
-
-Ensure `rg` (ripgrep), `jq`, `yq`, and `fd` are installed and usable in the
-agent's shell. Check command resolution and run each tool with `--version`. Install
-only missing tools through the machine's existing package manager, then rerun
-those checks. Respect required system permissions. If installation fails,
-report the missing tool and the concrete next action. Do not report setup as
-`READY` while a required tool is unavailable. In dry-run mode, report what
-would be installed without installing anything or editing project instructions.
-
-Use [Mike Farah's yq](https://github.com/mikefarah/yq) and verify the
-implementation from its version output. Package names and executable names
-can differ. If the package manager cannot supply a tool, use its official
-installation instructions. Do not replace an existing incompatible `yq`
-silently. Install alongside it and record the working command.
-
-Add or update a short `## CLI tools` section in the consuming project's root
-`AGENTS.md`. Preserve unrelated instructions and avoid duplicate sections.
-List only tools verified on this machine, with their actual command names and
-these uses:
-
-- `rg` for searching file contents. Use `rg --files` for a quick file inventory.
-- `jq` for querying and transforming JSON.
-- `yq` (Mike Farah) for querying and transforming YAML.
-- `fd` for finding files by name, extension, or path.
-
-Tell agents to prefer these tools for matching tasks before writing one-off
-Python or Node scripts. Use scripts when the CLI does not fit the task. Record
-alternate executable names such as `fdfind` when that is what the package
-provides. Do not assume a shell alias works in a non-interactive agent shell.
-Keep machine-specific absolute paths out of committed instructions. Recheck
-availability when moving to another machine or when a command fails.
-
 ## Output
 
-Report the config path, detected commands, verified CLI tools, the updated
-agent instructions path, enabled providers, the domain-expert paths or `none`,
-and remaining gaps. End with `Status: READY` or
+Report the config path, detected commands, verified CLI tools, enabled providers,
+the domain-expert paths or `none`, and remaining gaps. End with `Status: READY` or
 `Status: NEEDS_SETUP`. The initializer may additionally return `Status: DRY_RUN`.
 
 ## Rules

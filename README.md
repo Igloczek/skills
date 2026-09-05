@@ -130,11 +130,6 @@ npx skills use <source> --skill <name>
 Setup is deliberately boring: inspect the repo, record useful commands and
 paths, and add a local domain expert only when the project needs one.
 
-It also checks for `rg` (ripgrep), `jq`, `yq` (Mike Farah), and `fd`, installs
-missing tools, and verifies they run in the agent's shell. Setup records the
-verified commands and their uses in the project's `AGENTS.md`, with guidance
-to use them before writing one-off scripts for search, JSON, or YAML tasks.
-
 ```mermaid
 %%{init: {"theme":"base","themeVariables":{"fontFamily":"ui-sans-serif,system-ui,sans-serif","lineColor":"#94a3b8","primaryColor":"#eef2ff","primaryTextColor":"#172033","primaryBorderColor":"#6366f1","secondaryColor":"#ecfdf5","tertiaryColor":"#fff7ed"}}}%%
 flowchart LR
