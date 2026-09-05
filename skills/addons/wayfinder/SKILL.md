@@ -1,5 +1,6 @@
 ---
 name: wayfinder
+version: 0.1.0
 description: "Turn work larger than one agent session into a small decision map with blocking edges, a resolved frontier, and resumable handoffs."
 ---
 

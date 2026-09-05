@@ -1,5 +1,6 @@
 ---
 name: ux-proof
+version: 0.1.0
 description: "Shape and verify a user-facing change against the local design language using ranked findings and concrete visual evidence."
 ---
 

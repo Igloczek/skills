@@ -60,6 +60,11 @@ Owner: `verify`. Run immediately after `build`. Prove the changed
 product works, looks, and behaves as intended, then run repo-native tests and
 proportionate configured checks. Use UI/browser evidence when the change is
 user-facing. Keep credentials out of reports and clean up test processes.
+Evidence retention is defined in `verify`: use runner artifacts or temporary
+storage by default, with compact handoffs. `build` applies the retention test
+before committing. `finish` checks the final PR. Keep only explicit deliverables,
+project-required records, or the smallest artifacts useful six months later
+for understanding a decision, operating the tool, or reproducing a meaningful check.
 
 ## quality-signals
 

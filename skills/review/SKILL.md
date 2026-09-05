@@ -1,5 +1,6 @@
 ---
 name: review
+version: 0.1.0
 description: "Join independent review skills into one evidence-backed report for a change, while preserving every reviewer's findings and status."
 ---
 

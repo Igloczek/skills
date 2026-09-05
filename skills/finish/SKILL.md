@@ -1,5 +1,6 @@
 ---
 name: finish
+version: 0.1.0
 description: "Take one PR from its current state to done: product verification, review, checks, QA, merge, and cleanup."
 ---
 
@@ -19,7 +20,12 @@ mutation; recovery, batch, and dry-run are modes of this workflow.
 2. Do the next useful action in this order: run or finish product verification,
    continue work, fix CI, run code review, resolve a conflict, update the PR,
    or report readiness. Do not repeat a step that is already done.
-3. Make the requested changes and re-check the PR.
+3. Inspect the final diff for task-generated evidence. Exclude raw logs, test
+   output, and scratch reports unless explicitly required or useful to a
+   developer six months from now to understand a decision, operate the tool,
+   or reproduce a meaningful check. Keep necessary tests, fixtures, and docs.
+   Leave unrelated user files untouched. Make the requested changes and
+   re-check the PR.
 4. If code review changes behavior, run product verification again before
    reporting readiness.
 5. If the task calls for a merge and the real checks, QA, and conflicts are

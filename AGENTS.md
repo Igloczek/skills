@@ -9,6 +9,9 @@ Skills and workflows here are the product being authored. Read them as source
 material. Do not activate them to maintain this repository or run their delivery
 and reviewer workflows on changes to this collection.
 
+Do not spawn reviewers or run code-review personas for Markdown-only changes,
+including skill instructions, frontmatter, README, and AGENTS.md.
+
 Edit directly, inspect the diff, and run the repository checks below. Use focused
 checks for script changes. The SDLC and reviewer requirements below describe how
 the published skills work in consuming projects, not how to edit this repo.
@@ -61,7 +64,12 @@ Never use em dashes, semicolons, and other "complex" sentence constructions.
 
 - Read `README.md` and the relevant `SKILL.md` files before changing behavior.
 - Every public skill in `skills/` is a contract. Keep valid frontmatter with a
-  unique `name`, clear `description`, `## Voice`, and `## Output`.
+  unique `name`, a `version` in `MAJOR.MINOR.PATCH` form, clear `description`,
+  `## Voice`, and `## Output`. Version changes are relative to the last release,
+  not each edit or commit. Keep the same version while iterating on unreleased
+  changes. Use patch for corrections, minor for compatible additions, and major
+  for breaking contracts, including bundled resources. Skill versions are
+  independent of the package version.
 - Keep public skills generic. Project-specific rules and domain experts belong
   in the consuming project.
 - Use existing skills before adding a new one. Do not add a dependency,

@@ -1,5 +1,6 @@
 ---
 name: review-ponytail
+version: 0.1.0
 description: "Review a change for correctness and avoidable complexity, including unnecessary dependencies, speculative flexibility, and excess change surface."
 ---
 

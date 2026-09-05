@@ -1,5 +1,6 @@
 ---
 name: build
+version: 0.1.0
 description: "Implement or change code from a brief, specification, bug report, or direct request in an isolated branch, using feedback-driven checks and a reviewable PR."
 ---
 
@@ -59,6 +60,9 @@ Status: READY_FOR_VERIFY|BLOCKED|NEEDS_HUMAN
   cause, and leave a regression check.
 - Leave a clean, reviewable branch or PR and release temporary processes on
   exit.
+- Keep development logs and scratch artifacts out of commits unless explicitly
+  required or useful six months later to understand a decision, operate the
+  tool, or reproduce a meaningful check.
 - If a command or provider is missing, use a sensible available alternative and
   report the gap. Stop only when the missing thing is truly required and cannot
   be replaced.

@@ -1,5 +1,6 @@
 ---
 name: review-standard
+version: 0.1.0
 description: "Review a change for requested behavior, correctness, compatibility, security, data integrity, user impact, and test coverage with evidence-backed findings."
 ---
 

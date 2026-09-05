@@ -1,5 +1,6 @@
 ---
 name: review-gilfoyle
+version: 0.1.0
 description: "Review a change for correctness and operational risk, including runtime behavior, integrations, observability, and security."
 ---
 

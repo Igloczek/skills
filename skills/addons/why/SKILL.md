@@ -1,5 +1,6 @@
 ---
 name: why
+version: 0.1.0
 description: "Recover the likely intent behind existing code from repository history and available project evidence. Use before changing behavior whose rationale is unclear."
 ---
 

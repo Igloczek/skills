@@ -38,6 +38,7 @@ empty array and create none.
 ~~~~markdown
 ---
 name: domain-expert-{{DOMAIN_ROLE_SLUG}}
+version: 0.1.0
 description: Read-only domain authority for {{DOMAIN_ROLE}} decisions in this project.
 ---
 

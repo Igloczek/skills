@@ -1,5 +1,6 @@
 ---
 name: shape
+version: 0.1.0
 description: "Turn an idea or vague request into a small, explicit brief by resolving assumptions, alternatives, non-goals, and the next useful action."
 ---
 

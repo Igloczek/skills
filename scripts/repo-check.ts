@@ -33,6 +33,10 @@ function frontmatter(file: string): { name: string; description: string } {
   if (description.replace(/^['"]|['"]$/g, '').trim().length < 12) {
     fail(`${file}: description is too short`);
   }
+  const version = block?.match(/^version:[ \t]*(\S+)[ \t]*$/m)?.[1];
+  if (!version || !/^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$/.test(version)) {
+    fail(`${file}: missing or invalid frontmatter version (expected MAJOR.MINOR.PATCH)`);
+  }
   return { name, description };
 }
 

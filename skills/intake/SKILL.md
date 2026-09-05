@@ -1,5 +1,6 @@
 ---
 name: intake
+version: 0.1.0
 description: "Turn a brief or issue into one piece of work, classify it, choose the next step, and remove duplicates without implementing it."
 ---
 
