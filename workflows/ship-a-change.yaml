@@ -1,5 +1,5 @@
-name: skills-delivery
-description: Deliver one scoped feature, fix, or maintenance change through product verification and every reviewer.
+name: ship-a-change
+description: Implement one scoped change. Take a feature, bug, or refactor through code, verification, review, and a reviewable PR.
 steps:
   - id: intake
     skill: intake
@@ -11,7 +11,7 @@ steps:
       inventory and save them in the handoff for later worktree sessions.
       Use shape and specify when the change needs them. Use how, why, research,
       deep-design, or prototype only for questions that affect this change.
-      If the input is a large multi-session PRD, report that skills-product is the
+      If the input is a large multi-session PRD, report that deliver-a-project is the
       matching workflow rather than silently choosing one task as the whole scope.
       Save scope, acceptance criteria, Spec, Issue, Next, and real blockers.
       Preserve a no-action outcome or required blocker through later steps.

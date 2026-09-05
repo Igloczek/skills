@@ -87,7 +87,7 @@ Run this from the project root after installing the skills and running `setup`:
 
 ```bash
 mkdir -p .ai/cezar/workflows
-for workflow in skills-discovery skills-delivery skills-product; do
+for workflow in plan-a-project ship-a-change deliver-a-project; do
   curl -fL "https://raw.githubusercontent.com/Igloczek/skills/main/workflows/$workflow.yaml" \
     -o ".ai/cezar/workflows/$workflow.yaml" || break
 done
@@ -98,18 +98,18 @@ Choose the workflow in Cezar, select the runner and model, and enter the request
 or the path to your PRD. The skills installer does not install these YAML files.
 You can also copy them from this repository's `workflows/` folder.
 
-| Workflow | Use it for | Result |
+| Workflow | Choose it when | Result |
 | --- | --- | --- |
-| [skills-product](workflows/skills-product.yaml) | A large PRD or an entire feature set. | Research, design, task breakdown, every implementation slice, integrated verification, review, and PR readiness. |
-| [skills-discovery](workflows/skills-discovery.yaml) | An idea or PRD that needs investigation and a plan before coding. | Cited research, design decisions, specs, a task map, and a resume note. No production implementation. |
-| [skills-delivery](workflows/skills-delivery.yaml) | One scoped feature, bug, refactor, or maintenance task. | Build, product verification, every reviewer, and a reviewable PR. |
+| [plan-a-project](workflows/plan-a-project.yaml) | "Research and design this project. Give me a task plan before we code." | Research, design decisions, specs, and dependent tasks. Stops before production code. |
+| [deliver-a-project](workflows/deliver-a-project.yaml) | "Here is the PRD. Build the whole thing." | Planning plus every implementation task, integrated verification, review, and PR readiness. |
+| [ship-a-change](workflows/ship-a-change.yaml) | "Implement this one feature, fix, or refactor." | One scoped change, verified and reviewed, ready as a PR. |
 
-For "here is a big PRD, deliver it", choose **skills-product**. It tracks each
+For "here is a big PRD, deliver it", choose **deliver-a-project**. It tracks each
 requirement through dependent tasks and evidence. It details the next ready
 slices, implements and checks each one, then checks the integrated product.
-Finishing one task does not count as finishing the PRD. Use **skills-discovery**
+Finishing one task does not count as finishing the PRD. Use **plan-a-project**
 when you want the design and task plan first, then pass those artifacts to
-**skills-product** to continue.
+**deliver-a-project** to continue.
 
 The workflows inherit your runner and model. Keep the skills installed in the
 project so Cezar finds this collection before same-named vendor skills. Review

@@ -4,14 +4,19 @@ Install these YAML files in the consuming project's `.ai/cezar/workflows/`.
 Install the public skills and run `setup` first. These files compose the current
 skill contracts. They do not install skills or replace project setup.
 
-## Choose the scope
+## Choose the job
 
-- [skills-product](skills-product.yaml) takes a full PRD through research,
-  design, planning, all implementation tasks, and PR readiness.
-- [skills-discovery](skills-discovery.yaml) ends after research, design, and
-  planning. Use it when implementation is not yet requested.
-- [skills-delivery](skills-delivery.yaml) handles one scoped change, including
-  bugs. It does not treat one slice of a large PRD as the whole request.
+- [plan-a-project](plan-a-project.yaml): "Work out what to build and how."
+  Research, design, and task breakdown. Stops before production code.
+- [deliver-a-project](deliver-a-project.yaml): "Build the whole PRD."
+  Includes planning, every implementation task, integrated checks, and PR readiness.
+- [ship-a-change](ship-a-change.yaml): "Make this one change."
+  One feature, bug fix, or refactor through implementation, checks, and review.
+
+If you installed the previous names, remove their YAML files from the consuming
+project after installing the replacements so Cezar does not list both versions:
+`skills-discovery.yaml` became `plan-a-project.yaml`, `skills-product.yaml` became
+`deliver-a-project.yaml`, and `skills-delivery.yaml` became `ship-a-change.yaml`.
 
 ## Product phases
 
@@ -46,7 +51,7 @@ slice. The default is one implementation PR with coherent commits in Cezar's
 worktree. Request separate PRs when needed. Design-only PRs stay separate.
 Integrated verification and cumulative review catch defects between slices.
 
-To resume, continue the Cezar run or give a new `skills-product` run the original
+To resume, continue the Cezar run or give a new `deliver-a-project` run the original
 PRD, plan, specs, and resume note. The note records the branch, last verified
 commit, current frontier, and next task. Reuse current evidence and refresh
 stale decisions. A partial run must report unfinished tasks and its next action.

@@ -85,9 +85,9 @@ function main(): void {
   }
 
   const workflowSteps = {
-    'skills-delivery': ['intake', 'build', 'verify', 'review', 'finish'],
-    'skills-discovery': ['intake', 'research', 'design', 'plan'],
-    'skills-product': ['intake', 'research', 'design', 'plan', 'deliver', 'verify', 'review', 'finish'],
+    'ship-a-change': ['intake', 'build', 'verify', 'review', 'finish'],
+    'plan-a-project': ['intake', 'research', 'design', 'plan'],
+    'deliver-a-project': ['intake', 'research', 'design', 'plan', 'deliver', 'verify', 'review', 'finish'],
   };
   for (const [name, expectedSteps] of Object.entries(workflowSteps)) {
     const file = join(root, 'workflows', `${name}.yaml`);
@@ -103,7 +103,7 @@ function main(): void {
         && step.prompt.includes('{{task}}') && step.prompt.includes('CEZ_HANDOFF_FILE')
         && !('command' in step), `${file}: expected a known skill with task and handoff context`);
       if (step.id === 'review' || step.id === 'finish' || step.id === 'deliver'
-        || (name === 'skills-product' && step.id === 'verify')) {
+        || (name === 'deliver-a-project' && step.id === 'verify')) {
         const allowedTools = 'allowedTools' in step ? step.allowedTools : undefined;
         assert(Array.isArray(allowedTools)
           && ['Agent', 'Task', 'TaskOutput'].every(tool => allowedTools.includes(tool)),

@@ -1,5 +1,5 @@
-name: skills-discovery
-description: Turn an idea or PRD into research, design decisions, and a dependency-ordered task plan without production code.
+name: plan-a-project
+description: Plan only. Turn an idea or PRD into research, design decisions, specs, and dependent tasks. Stop before production code.
 steps:
   - id: intake
     skill: intake
@@ -66,4 +66,4 @@ steps:
       in the resume note and CEZ_HANDOFF_FILE. Create tracker tasks only when requested.
       This workflow ends with the plan. Report planned scope, unresolved questions,
       and the first implementation task. Do not implement production code or claim
-      delivery. Continue with skills-product and these artifacts when ready to build.
+      delivery. Continue with deliver-a-project and these artifacts when ready to build.

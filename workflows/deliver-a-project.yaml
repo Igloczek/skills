@@ -1,5 +1,5 @@
-name: skills-product
-description: Take a full PRD through research, design, task planning, every implementation slice, and integrated product delivery.
+name: deliver-a-project
+description: Deliver the whole project. Take a PRD through research, design, planning, every task, verification, and a reviewable PR.
 steps:
   - id: intake
     skill: intake
