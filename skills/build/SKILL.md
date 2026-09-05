@@ -51,13 +51,6 @@ Status: READY_FOR_VERIFY|BLOCKED|NEEDS_HUMAN
 
 ## Rules
 
-- Before committing, exclude task-generated logs, test output, screenshots,
-  and scratch reports from the PR by default. Keep them in runner artifact
-  storage or outside the repository. Retain only explicit deliverables,
-  project-required records, or artifacts useful to a developer six months
-  from now to understand a decision, operate the tool, or reproduce a
-  meaningful check. Keep the smallest useful form and leave unrelated user
-  files untouched.
 - Never merge the PR.
 - Do not edit a spec PR with implementation code.
 - Use this same path for features, fixes, maintenance, refactors, and other
@@ -67,6 +60,8 @@ Status: READY_FOR_VERIFY|BLOCKED|NEEDS_HUMAN
   cause, and leave a regression check.
 - Leave a clean, reviewable branch or PR and release temporary processes on
   exit.
+- Keep development logs and scratch artifacts out of commits by default.
+  Apply the evidence retention rules from `verify`.
 - If a command or provider is missing, use a sensible available alternative and
   report the gap. Stop only when the missing thing is truly required and cannot
   be replaced.
