@@ -1,5 +1,5 @@
 import { accessSync, constants, existsSync, readFileSync, realpathSync, statSync } from 'node:fs';
-import { isAbsolute, join, relative, resolve, sep } from 'node:path';
+import { dirname, isAbsolute, join, relative, resolve, sep } from 'node:path';
 
 type Options = {
   projectDir: string;
@@ -53,9 +53,12 @@ function isInside(root: string, candidate: string): boolean {
 }
 
 function projectPath(projectDir: string, value: string): string {
+  if (isAbsolute(value)) throw new Error(`path must be project-relative: ${value}`);
   const candidate = resolve(projectDir, value);
   if (!isInside(projectDir, candidate)) throw new Error(`path must stay inside project: ${value}`);
-  if (existsSync(candidate) && !isInside(projectDir, realpathSync(candidate))) {
+  let existingPath = candidate;
+  while (!existsSync(existingPath) && existingPath !== projectDir) existingPath = dirname(existingPath);
+  if (!isInside(projectDir, realpathSync(existingPath))) {
     throw new Error(`path resolves outside project: ${value}`);
   }
   return candidate;
@@ -97,27 +100,50 @@ function parseDomainExpert(value: unknown): DomainExpert {
 }
 
 function configuredDescriptor(value: unknown): boolean {
-  return (typeof value === 'string' && value.trim().length > 0)
-    || (Array.isArray(value) && value.length > 0)
-    || (isRecord(value) && Object.keys(value).length > 0);
+  if (typeof value === 'string') return value.trim().length > 0;
+  if (Array.isArray(value)) return value.length > 0 && value.every(configuredDescriptor);
+  if (!isRecord(value)) return false;
+  const entries = Object.entries(value);
+  return entries.length > 0
+    && entries.every(([name, descriptor]) => name.trim() && configuredDescriptor(descriptor));
 }
 
 function configuredEntries(config: Record<string, unknown>, key: string): number {
   const value = config[key];
-  if (value === undefined || value === null) return 0;
-  if (Array.isArray(value)) {
-    if (value.some(entry => !configuredDescriptor(entry))) {
-      throw new Error(`${key} contains an empty or invalid descriptor`);
-    }
-    return value.length;
-  }
-  if (!isRecord(value)) throw new Error(`${key} must be an object or array`);
+  if (!isRecord(value)) throw new Error(`${key} must be an object`);
   for (const [name, descriptor] of Object.entries(value)) {
     if (!name.trim() || !configuredDescriptor(descriptor)) {
       throw new Error(`${key} contains an empty or invalid descriptor`);
     }
   }
   return Object.keys(value).length;
+}
+
+function configuredCommands(config: Record<string, unknown>): { feedback: number; validation: number } {
+  const value = config.commands;
+  if (!isRecord(value)) throw new Error('commands must be an object');
+  const { feedback, validation } = value;
+  if (!Array.isArray(validation) || validation.length === 0
+    || validation.some(command => typeof command !== 'string' || !command.trim())) {
+    throw new Error('commands.validation must be a non-empty string array');
+  }
+  if (feedback !== undefined && (!Array.isArray(feedback)
+    || feedback.some(command => typeof command !== 'string' || !command.trim()))) {
+    throw new Error('commands.feedback must be a string array');
+  }
+  return { validation: validation.length, feedback: Array.isArray(feedback) ? feedback.length : 0 };
+}
+
+function configuredPaths(config: Record<string, unknown>, projectDir: string): number {
+  const value = config.paths;
+  if (!isRecord(value)) throw new Error('paths must be an object');
+  const required = ['briefs', 'specs', 'research', 'work'];
+  for (const key of required) {
+    const path = value[key];
+    if (typeof path !== 'string' || !path.trim()) throw new Error(`paths.${key} must be a path`);
+    projectPath(projectDir, path);
+  }
+  return required.length;
 }
 
 function domainExperts(config: Record<string, unknown>): DomainExpert[] {
@@ -157,8 +183,11 @@ function main(): void {
 
   if (!aiDirectoryReady && aiDirectoryExists) {
     failures.push(`.ai exists but is not a directory: ${aiDirectory}`);
+  } else if (aiDirectoryReady && !isInside(projectDir, realpathSync(aiDirectory))) {
+    failures.push(`.ai resolves outside project: ${aiDirectory}`);
   } else if (configExists) {
     try {
+      projectPath(projectDir, relative(projectDir, configPath));
       config = readSetupConfig(configPath);
       console.log(`AI_CONFIG: ${configPath} (VALID)`);
     } catch (error: unknown) {
@@ -173,10 +202,13 @@ function main(): void {
 
   if (config) {
     try {
-      const commandCount = configuredEntries(config, 'commands');
+      if (config.version !== 1) throw new Error('version must be 1');
+      const commandCount = configuredCommands(config);
       const providerCount = configuredEntries(config, 'providers');
-      console.log(`COMMANDS: ${commandCount || 'NONE'}`);
+      const pathCount = configuredPaths(config, projectDir);
+      console.log(`COMMANDS: validation=${commandCount.validation}, feedback=${commandCount.feedback}`);
       console.log(`PROVIDERS: ${providerCount || 'NONE'}`);
+      console.log(`PATHS: ${pathCount}`);
       const experts = domainExperts(config);
       if (experts.length === 0) {
         console.log('DOMAIN_EXPERTS: NONE');

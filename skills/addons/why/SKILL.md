@@ -3,6 +3,12 @@ name: why
 description: "Recover the likely intent behind existing code from repository history and available project evidence. Use before changing behavior whose rationale is unclear."
 ---
 
+## Voice
+
+Write like a blunt developer talking to another developer. Use plain words,
+short sentences, and no corporate filler. No yap. Say what happened, what is
+wrong, and what happens next.
+
 Use after `how` when the source explains what happens but not why it is that
 way. Use `research` for external facts rather than turning this into a broad
 research exercise.

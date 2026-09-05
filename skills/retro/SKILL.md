@@ -3,6 +3,12 @@ name: retro
 description: "Review a completed delivery run and produce a short, evidence-backed list of process improvements without changing the repository by default."
 ---
 
+## Voice
+
+Write like a blunt developer talking to another developer. Use plain words,
+short sentences, and no corporate filler. No yap. Say what happened, what is
+wrong, and what happens next.
+
 ## Workflow
 
 1. Collect the run, PR, CI, review, QA, and rework evidence available locally,

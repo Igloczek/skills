@@ -3,22 +3,25 @@
 These are shared contracts, not installable skills. A public workflow owns the
 primitive; the primitive must not become another user-facing command.
 
-## context-and-safety
+All agent-facing text uses blunt developer language: plain words, short
+sentences, no corporate filler, and no yap.
+
+## context
 
 Owner: `setup` and every workflow. Load project instructions and local config,
-discover and scope relevant project-local domain experts, mark untrusted content,
-redact secrets, and refuse unsafe or ambiguous mutations.
+find useful project-local domain experts, and keep real input, security, and
+data-loss checks. Do not turn normal work into an approval exercise.
 
-## decision-gate
+## decision
 
-Owner: `shape` and `specify`. Decide whether to build, ask, assume with a
-record, or stop. A missing answer must never be silently invented when it
-changes the contract.
+Owner: `shape` and `specify`. Pick the smallest useful path. Assume and record
+when the assumption is reversible. Ask only when the answer changes the
+contract or the next action is destructive; otherwise keep moving.
 
 ## work-item-normalizer
 
-Owner: `intake` and `fix`. Turn a brief or issue into a deduplicated,
-classified, agent-ready work item without rewriting the original request.
+Owner: `intake`. Turn a brief or issue into a deduplicated, classified,
+agent-ready work item without rewriting the original request.
 
 ## artifact-contract
 
@@ -28,29 +31,35 @@ workflow to consume.
 
 ## change-executor
 
-Owner: `build` and `fix`. Work in an isolated branch/worktree, take small
-feedback-driven steps, reset an unproductive context trajectory with a compact
-handoff, run the configured validation, and leave a reviewable branch or PR.
+Owner: `build`. Work in an isolated branch/worktree, take small
+feedback-driven steps, run the configured validation, and leave a reviewable
+branch or PR. Use the same executor for features, fixes, maintenance, and
+refactors. For a reported bug, reproduce it, fix the root cause, and add a
+regression check. There is no separate bug workflow.
 
 ## tracker-lifecycle
 
-Owner: all workflows that mutate a tracker. Centralize provider operations,
-claim locks, labels, idempotent comments, and lock cleanup.
+Owner: workflows that mutate a tracker. Use the configured provider, avoid
+duplicate comments or items, and do the requested mutation. Do not add team
+lock ceremony to a solo workflow.
 
 ## review-engine
 
-Owner: `review` and `finish`. Review standards, requested behavior, security,
-compatibility, tests, and architecture; route the public operational and
-minimality lanes and local domain experts only when relevant. Run the three
-core review personas on separate threads for every change, join their terminal
-results, and return a bounded, severity-ranked report with reviewer ownership
-preserved.
+Owner: `review` and `finish`. Run after `evidence-engine` has checked the
+product. Run every available review skill, including `review-standard`,
+`review-gilfoyle`, and `review-ponytail`; invoke additional project-local or
+external reviewers through the normal runner or `npx skills`. Do not narrow a
+reviewer's scope or omit a lane based on a heuristic. Join the results,
+normalize only the output shape, and keep disagreements visible. Review checks
+the implementation against verified intent. It does not redefine the product.
+If review causes code changes, run `evidence-engine` again before delivery.
 
 ## evidence-engine
 
-Owner: `verify`. Combine repo-native tests with proportionate configured quality
-gates and UI/browser evidence when the change is user-facing. Keep credentials
-indirect and clean up test processes.
+Owner: `verify`. Run immediately after `build`. Prove the changed
+product works, looks, and behaves as intended, then run repo-native tests and
+proportionate configured checks. Use UI/browser evidence when the change is
+user-facing. Keep credentials out of reports and clean up test processes.
 
 ## quality-signals
 
@@ -75,9 +84,10 @@ tool or reason and its evidence.
 
 A warning is not a blocker unless project policy or change risk makes it one.
 Legacy findings may remain, but new changed-code violations should be explicit.
+`BLOCKED` means a required input, tool, or decision is actually unavailable;
+it does not mean a reviewer dislikes the risk or an optional check was skipped.
 
 ## pr-state-dispatcher
 
-Owner: `finish`. Read the current PR state, choose the next allowed gate,
-re-check after each mutation, and never turn a readiness report into an
-implicit merge.
+Owner: `finish`. Read the current PR state, do the next useful action, and
+re-check after mutations. Never turn a readiness report into an implicit merge.

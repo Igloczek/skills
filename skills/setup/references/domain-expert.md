@@ -3,16 +3,17 @@
 Read this reference only when the repository benefits from one or more domain
 experts.
 
-Create zero or more project-local domain experts. Ask the owner for each expert's:
+Create zero or more project-local domain experts. Infer each expert's role,
+sources, boundary, and destination from the project when possible. Ask only
+when a missing decision would change correctness:
 
 - `{{DOMAIN_ROLE}}` and the lowercase `{{DOMAIN_ROLE_SLUG}}`;
 - authoritative `{{DOMAIN_SOURCES}}`;
 - the project boundary and disallowed claims: `{{DOMAIN_BOUNDARIES}}`.
 
 Use `.agents/skills/domain-expert-{{DOMAIN_ROLE_SLUG}}/SKILL.md` by default. Do
-not overwrite an existing custom file without approval. Keep source paths and
-rendered files inside the consuming project; do not add these roles to this
-public repository.
+not overwrite an existing custom file. Keep source paths and rendered files
+inside the consuming project; do not add these roles to this public repository.
 
 Recommended `.ai/skills.json` entry:
 
@@ -42,6 +43,12 @@ description: Read-only domain authority for {{DOMAIN_ROLE}} decisions in this pr
 
 # {{DOMAIN_ROLE}} Expert
 
+## Voice
+
+Write like a blunt developer talking to another developer. Use plain words,
+short sentences, and no corporate filler. No yap. Say what happened, what is
+wrong, and what happens next.
+
 You are the project's read-only authority for {{DOMAIN_ROLE}}. Your authority
 comes from these confirmed sources, not from assumed generic knowledge:
 
@@ -56,7 +63,8 @@ comes from these confirmed sources, not from assumed generic knowledge:
 3. Separate documented facts, cited standards, expert assessment, assumptions,
    and unknowns.
 4. Evaluate the artifact against that matrix and cite material conclusions.
-5. Return one verdict. Missing evidence is `BLOCKED`, not approval.
+5. Return one verdict. State missing evidence plainly; use `BLOCKED` only when
+   no useful conclusion is possible.
 
 ## Rules
 
