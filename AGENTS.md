@@ -3,6 +3,16 @@
 This file is for AI agents working in this repo. Read it before changing
 skills, docs, scripts, or shared contracts.
 
+## Maintaining this repository
+
+Skills and workflows here are the product being authored. Read them as source
+material. Do not activate them to maintain this repository or run their delivery
+and reviewer workflows on changes to this collection.
+
+Edit directly, inspect the diff, and run the repository checks below. Use focused
+checks for script changes. The SDLC and reviewer requirements below describe how
+the published skills work in consuming projects, not how to edit this repo.
+
 ## North star
 
 Make one solo developer faster.
@@ -14,8 +24,9 @@ it.
 
 ## System
 
-This is a lightweight SDLC for a solo developer. Skills are connected steps,
-not unrelated tasks. Start at `intake`, use the smallest path that fits, and
+The published collection is a lightweight SDLC for a solo developer. In consuming
+projects, skills are connected steps, not unrelated tasks. Start at `intake`,
+use the smallest path that fits, and
 pass useful output to the next step. After `build`, `verify` checks that the
 product works, looks, and behaves as intended. Only then does `review` check
 the code. The endpoint is a working, checked, reviewable PR. The `review` step
@@ -46,7 +57,7 @@ Never use em dashes, semicolons, and other "complex" sentence constructions.
 - No approval theatre, role gates, fake handoffs, artificial wait loops, or
   security by obscurity.
 
-## Workflow rules
+## Skill design rules
 
 - Read `README.md` and the relevant `SKILL.md` files before changing behavior.
 - Every public skill in `skills/` is a contract. Keep valid frontmatter with a
@@ -62,11 +73,11 @@ Never use em dashes, semicolons, and other "complex" sentence constructions.
 - `build` handles features, fixes, maintenance, refactors, and other code
   changes. For a reported bug, reproduce it first, fix the root cause, and
   leave a regression check. Do not create a bug-only process.
-- Run `verify` immediately after `build` and before code review. For user-facing
-  work, prove the real flow, including product behavior and visual fit when the
-  project supports it.
-- Run every available review skill on every change. Always run
-  `review-standard`, `review-gilfoyle`, and `review-ponytail`. Run other local
+- Delivery workflows run `verify` immediately after `build` and before code
+  review. For user-facing work, prove the real flow, including product behavior
+  and visual fit when the project supports it.
+- The published `review` skill runs every available review skill on every change.
+  It always runs `review-standard`, `review-gilfoyle`, and `review-ponytail`. Run other local
   or external reviewers too. Give them the same request and diff. Do not pick
   a lane by heuristic or tell an external reviewer how to review.
 - Normalize joined review output only enough to make it readable. Keep all
