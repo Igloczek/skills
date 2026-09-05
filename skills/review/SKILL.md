@@ -1,5 +1,6 @@
 ---
 name: review
+version: 0.1.0
 description: "Review a diff against repository standards and requested behavior, including security, compatibility, tests, complexity, and proportionate quality signals."
 ---
 

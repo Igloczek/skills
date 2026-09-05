@@ -21,6 +21,10 @@ function frontmatter(file: string): { name: string; description: string } {
   const name = block?.match(/^name:\s*(.+?)\s*$/m)?.[1]?.trim();
   const description = block?.match(/^description:\s*(.+?)\s*$/m)?.[1]?.trim();
   if (!name || !description) fail(`${file}: missing frontmatter name/description`);
+  const version = block?.match(/^version:[ \t]*(\S+)[ \t]*$/m)?.[1];
+  if (!version || !/^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$/.test(version)) {
+    fail(`${file}: missing or invalid frontmatter version (expected MAJOR.MINOR.PATCH)`);
+  }
   return { name, description };
 }
 

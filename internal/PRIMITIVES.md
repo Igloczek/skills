@@ -50,7 +50,12 @@ preserved.
 
 Owner: `verify`. Combine repo-native tests with proportionate configured quality
 gates and UI/browser evidence when the change is user-facing. Keep credentials
-indirect and clean up test processes.
+indirect and clean up test processes. Evidence retention is defined in
+`verify`: use runner artifacts or temporary storage by default, with compact
+handoffs. `build` and `fix` apply the retention test before committing;
+`finish` checks the final PR. Keep only explicit deliverables, project-required
+records, or the smallest artifacts useful six months later for understanding
+a decision, operating the tool, or reproducing a meaningful check.
 
 ## quality-signals
 

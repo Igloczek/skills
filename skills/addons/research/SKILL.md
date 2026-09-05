@@ -1,5 +1,6 @@
 ---
 name: research
+version: 0.1.0
 description: "Investigate an external or uncertain question with high-trust primary sources and return cited findings for shaping or specification."
 ---
 

@@ -1,5 +1,6 @@
 ---
 name: fix
+version: 0.1.0
 description: "Resolve a suspected defect by reproducing it, finding the smallest root cause, adding a regression test, and producing a reviewable fix."
 ---
 
@@ -25,6 +26,14 @@ PR: #<number> (link: <url>)|none
 Include reproduction, root cause, regression, validation, and remaining risk.
 
 ## Rules
+
+- Before committing, exclude task-generated logs, test output, screenshots,
+  and scratch reports from the PR by default; keep them in runner artifact
+  storage or outside the repository. Retain only explicit deliverables,
+  project-required records, or artifacts useful to a developer six months
+  from now to understand a decision, operate the tool, or reproduce a
+  meaningful check. Keep the smallest useful form and leave unrelated user
+  files untouched.
 
 - Do not change behavior without a reproduction or a documented reason.
 - Do not hide a failed reproduction behind a speculative patch.

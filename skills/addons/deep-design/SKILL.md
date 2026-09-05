@@ -1,5 +1,6 @@
 ---
 name: deep-design
+version: 0.1.0
 description: "Examine module boundaries, domain language, and architecture when a change risks adding coupling or making the codebase harder to change."
 ---
 

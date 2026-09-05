@@ -1,5 +1,6 @@
 ---
 name: how
+version: 0.1.0
 description: "Explain how an existing feature, module, or data flow works before changing it. Use when behavior is unclear or a safe change needs a short code-grounded map."
 ---
 

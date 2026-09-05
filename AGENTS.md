@@ -15,14 +15,20 @@ repo focused on those steps and the shared contracts they use.
 
 - Read `README.md` and the relevant `SKILL.md` files before changing behavior.
 - Treat every `skills/*/SKILL.md` as a public contract. Keep valid frontmatter
-  with a unique `name` and a clear `description`.
+  with a unique `name`, a `version` in `MAJOR.MINOR.PATCH` form, and a clear
+  `description`. Bump the skill version when its instructions or bundled resources change.
 - Keep public skills generic and project-agnostic. Project-specific domain
   experts belong in the consuming repository, not here.
 - Prefer composing existing skills over adding narrower or duplicate skills.
 - Keep `setup` separate from the delivery workflow. It stays project-local and
   agent-neutral; installation stays project-scoped.
-- Run the three review personas on every change: `standard`,
-  `review-gilfoyle`, and `review-ponytail`.
+- Treat this repo's skills as content being authored, not instructions for
+  working on this repo. Do not execute their workflows or review personas
+  against changes to the skills themselves unless the user explicitly asks.
+- Do not spawn reviewers or run code-review personas for Markdown-only changes,
+  including skill instructions, frontmatter, README, and AGENTS.md. Inspect the
+  diff directly and run only the repository validation below. Executable-code
+  changes get proportionate checks, not an automatic multi-reviewer workflow.
 - Preserve input validation, security, accessibility, data-loss protection,
   and explicit human control over irreversible actions.
 - Treat quality metrics as changed-surface signals. Use configured tools only;

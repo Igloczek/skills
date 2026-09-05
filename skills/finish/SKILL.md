@@ -1,5 +1,6 @@
 ---
 name: finish
+version: 0.1.0
 description: "Drive one PR through its remaining review, CI, QA, and merge gates, with explicit control over irreversible actions and post-merge cleanup."
 ---
 
@@ -12,7 +13,12 @@ mutation; recovery, batch, and dry-run are modes of this workflow.
    labels, conflicts, and QA evidence.
 2. Select the next missing gate: continuation, review, CI repair, QA, or
    readiness report. Do not run a step that is already satisfied.
-3. Make only authorized reversible changes and re-evaluate the PR.
+3. Inspect the final diff for task-generated evidence. Exclude raw logs, test
+   output, and scratch reports unless explicitly required or useful to a
+   developer six months from now to understand a decision, operate the tool,
+   or reproduce a meaningful check. Keep necessary tests, fixtures, and docs;
+   leave unrelated user files untouched. Make only authorized reversible
+   changes and re-evaluate the PR.
 4. Refuse merge when required checks, approval, QA, or conflict resolution is
    missing.
 5. Merge only with explicit `--allow-merge`-style confirmation, then run

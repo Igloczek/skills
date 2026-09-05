@@ -1,5 +1,6 @@
 ---
 name: specify
+version: 0.1.0
 description: "Turn an actionable brief or feature issue into a stable contract and the next small, testable slice without mixing design and code."
 ---
 

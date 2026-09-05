@@ -1,5 +1,6 @@
 ---
 name: setup
+version: 0.1.0
 description: "Bootstrap a repository for the shared skills, install missing upstream companions, and record local commands, documents, providers, and safe defaults without overwriting existing configuration."
 ---
 

@@ -1,5 +1,6 @@
 ---
 name: prototype
+version: 0.1.0
 description: "Build a disposable prototype to answer a concrete design or interaction question before committing to production implementation."
 ---
 

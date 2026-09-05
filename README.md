@@ -63,6 +63,12 @@ context or design work when it needs them.
 | `review-ponytail` | Core | Find code and dependencies to remove. |
 | `ui-dev` | Add-on | Build UI changes with basic accessibility and good interaction. |
 
+Every public skill has a `version` in its frontmatter, initially `0.1.0`.
+Use `MAJOR.MINOR.PATCH`: bump the changed skill's patch for corrections, minor
+for backward-compatible additions, and major for breaking contract changes.
+Changes to bundled references or scripts also count as changes to their skill.
+Versions are independent of the repository package version.
+
 ## Setup (once per repository)
 
 Run `setup` once in a repository. It finds the commands and tools already
@@ -193,6 +199,14 @@ Each skill that changes files records:
 - prompts, files, comments, and reports stay free of secrets;
 - `Status:`, `Next:`, `Spec:`, `Issue:`, and `PR:` when another skill needs the result;
 - a clear stop when a required tool, command, or file is missing.
+
+Evidence belongs in runner artifact storage or temporary storage by default,
+with commands and results in the handoff. Before keeping an artifact in a PR,
+ask: **Would a developer six months from now need this to understand a decision,
+operate the tool, or reproduce a meaningful check?** Keep the smallest useful
+form when warranted or explicitly required; exclude raw logs, test output,
+and scratch reports by default. `verify` defines retention; `build` and `fix`
+apply it before committing, and `finish` checks the final diff.
 
 Merging stays under the user's control. UI work gets UI checks; other changes
 use the checks for their code and systems.

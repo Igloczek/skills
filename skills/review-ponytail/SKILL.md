@@ -1,5 +1,6 @@
 ---
 name: review-ponytail
+version: 0.1.0
 description: "Review a change for over-engineering, unnecessary complexity, and avoidable change surface as one of the three review personas."
 ---
 

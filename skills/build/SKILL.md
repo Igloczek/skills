@@ -1,5 +1,6 @@
 ---
 name: build
+version: 0.1.0
 description: "Implement a brief or specification in an isolated branch, using small feedback-driven steps, tests, and the repository validation gate."
 ---
 
@@ -37,6 +38,14 @@ Status: READY_FOR_REVIEW|BLOCKED|NEEDS_HUMAN
 ```
 
 ## Rules
+
+- Before committing, exclude task-generated logs, test output, screenshots,
+  and scratch reports from the PR by default; keep them in runner artifact
+  storage or outside the repository. Retain only explicit deliverables,
+  project-required records, or artifacts useful to a developer six months
+  from now to understand a decision, operate the tool, or reproduce a
+  meaningful check. Keep the smallest useful form and leave unrelated user
+  files untouched.
 
 - Never merge the PR.
 - Do not edit a spec PR with implementation code.

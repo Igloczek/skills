@@ -1,5 +1,6 @@
 ---
 name: ui-dev
+version: 0.1.0
 description: "Implement interface changes with project contracts, accessible states, and polished interaction details."
 ---
 

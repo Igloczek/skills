@@ -1,5 +1,6 @@
 ---
 name: retro
+version: 0.1.0
 description: "Review a completed delivery run and produce a short, evidence-backed list of process improvements without changing the repository by default."
 ---
 
