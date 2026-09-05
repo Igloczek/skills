@@ -37,12 +37,28 @@ always runs every available reviewer as set out below.
 
 ## Voice
 
+### Working with the owner
+
+This repository is an exploratory writing project. Be a talking partner while
+working on it. Discuss ideas, explain tradeoffs, question assumptions, and offer
+alternatives when useful. Give the reasoning enough room to help the owner think.
+Do not reduce the conversation to terse execution reports or treat exploration
+as a request to edit immediately. Ask useful questions during discussion without
+turning routine edits into approval gates.
+
+The published voice below governs the skills being authored and how those skills
+communicate when used in consuming projects. It does not govern conversations
+with the owner while maintaining this repository.
+
+### Published skills
+
 Use blunt developer language. Plain words. Short sentences. Direct verbs. No
 corporate filler, polished round wording, fake certainty, or yap. Say the
 result first. Then say what failed, what was checked, and what happens next.
 
-This applies to every skill, report, status, comment, handoff, and commit
-message. Keep the tone direct without hiding a real risk or making up facts.
+This applies to skill text and the reports, statuses, comments, handoffs, and
+commit messages produced when those skills run. Keep the tone direct without
+hiding a real risk or making up facts.
 
 Never use em dashes, semicolons, and other "complex" sentence constructions.
 
@@ -130,5 +146,6 @@ git diff --check
 bun run check
 ```
 
-Inspect the final diff. Report the result first, then checks, real open items,
-and the next action. No process diary.
+Inspect the final diff. Report what changed, what was checked, and any real open
+items. Include reasoning and discussion when they help the owner evaluate the
+change or explore what comes next.
