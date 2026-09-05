@@ -1,3 +1,5 @@
+import assert from 'node:assert/strict';
+import { YAML } from 'bun';
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import { basename, dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -80,6 +82,37 @@ function main(): void {
 
   if (files(join(root, 'internal')).some(file => file.endsWith('SKILL.md'))) {
     fail('internal docs must not be installable skills');
+  }
+
+  const workflowSteps = {
+    'skills-delivery': ['intake', 'build', 'verify', 'review', 'finish'],
+    'skills-discovery': ['intake', 'research', 'design', 'plan'],
+    'skills-product': ['intake', 'research', 'design', 'plan', 'deliver', 'verify', 'review', 'finish'],
+  };
+  for (const [name, expectedSteps] of Object.entries(workflowSteps)) {
+    const file = join(root, 'workflows', `${name}.yaml`);
+    const workflow: unknown = YAML.parse(readFileSync(file, 'utf8'));
+    assert(workflow && typeof workflow === 'object' && 'name' in workflow
+      && workflow.name === name && 'steps' in workflow && Array.isArray(workflow.steps)
+      && !('skills' in workflow), `${file}: invalid workflow`);
+    const stepIds: string[] = [];
+    for (const step of workflow.steps as unknown[]) {
+      assert(step && typeof step === 'object' && 'id' in step && typeof step.id === 'string'
+        && 'skill' in step && typeof step.skill === 'string' && names.has(step.skill)
+        && 'prompt' in step && typeof step.prompt === 'string'
+        && step.prompt.includes('{{task}}') && step.prompt.includes('CEZ_HANDOFF_FILE')
+        && !('command' in step), `${file}: expected a known skill with task and handoff context`);
+      if (step.id === 'review' || step.id === 'finish' || step.id === 'deliver'
+        || (name === 'skills-product' && step.id === 'verify')) {
+        const allowedTools = 'allowedTools' in step ? step.allowedTools : undefined;
+        assert(Array.isArray(allowedTools)
+          && ['Agent', 'Task', 'TaskOutput'].every(tool => allowedTools.includes(tool)),
+        `${file}: ${step.id} must allow independent reviewers, including after repairs`);
+      }
+      stepIds.push(step.id);
+    }
+    assert.deepEqual(stepIds, expectedSteps, `${file}: unexpected phase order`);
+    assert(readme.includes(`workflows/${name}.yaml`), `${file}: missing README link`);
   }
 
   const obsoleteManifest = join(root, 'skills', 'setup', 'references', 'external-skills.json');

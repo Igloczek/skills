@@ -1,0 +1,69 @@
+name: skills-discovery
+description: Turn an idea or PRD into research, design decisions, and a dependency-ordered task plan without production code.
+steps:
+  - id: intake
+    skill: intake
+    prompt: |
+      Request: {{task}}
+
+      Read CEZ_HANDOFF_FILE, project instructions, and the complete input document
+      or linked PRD. Preserve the original source and full requested outcome.
+      Apply intake. Require project setup to be ready before delivery work.
+      Use Cezar's supplied absolute skill directory and the runner inventory to
+      locate installed skills. Save their absolute paths in the handoff so fresh
+      worktrees can read them. Prefer this project's installed collection over
+      same-named vendor skills. Report a missing required skill instead of guessing.
+      Save classification, scope, acceptance summary, Issue, Next, and Status.
+      Carry no-action outcomes and real blockers forward without downstream work.
+
+  - id: research
+    skill: research
+    prompt: |
+      Request: {{task}}
+
+      Read CEZ_HANDOFF_FILE and the source document. Preserve any no-action outcome
+      or unresolved required blocker. Use how to map affected code and data flows.
+      Use why for existing behavior whose intent matters. Apply research to bounded
+      external questions that affect feasibility, dependencies, or product decisions.
+      Save cited findings under paths.research with access dates and uncertainties.
+      If no outside facts need checking, record that and continue. Missing optional
+      sources are a stated gap. Do not invent evidence or change production code.
+      Update the handoff with findings, constraints, artifact paths, and open items.
+
+  - id: design
+    skill: shape
+    prompt: |
+      Request: {{task}}
+
+      Read CEZ_HANDOFF_FILE, the PRD, and research. Preserve any no-action outcome
+      or unresolved required blocker. Apply shape to define users, outcomes, scope,
+      non-goals, and acceptance intent. Do not reduce the requested scope to one slice.
+      For UI work, define journeys, screens, states, accessibility, and visual direction
+      against existing patterns. Invoke available design skills directly when useful.
+      Use deep-design for material architecture and data-contract decisions.
+      Use prototype when a disposable experiment can resolve an open design question.
+      Use ux-proof on existing flows or a running prototype when applicable. Keep
+      prototype evidence distinct from production verification and clean it up.
+      Record reversible assumptions. Ask only for decisions that block correctness.
+      Save the brief, design decisions, evidence, and remaining questions in the handoff.
+
+  - id: plan
+    skill: specify
+    prompt: |
+      Request: {{task}}
+
+      Read CEZ_HANDOFF_FILE, the original PRD, research, and design decisions.
+      Preserve any no-action outcome or unresolved required blocker. Use wayfinder
+      for work spanning sessions. Split the entire requested outcome into vertical
+      tasks with stable IDs, requirement links, dependencies, acceptance checks,
+      and pending/in-progress/verified/reviewed/blocked states in a Markdown plan.
+      Keep a coverage table from every PRD requirement to tasks and eventual evidence.
+      Detail the next one or two ready slices with specify. Keep later task details
+      provisional, but never silently drop their requirements. Resolve blocking design
+      questions through shape, research, or deep-design before specifying that slice.
+      Save specs under paths.specs and the plan and resume note under paths.work.
+      Record current frontier, next task, branch, last verified commit, and artifacts
+      in the resume note and CEZ_HANDOFF_FILE. Create tracker tasks only when requested.
+      This workflow ends with the plan. Report planned scope, unresolved questions,
+      and the first implementation task. Do not implement production code or claim
+      delivery. Continue with skills-product and these artifacts when ready to build.

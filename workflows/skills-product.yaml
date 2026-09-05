@@ -1,0 +1,141 @@
+name: skills-product
+description: Take a full PRD through research, design, task planning, every implementation slice, and integrated product delivery.
+steps:
+  - id: intake
+    skill: intake
+    prompt: |
+      Request: {{task}}
+
+      Read CEZ_HANDOFF_FILE, project instructions, and the complete input document
+      or linked PRD. Preserve the original source and full requested outcome.
+      Apply intake. Require project setup to be ready before delivery work.
+      Use Cezar's supplied absolute skill directory and the runner inventory to
+      locate installed skills. Save their absolute paths in the handoff so fresh
+      worktrees can read them. Prefer this project's installed collection over
+      same-named vendor skills. Report a missing required skill instead of guessing.
+      Save classification, scope, acceptance summary, Issue, Next, and Status.
+      Carry no-action outcomes and real blockers forward without downstream work.
+
+  - id: research
+    skill: research
+    prompt: |
+      Request: {{task}}
+
+      Read CEZ_HANDOFF_FILE and the source document. Preserve any no-action outcome
+      or unresolved required blocker. Use how to map affected code and data flows.
+      Use why for existing behavior whose intent matters. Apply research to bounded
+      external questions that affect feasibility, dependencies, or product decisions.
+      Save cited findings under paths.research with access dates and uncertainties.
+      If no outside facts need checking, record that and continue. Missing optional
+      sources are a stated gap. Do not invent evidence or change production code.
+      Update the handoff with findings, constraints, artifact paths, and open items.
+
+  - id: design
+    skill: shape
+    prompt: |
+      Request: {{task}}
+
+      Read CEZ_HANDOFF_FILE, the PRD, and research. Preserve any no-action outcome
+      or unresolved required blocker. Apply shape to define users, outcomes, scope,
+      non-goals, and acceptance intent. Do not reduce the requested scope to one slice.
+      For UI work, define journeys, screens, states, accessibility, and visual direction
+      against existing patterns. Invoke available design skills directly when useful.
+      Use deep-design for material architecture and data-contract decisions.
+      Use prototype when a disposable experiment can resolve an open design question.
+      Use ux-proof on existing flows or a running prototype when applicable. Keep
+      prototype evidence distinct from production verification and clean it up.
+      Record reversible assumptions. Ask only for decisions that block correctness.
+      Save the brief, design decisions, evidence, and remaining questions in the handoff.
+
+  - id: plan
+    skill: specify
+    prompt: |
+      Request: {{task}}
+
+      Read CEZ_HANDOFF_FILE, the original PRD, research, and design decisions.
+      Preserve any no-action outcome or unresolved required blocker. Use wayfinder
+      for work spanning sessions. Split the entire requested outcome into vertical
+      tasks with stable IDs, requirement links, dependencies, acceptance checks,
+      and pending/in-progress/verified/reviewed/blocked states in a Markdown plan.
+      Keep a coverage table from every PRD requirement to tasks and eventual evidence.
+      Detail the next one or two ready slices with specify. Keep later task details
+      provisional, but never silently drop their requirements. Resolve blocking design
+      questions through shape, research, or deep-design before specifying that slice.
+      Save specs under paths.specs and the plan and resume note under paths.work.
+      Record current frontier, next task, branch, last verified commit, and artifacts
+      in the resume note and CEZ_HANDOFF_FILE. Create tracker tasks only when requested.
+      Reuse current discovery artifacts when supplied. Check them against the PRD
+      and current code and refresh only stale decisions. Continue into delivery.
+
+  - id: deliver
+    skill: build
+    allowedTools: [Read, Edit, Write, Grep, Glob, Bash, Agent, Task, TaskOutput]
+    prompt: |
+      Request: {{task}}
+
+      Read CEZ_HANDOFF_FILE, the original PRD, plan, specs, and recorded skill paths.
+      Preserve no-action outcomes and real blockers. Deliver all in-scope tasks,
+      not just the first slice. Reuse Cezar's worktree and one implementation PR
+      with coherent commits unless the user requested separate PRs. Keep any
+      design-only PR separate from implementation code.
+      Select the next task whose dependencies are satisfied. Use wayfinder to update
+      the frontier and specify to detail that slice before coding. Apply build,
+      including ui-dev for UI changes. Immediately apply verify to product behavior
+      and configured checks, with ux-proof for relevant flows. Then apply review.
+      Invoke every available review skill, including review-standard, review-gilfoyle,
+      and review-ponytail, as independent read-only reviewers of the same snapshot.
+      Wait for all results. Preserve findings and disagreements. Never recursively
+      invoke the review joiner as a reviewer. Fix actionable findings through build,
+      then verify and review the new snapshot before marking the task reviewed.
+      Update task state, requirement coverage, evidence, commits, and resume notes
+      after each slice. Continue until every in-scope requirement is covered. Evolve
+      provisional task details from evidence without deleting agreed requirements.
+      If context runs short, checkpoint the exact frontier for continuation. A session
+      ending, one completed task, or one PR opening does not mean the PRD is delivered.
+      Use a new approach after failed attempts. If no progress is possible, record
+      partial completion, remaining tasks, and the actual blocker without claiming done.
+
+  - id: verify
+    skill: verify
+    allowedTools: [Read, Edit, Write, Grep, Glob, Bash, Agent, Task, TaskOutput]
+    prompt: |
+      Request: {{task}}
+
+      Read CEZ_HANDOFF_FILE, the full PRD, task plan, and coverage table. Proceed to
+      final verification only when every in-scope task is reviewed. Otherwise report
+      the unfinished frontier and preserve partial or blocked status. Apply verify
+      to the integrated product and cross-task journeys, not just isolated task checks.
+      Confirm every requirement has current evidence. Use ux-proof for changed UI.
+      Repair failures through build, verify, and review and update the plan. Record
+      final revision, scenarios, checks, evidence, and any uncovered requirement.
+
+  - id: review
+    skill: review
+    allowedTools: [Read, Edit, Write, Grep, Glob, Bash, Agent, Task, TaskOutput]
+    prompt: |
+      Request: {{task}}
+
+      Read CEZ_HANDOFF_FILE. Proceed only after integrated verification covers the
+      complete requested scope at the current revision. Apply review to the cumulative
+      diff against the original base. Invoke every available review skill, including
+      review-standard, review-gilfoyle, and review-ponytail. Supply the same original
+      request, snapshot, pinned diff, plan, and verification evidence to each reviewer.
+      Join every terminal result without hiding disagreements or missing reviewers.
+      Route fixes through build -> verify -> review. Save the final joined report,
+      reviewed revision, coverage, PR, and remaining blockers in the handoff.
+
+  - id: finish
+    skill: finish
+    allowedTools: [Read, Edit, Write, Grep, Glob, Bash, Agent, Task, TaskOutput]
+    prompt: |
+      Request: {{task}}
+
+      Read CEZ_HANDOFF_FILE, the PRD coverage table, task states, verification, and
+      every review result. If anything in scope remains unfinished, report partial
+      delivery and the exact resume action. Do not turn the first finished slice
+      into PRD completion. Otherwise apply finish to each implementation PR.
+      Repair CI and conflicts when possible and rerun build -> verify -> review
+      for changed code. Stop at PR readiness unless the user requested a merge.
+      Do not bypass real checks or provider-required approval. After delivery, use
+      retro for a short read-only report. Save its lessons without replacing the
+      delivery Status, PR links, coverage, or open items with retro's COMPLETE status.

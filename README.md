@@ -77,9 +77,45 @@ Add the public skills to a project:
 npx skills add igloczek/skills --skill '*' --agent '*' --yes
 ```
 
-Then run `setup` once in that project. A runner such as
-[Cezar](https://github.com/open-mercato/cezar) can load the skills as workflow
-steps.
+Then run `setup` once in that project. With
+[Cezar](https://github.com/open-mercato/cezar), use the workflows below as the
+default setup for this collection.
+
+### Default setup with Cezar
+
+Run this from the project root after installing the skills and running `setup`:
+
+```bash
+mkdir -p .ai/cezar/workflows
+for workflow in skills-discovery skills-delivery skills-product; do
+  curl -fL "https://raw.githubusercontent.com/Igloczek/skills/main/workflows/$workflow.yaml" \
+    -o ".ai/cezar/workflows/$workflow.yaml" || break
+done
+npx cezar-cli
+```
+
+Choose the workflow in Cezar, select the runner and model, and enter the request
+or the path to your PRD. The skills installer does not install these YAML files.
+You can also copy them from this repository's `workflows/` folder.
+
+| Workflow | Use it for | Result |
+| --- | --- | --- |
+| [skills-product](workflows/skills-product.yaml) | A large PRD or an entire feature set. | Research, design, task breakdown, every implementation slice, integrated verification, review, and PR readiness. |
+| [skills-discovery](workflows/skills-discovery.yaml) | An idea or PRD that needs investigation and a plan before coding. | Cited research, design decisions, specs, a task map, and a resume note. No production implementation. |
+| [skills-delivery](workflows/skills-delivery.yaml) | One scoped feature, bug, refactor, or maintenance task. | Build, product verification, every reviewer, and a reviewable PR. |
+
+For "here is a big PRD, deliver it", choose **skills-product**. It tracks each
+requirement through dependent tasks and evidence. It details the next ready
+slices, implements and checks each one, then checks the integrated product.
+Finishing one task does not count as finishing the PRD. Use **skills-discovery**
+when you want the design and task plan first, then pass those artifacts to
+**skills-product** to continue.
+
+The workflows inherit your runner and model. Keep the skills installed in the
+project so Cezar finds this collection before same-named vendor skills. Review
+runs every available reviewer. Merging happens only when your request calls for
+it. See the [workflow guide](workflows/README.md) for phases, skill coverage,
+resuming large work, and Cezar's execution limits.
 
 For external skills, use the upstream CLI directly:
 
