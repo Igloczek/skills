@@ -1,6 +1,6 @@
 ---
 name: verify
-version: 0.1.0
+version: 0.1.1
 description: "Verify a change with repository tests and, when it is user-facing, concrete browser or UI evidence from a controlled test environment."
 ---
 
@@ -59,20 +59,14 @@ it does not apply or the project does not provide it.
 
 ## Evidence retention
 
-Preserving evidence for a workflow handoff does not mean committing it.
-Keep raw logs, test output, screenshots, traces, and scratch reports in the
-runner's artifact storage or a temporary location outside the repository by
-default. Report commands, observed results, and available artifact links or
-paths in the handoff. The report itself need not be a tracked file.
-
-Before retaining a generated artifact in the PR, ask: **Would a developer six
-months from now need this to understand a decision, operate the tool, or
-reproduce a meaningful check?** If yes, consider keeping the smallest useful
-form, such as a decision note, runbook, regression test, or required fixture.
-If not, exclude it from the PR and remove task-created scratch files when no
-longer needed for an active handoff or failure diagnosis. Do not delete
-pre-existing or unrelated user files. Honor explicit deliverables and project
-retention requirements. Never retain secrets.
+- Keep logs, test output, screenshots, and scratch reports outside the repo.
+  Put commands and results in the handoff.
+- Before committing evidence, ask: **Would a developer six months from now
+  need this to understand a decision, operate the tool, or reproduce a
+  meaningful check?** Keep the smallest useful form if yes. Otherwise exclude
+  it unless the user or project explicitly requires it. Never include secrets.
+- Delete your scratch files after handoff or debugging is done. Leave user
+  files untouched.
 
 ## Rules
 
