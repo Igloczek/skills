@@ -1,0 +1,72 @@
+name: ship-a-change
+description: Implement one scoped change. Take a feature, bug, or refactor through code, verification, review, and a reviewable PR.
+steps:
+  - id: intake
+    skill: intake
+    prompt: |
+      Request: {{task}}
+
+      Read CEZ_HANDOFF_FILE, project instructions, and project setup. Apply intake.
+      Resolve installed skill paths from Cezar's supplied directory and the runner
+      inventory and save them in the handoff for later worktree sessions.
+      Use shape and specify when the change needs them. Use how, why, research,
+      deep-design, or prototype only for questions that affect this change.
+      If the input is a large multi-session PRD, report that deliver-a-project is the
+      matching workflow rather than silently choosing one task as the whole scope.
+      Save scope, acceptance criteria, Spec, Issue, Next, and real blockers.
+      Preserve a no-action outcome or required blocker through later steps.
+
+  - id: build
+    skill: build
+    prompt: |
+      Request: {{task}}
+
+      Read CEZ_HANDOFF_FILE and the installed build skill. Proceed only with an
+      actionable scope and resolved acceptance intent. Preserve no-action outcomes
+      and real blockers. Apply build in Cezar's current worktree. For bugs, reproduce
+      first and leave a root-cause fix and regression check. Use ui-dev for UI work.
+      Save the comparison base, changed paths, PR, checks, and READY_FOR_VERIFY or
+      blocker status in the handoff. Code written is not yet verified or delivered.
+
+  - id: verify
+    skill: verify
+    prompt: |
+      Request: {{task}}
+
+      Read CEZ_HANDOFF_FILE. Preserve no-action outcomes and unresolved required
+      blockers. Apply verify to the implemented scope before code review. Exercise
+      actual product behavior and use ux-proof for relevant UI flows. Run configured
+      checks and record evidence. If verification fails, switch to build for repair,
+      then verify again. Use failure evidence to change approach. If progress is
+      blocked by a required input or unavailable capability, record it and stop work.
+      Save the verified revision, diff, scenarios, artifacts, and Status in the handoff.
+
+  - id: review
+    skill: review
+    allowedTools: [Read, Edit, Write, Grep, Glob, Bash, Agent, Task, TaskOutput]
+    prompt: |
+      Request: {{task}}
+
+      Read CEZ_HANDOFF_FILE. Preserve no-action outcomes and unresolved required
+      blockers. Apply review only after current product verification. Discover and
+      invoke every available review skill, including review-standard, review-gilfoyle,
+      and review-ponytail. Give independent read-only reviewers the same request,
+      pinned diff, checkout, and evidence. Wait for all results and preserve findings
+      and disagreements. Do not recursively invoke the review joiner as a reviewer.
+      For actionable findings, switch to build, then verify, then repeat review on
+      the updated snapshot. Missing required review results are never approval.
+      Save the joined report, verified and reviewed revision, PR, and Status.
+
+  - id: finish
+    skill: finish
+    allowedTools: [Read, Edit, Write, Grep, Glob, Bash, Agent, Task, TaskOutput]
+    prompt: |
+      Request: {{task}}
+
+      Read CEZ_HANDOFF_FILE. Report no-action outcomes or unresolved required blockers
+      honestly. Otherwise apply finish to the existing PR and the current verified,
+      reviewed change. Repair remaining CI or conflicts when possible. Any code change
+      must pass build -> verify -> review again before readiness. Reuse satisfied
+      checks. Stop at a reviewable PR unless the user explicitly requested a merge.
+      Never bypass real checks or provider-required approval. Save Status, PR,
+      evidence, and next action. Run retro after delivery when requested.

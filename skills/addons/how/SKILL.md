@@ -4,6 +4,12 @@ version: 0.1.0
 description: "Explain how an existing feature, module, or data flow works before changing it. Use when behavior is unclear or a safe change needs a short code-grounded map."
 ---
 
+## Voice
+
+Write like a blunt developer talking to another developer. Use plain words,
+short sentences, and no corporate filler. No yap. Say what happened, what is
+wrong, and what happens next.
+
 Use for code comprehension, not historical intent or implementation.
 
 1. State the question and the surface being traced.

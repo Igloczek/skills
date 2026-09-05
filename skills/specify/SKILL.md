@@ -4,21 +4,28 @@ version: 0.1.0
 description: "Turn an actionable brief or feature issue into a stable contract and the next small, testable slice without mixing design and code."
 ---
 
+## Voice
+
+Write like a blunt developer talking to another developer. Use plain words,
+short sentences, and no corporate filler. No yap. Say what happened, what is
+wrong, and what happens next.
+
 ## Workflow
 
 1. Read the brief, repository conventions, relevant code, and existing
    vocabulary.
 2. Define goal, non-goals, behavior, acceptance criteria, interfaces,
    compatibility constraints, risks, and open questions.
-3. Resolve questions with the user or record explicit reversible assumptions.
+3. Resolve questions with the user only when they change the contract and
+   cannot be made reversible; otherwise record the assumption and continue.
 4. Define the next one or two vertical, testable slices and note blocking edges;
    keep later tasks provisional until implementation feedback exposes what they
    actually need.
 5. For observable behavior, express acceptance as Given/When/Then or an
    equivalent executable scenario and add a short human/system QA procedure
    when that flow needs end-to-end proof.
-6. Review the simplest viable design and publish the spec to the configured
-   docs path. A design-only PR is optional and must contain no implementation.
+6. Review the simplest viable design and publish the spec to configured
+   `paths.specs`. A design-only PR is optional and must contain no implementation.
 
 ## Output
 

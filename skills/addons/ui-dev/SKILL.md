@@ -4,10 +4,18 @@ version: 0.1.0
 description: "Implement interface changes with project contracts, accessible states, and polished interaction details."
 ---
 
+## Voice
+
+Write like a blunt developer talking to another developer. Use plain words,
+short sentences, and no corporate filler. No yap. Say what happened, what is
+wrong, and what happens next.
+
 Use for components, routes, forms, responsive layout, user-visible states, and
-interaction. Companion guidance may come from `design-taste-frontend` and
-`make-interfaces-feel-better` when those skills are installed; neither replaces
-the project's framework or explicit requirements.
+interaction. When `design-taste-frontend` or `make-interfaces-feel-better` is
+available, invoke it directly for the UI change and preserve its guidance. Do
+not reproduce an external skill's instructions or make setup manage it; use
+`npx skills` when the project needs to add or use one. Neither companion
+replaces the project's framework or explicit requirements.
 
 ## Workflow
 
