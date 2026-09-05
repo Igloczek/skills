@@ -65,10 +65,11 @@ Never use em dashes, semicolons, and other "complex" sentence constructions.
 - Read `README.md` and the relevant `SKILL.md` files before changing behavior.
 - Every public skill in `skills/` is a contract. Keep valid frontmatter with a
   unique `name`, a `version` in `MAJOR.MINOR.PATCH` form, clear `description`,
-  `## Voice`, and `## Output`. Bump the skill version when its instructions or
-  bundled resources change. Use patch for corrections, minor for compatible
-  additions, and major for breaking contracts. Skill versions are independent
-  of the package version.
+  `## Voice`, and `## Output`. Version changes are relative to the last release,
+  not each edit or commit. Keep the same version while iterating on unreleased
+  changes. Use patch for corrections, minor for compatible additions, and major
+  for breaking contracts, including bundled resources. Skill versions are
+  independent of the package version.
 - Keep public skills generic. Project-specific rules and domain experts belong
   in the consuming project.
 - Use existing skills before adding a new one. Do not add a dependency,

@@ -1,6 +1,6 @@
 ---
 name: verify
-version: 0.1.1
+version: 0.1.0
 description: "Verify a change with repository tests and, when it is user-facing, concrete browser or UI evidence from a controlled test environment."
 ---
 
