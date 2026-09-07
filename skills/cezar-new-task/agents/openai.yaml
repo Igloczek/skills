@@ -1,0 +1,7 @@
+interface:
+  display_name: "Cezar New Task"
+  short_description: "Create a top-level Cezar task from an agent"
+  default_prompt: "Use $cezar-new-task to create a separate Cezar task from the current plan."
+
+policy:
+  allow_implicit_invocation: false
