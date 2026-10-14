@@ -1,7 +1,7 @@
 ---
-name: relentless-test-culler
+name: remove-bad-tests
 version: 0.1.0
-description: "Relentlessly judge, audit, and cull low-value, tautological, over-mocked, or AI-padded tests. Use whenever the user asks to review tests, audit test quality, clean up a test suite, judge whether a test is good or garbage, remove slop tests, or stop generating tests just for the sake of coverage."
+description: "Check a test suite and remove the tests that catch no real bugs. Use whenever the user asks to review tests, audit test quality, clean up a test suite, judge whether a test is good or garbage, remove slop tests, or stop generating tests just for the sake of coverage."
 ---
 
 ## Voice
@@ -132,7 +132,7 @@ Bucket every evaluated test or file into one of five strict dispositions:
 | **Tier 4** | **Bug-Encoding Test** | Test fixture drifts from real upstream data or asserts broken behavior that masks a source bug. | **FIX SOURCE BUG & REWRITE/DELETE TEST** |
 | **Keep** | **High-Signal Survivor** | Calls public seams with concrete inputs, asserts exact behavioral outcomes, and survives internal refactors. | **KEEP UNTOUCHED** |
 
-### Step 5: Output the Relentless Verdict Report
+### Step 5: Output the Verdict Report
 
 Always present your evaluation in this direct, scannable format before modifying files (unless the user explicitly told you to delete immediately):
 
@@ -155,7 +155,7 @@ Always present your evaluation in this direct, scannable format before modifying
 
    - For each kept test, state the **1-sentence failure mode** it actually protects against.
 
-### Step 6: Execute the Cull
+### Step 6: Remove the Bad Tests
 
 - When executing deletions, **delete cleanly and stop**.
 - Do **not** rewrite deleted slop tests into slightly fancier slop tests just to keep the test count high.
@@ -182,11 +182,11 @@ Kill list:
 False confidence and bugs: <tier 3 honest gaps and tier 4 source bugs|none>
 Survivors:
   <file:line> "<test name>": <one-sentence failure mode>
-Cull: <files and tests removed, runtime before and after|none>
-Status: REPORTED|CULLED|SUITE_FAILED|BLOCKED
+Removed: <files and tests deleted, runtime before and after|none>
+Status: REPORTED|REMOVED|SUITE_FAILED|BLOCKED
 ```
 
 - `REPORTED`: the verdict is delivered and nothing was deleted.
-- `CULLED`: deletions are done and the surviving suite passes.
+- `REMOVED`: deletions are done and the surviving suite passes.
 - `SUITE_FAILED`: deletions are done and the surviving suite fails. Include the failing output.
 - `BLOCKED`: the target tests cannot be found or read.

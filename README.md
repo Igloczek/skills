@@ -248,17 +248,17 @@ experts from that project's own docs.
 
 ### Add-ons
 
-| Skill                    | Does                                            |
-| ------------------------ | ----------------------------------------------- |
-| `deep-design`            | Check module boundaries before a risky change.  |
-| `how`                    | Trace existing code and data flow.              |
-| `prototype`              | Answer one design question with throwaway code. |
-| `relentless-test-culler` | Cull tests that catch no real bugs.             |
-| `research`               | Check outside facts with sources.               |
-| `ui-dev`                 | Build UI changes with basic accessibility.      |
-| `ux-proof`               | Check a user flow in the real UI.               |
-| `wayfinder`              | Split genuinely multi-session work.             |
-| `why`                    | Recover intent from code, docs, and history.    |
+| Skill              | Does                                            |
+| ------------------ | ----------------------------------------------- |
+| `deep-design`      | Check module boundaries before a risky change.  |
+| `how`              | Trace existing code and data flow.              |
+| `prototype`        | Answer one design question with throwaway code. |
+| `remove-bad-tests` | Remove tests that catch no real bugs.           |
+| `research`         | Check outside facts with sources.               |
+| `ui-dev`           | Build UI changes with basic accessibility.      |
+| `ux-proof`         | Check a user flow in the real UI.               |
+| `wayfinder`        | Split genuinely multi-session work.             |
+| `why`              | Recover intent from code, docs, and history.    |
 
 ## Sources
 
