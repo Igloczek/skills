@@ -30,6 +30,32 @@ smaller diff.
 4. Refresh the diff and line references before reporting. Do not implement a
    proposed reduction, install dependencies, or mutate the repository.
 
+## Lean checks
+
+Look for these in the changed code:
+
+- **Delete:** dead code, unused options, speculative features.
+- **Reuse:** the repo already has a helper or pattern for this job. Name its path.
+- **Platform:** the standard library or platform already does it. A new dependency
+  for a few lines is a finding.
+- **One-case abstraction:** an interface, layer, or config option with one
+  implementation, or with no caller that sets it.
+- **Merge:** near-copies that must change together.
+- **Split:** one function that does unrelated jobs, so it is hard to read or test.
+  Split by job, never by line count, and never into helpers that exist only to
+  shorten a function.
+
+## Before you report
+
+- Every finding needs a concrete case: this input or state leads to this result. No
+  case, no finding.
+- Re-read the code. Confirm the caller exists, the value can really be empty, and the
+  code really is unused.
+- A `shortcut:` comment that names its limit is a decision. Report it only when the
+  expected load already crosses that limit.
+- Propose the smallest fix that works. Prefer fixes that delete code.
+- Do not report style taste.
+
 ## Output
 
 ```text
@@ -40,7 +66,7 @@ Findings:
 - [BLOCKER|MAJOR|MINOR] path:line — title; cut or defect; replacement; evidence
 Checks: exact command or interaction => result
 Open: non-complexity findings routed elsewhere, owner, and next action
-Summary: one concise complexity verdict
+Summary: one concise complexity verdict. Lean: -<N> lines possible, or none.
 Changes: none; reviewer is read-only
 ```
 

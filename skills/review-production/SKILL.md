@@ -1,7 +1,7 @@
 ---
 name: review-production
 version: 1.0.0
-description: "Review a change for correctness and operational risk, including runtime behavior, integrations, observability, and security."
+description: "Review a change for failure handling, capacity, observability, scale, and security."
 ---
 
 ## Voice
@@ -30,6 +30,39 @@ back through `build`, then verify again.
    `path:line`, consequence, and reproducible evidence.
 5. Refresh the diff and line references before the verdict. Do not edit code,
    install dependencies, deploy, or mutate tracker state.
+
+## Failure checks
+
+Check every changed path against this list. Report only what the change can
+actually trigger.
+
+- **Failure paths:** What happens on timeout, error, and partial success? Retries
+  need a cap and a backoff, or they can flood a dependency that is recovering.
+- **Cancellation and timeouts:** Work should stop when the caller gives up. Every
+  outbound call needs a timeout chosen on purpose. Library defaults are not a
+  decision. Check pool sizes, buffer sizes, and retry counts the same way.
+- **Capacity:** Find the connection, thread, worker, or file handle pool this change
+  can exhaust. Check error paths for leaks. A fixed-size pool can stall on one slow
+  request or one hot key.
+- **Shared dependencies:** A slow database, cache, auth service, or queue can block
+  unrelated work. Name each new dependency on a shared service and what happens when
+  it fails.
+- **Data access:** New queries need an index that fits them. Watch for one query per
+  item, long lock waits, transactions that wait on remote calls, and connection
+  exhaustion.
+- **Deployment and config:** Name every new setting, env var, schema change, and
+  feature flag. Check that the old version can still read new data, the defaults are
+  safe, and a rollback works.
+- **Observability:** Each new failure path needs a log line, metric, or error an
+  operator can find. Name it in the finding. For changed request paths, check
+  latency, traffic, errors, and saturation. For changed resources, check utilization,
+  saturation, and errors.
+- **Scale:** Does it work for one user but fail for many? Look for check-then-write
+  races, the same work repeated by every process, lists or caches that only grow,
+  quadratic loops over large input, and state that must be shared across processes.
+- **Speed:** A large slowdown is a finding. A small win in a hot loop is a suggestion.
+- **Behavior change:** Compare the old and new paths. Ask what the old path handled
+  that the new one no longer does.
 
 ## Output
 

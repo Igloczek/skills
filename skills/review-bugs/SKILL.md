@@ -49,7 +49,8 @@ change does not worsen, or formatting and naming preferences.
   significant accessibility regression, or missing regression coverage for a
   demonstrated bug.
 - `MINOR`: limited-impact defect or useful maintenance/test gap that does not
-  make the change unsafe.
+  make the change unsafe. New non-trivial logic with no test that fails when it
+  breaks counts here: a branch, loop, parser, money or security rule, or data write.
 
 Use `CHANGES_REQUESTED` for a blocker or major, `PASS` for minor or no findings,
 and `BLOCKED` only when the review unit or necessary evidence is unavailable.

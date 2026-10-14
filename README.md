@@ -48,7 +48,7 @@ updater, or lifecycle wrapper here.
 Every change gets all three reviewers:
 
 - `review-bugs` for normal correctness;
-- `review-production` for runtime, operations, and security;
+- `review-production` for failures, capacity, observability, and security;
 - `review-bloat` for code and dependency bloat.
 
 They see the same request and diff. The joiner keeps all findings and only
@@ -165,7 +165,7 @@ flowchart TD
     subgraph review["review · run all reviewers and combine findings"]
         direction LR
         review_bugs["review-bugs<br/>behavior + rules"]
-        review_production["review-production<br/>runtime + security"]
+        review_production["review-production<br/>failures + security"]
         review_bloat["review-bloat<br/>simplicity + dependencies"]
     end
 
@@ -231,7 +231,7 @@ experts from that project's own docs.
 | `retro`             | Record useful lessons after delivery.               |
 | `review-bloat`      | Find code and dependencies to cut.                  |
 | `review-bugs`       | Check for bugs, compatibility, security, and tests. |
-| `review-production` | Check runtime, operations, and security.            |
+| `review-production` | Check failures, capacity, observability, security.  |
 | `review`            | Run every reviewer after product verification.      |
 | `setup`             | Find repo commands and repair project config.       |
 | `shape`             | Make fuzzy work clear.                              |
@@ -247,7 +247,7 @@ experts from that project's own docs.
 | `prototype`        | Answer one design question with throwaway code. |
 | `remove-bad-tests` | Remove tests that catch no real bugs.           |
 | `research`         | Check outside facts with sources.               |
-| `ui-dev`           | Build UI changes with basic accessibility.      |
+| `ui-dev`           | Build UI with accessible states and polish.     |
 | `ux-proof`         | Check a user flow in the real UI.               |
 | `wayfinder`        | Split genuinely multi-session work.             |
 | `why`              | Recover intent from code, docs, and history.    |
