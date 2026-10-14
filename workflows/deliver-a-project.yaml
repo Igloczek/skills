@@ -82,7 +82,7 @@ steps:
       the frontier and specify to detail that slice before coding. Apply build,
       including ui-dev for UI changes. Immediately apply verify to product behavior
       and configured checks, with ux-proof for relevant flows. Then apply review.
-      Run all three reviewers, review-bugs, review-production, and review-bloat, as
+      Run all three reviewers, review-bugs, review-risk, and review-quality, as
       independent read-only reviewers of the same snapshot.
       Wait for all results. Preserve findings and disagreements. Never recursively
       invoke the review joiner as a reviewer. Fix actionable findings through build,
@@ -118,7 +118,7 @@ steps:
       Read CEZ_HANDOFF_FILE. Proceed only after integrated verification covers the
       complete requested scope at the current revision. Apply review to the cumulative
       diff against the original base. Run all three reviewers, review-bugs,
-      review-production, and review-bloat. Supply the same original
+      review-risk, and review-quality. Supply the same original
       request, snapshot, pinned diff, plan, and verification evidence to each reviewer.
       Join every terminal result without hiding disagreements or missing reviewers.
       Route fixes through build -> verify -> review. Save the final joined report,

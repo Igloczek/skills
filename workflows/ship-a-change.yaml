@@ -49,7 +49,7 @@ steps:
 
       Read CEZ_HANDOFF_FILE. Preserve no-action outcomes and unresolved required
       blockers. Apply review only after current product verification. Run all three
-      reviewers, review-bugs, review-production, and review-bloat. Give independent
+      reviewers, review-bugs, review-risk, and review-quality. Give independent
       read-only reviewers the same request,
       pinned diff, checkout, and evidence. Wait for all results and preserve findings
       and disagreements. Do not recursively invoke the review joiner as a reviewer.

@@ -48,8 +48,8 @@ updater, or lifecycle wrapper here.
 Every change gets all three reviewers:
 
 - `review-bugs` for normal correctness;
-- `review-production` for failures, capacity, observability, and security;
-- `review-bloat` for code and dependency bloat.
+- `review-risk` for infrastructure, security, and reliability;
+- `review-quality` for logic, safety, load, tests, and leanness.
 
 They see the same request and diff. The joiner keeps all findings and only
 normalizes their output shape. It does not pick one reviewer and pretend that
@@ -165,8 +165,8 @@ flowchart TD
     subgraph review["review · run all reviewers and combine findings"]
         direction LR
         review_bugs["review-bugs<br/>behavior + rules"]
-        review_production["review-production<br/>failures + security"]
-        review_bloat["review-bloat<br/>simplicity + dependencies"]
+        review_risk["review-risk<br/>infra + security + reliability"]
+        review_quality["review-quality<br/>logic + load + leanness"]
     end
 
     intake -->|scope unclear| shape
@@ -188,7 +188,7 @@ flowchart TD
     classDef review fill:#ecfdf5,stroke:#059669,color:#064e3b,stroke-width:1.5px;
     classDef terminal fill:#f1f5f9,stroke:#475569,color:#0f172a,stroke-width:1.5px;
     class intake,shape,specify,build,verify core;
-    class review_bugs,review_production,review_bloat review;
+    class review_bugs,review_risk,review_quality review;
     class finish,retro terminal;
 ```
 
@@ -223,20 +223,20 @@ experts from that project's own docs.
 
 ### Core
 
-| Skill               | Does                                                |
-| ------------------- | --------------------------------------------------- |
-| `build`             | Implement or repair code and run checks.            |
-| `finish`            | Take the PR to the requested end state.             |
-| `intake`            | Classify the request and choose the next step.      |
-| `retro`             | Record useful lessons after delivery.               |
-| `review-bloat`      | Find code and dependencies to cut.                  |
-| `review-bugs`       | Check for bugs, compatibility, security, and tests. |
-| `review-production` | Check failures, capacity, observability, security.  |
-| `review`            | Run every reviewer after product verification.      |
-| `setup`             | Find repo commands and repair project config.       |
-| `shape`             | Make fuzzy work clear.                              |
-| `specify`           | Write the contract and next small slice.            |
-| `verify`            | Prove the product works before code review.         |
+| Skill            | Does                                                |
+| ---------------- | --------------------------------------------------- |
+| `build`          | Implement or repair code and run checks.            |
+| `finish`         | Take the PR to the requested end state.             |
+| `intake`         | Classify the request and choose the next step.      |
+| `retro`          | Record useful lessons after delivery.               |
+| `review-bugs`    | Check for bugs, compatibility, security, and tests. |
+| `review-quality` | Check logic, safety, load, tests, and leanness.     |
+| `review-risk`    | Check infra, security, and reliability risk.        |
+| `review`         | Run every reviewer after product verification.      |
+| `setup`          | Find repo commands and repair project config.       |
+| `shape`          | Make fuzzy work clear.                              |
+| `specify`        | Write the contract and next small slice.            |
+| `verify`         | Prove the product works before code review.         |
 
 ### Add-ons
 

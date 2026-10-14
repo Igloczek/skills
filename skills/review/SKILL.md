@@ -23,7 +23,7 @@ intent. It does not invent product work.
    is missing or stale, run `verify` first. Do not use code review as a
    substitute for product proof.
 4. Run all three reviewers on every change: `review-bugs`,
-   `review-production`, and `review-bloat`. Run no other review skill, local or
+   `review-risk`, and `review-quality`. Run no other review skill, local or
    external. Do not recursively invoke this joining skill. Do not select or omit
    a lane based on risk, file type, diff size, or a heuristic.
 5. Give each reviewer the same original request, project snapshot, pinned diff,

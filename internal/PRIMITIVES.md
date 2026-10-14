@@ -47,7 +47,7 @@ lock ceremony to a solo workflow.
 
 Owner: `review` and `finish`. Run after `evidence-engine` has checked the
 product. Run the three reviewers in this collection: `review-bugs`,
-`review-production`, and `review-bloat`. Run no other review skill. Do not narrow a
+`review-risk`, and `review-quality`. Run no other review skill. Do not narrow a
 reviewer's scope or omit a lane based on a heuristic. Join the results,
 normalize only the output shape, and keep disagreements visible. Review checks
 the implementation against verified intent. It does not redefine the product.
