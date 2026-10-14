@@ -82,8 +82,8 @@ steps:
       the frontier and specify to detail that slice before coding. Apply build,
       including ui-dev for UI changes. Immediately apply verify to product behavior
       and configured checks, with ux-proof for relevant flows. Then apply review.
-      Invoke every available review skill, including review-standard, review-gilfoyle,
-      and review-ponytail, as independent read-only reviewers of the same snapshot.
+      Invoke every available review skill, including review-bugs, review-production,
+      and review-bloat, as independent read-only reviewers of the same snapshot.
       Wait for all results. Preserve findings and disagreements. Never recursively
       invoke the review joiner as a reviewer. Fix actionable findings through build,
       then verify and review the new snapshot before marking the task reviewed.
@@ -118,7 +118,7 @@ steps:
       Read CEZ_HANDOFF_FILE. Proceed only after integrated verification covers the
       complete requested scope at the current revision. Apply review to the cumulative
       diff against the original base. Invoke every available review skill, including
-      review-standard, review-gilfoyle, and review-ponytail. Supply the same original
+      review-bugs, review-production, and review-bloat. Supply the same original
       request, snapshot, pinned diff, plan, and verification evidence to each reviewer.
       Join every terminal result without hiding disagreements or missing reviewers.
       Route fixes through build -> verify -> review. Save the final joined report,

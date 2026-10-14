@@ -1,6 +1,6 @@
 ---
 name: review
-version: 0.1.0
+version: 0.1.1
 description: "Join independent review skills into one evidence-backed report for a change, while preserving every reviewer's findings and status."
 ---
 
@@ -23,7 +23,7 @@ intent. It does not invent product work.
    is missing or stale, run `verify` first. Do not use code review as a
    substitute for product proof.
 4. Invoke every available review skill for every change. Always invoke
-   `review-standard`, `review-gilfoyle`, and `review-ponytail`; also invoke any
+   `review-bugs`, `review-production`, and `review-bloat`; also invoke any
    project-local or external review skills that are available. Use the runner's
    inventory or `npx skills list` to discover them; do not maintain a second
    registry. Do not recursively invoke this joining skill. Do not select or omit

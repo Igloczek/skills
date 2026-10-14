@@ -1,6 +1,6 @@
 ---
-name: review-gilfoyle
-version: 0.1.0
+name: review-production
+version: 1.0.0
 description: "Review a change for correctness and operational risk, including runtime behavior, integrations, observability, and security."
 ---
 
@@ -12,9 +12,7 @@ wrong, and what happens next.
 
 Run an independent, read-only review of the whole change. Pay particular
 attention to runtime behavior, integrations, failure handling, observability,
-security, and deployability, but report any concrete defect you find. If the
-external `gilfoyle` skill is available, invoke it directly and preserve its
-findings; only normalize its output into the contract below.
+security, and deployability, but report any concrete defect you find.
 In the normal workflow, run after `verify` has checked the product. Review the
 implementation against that intent. If a finding changes behavior, send it
 back through `build`, then verify again.

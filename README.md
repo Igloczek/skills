@@ -47,9 +47,9 @@ There is no local registry, pin file, updater, or lifecycle wrapper here.
 
 Every change gets every available review skill. The baseline is:
 
-- `review-standard` for normal correctness;
-- `review-gilfoyle` for runtime, operations, and security;
-- `review-ponytail` for code and dependency bloat.
+- `review-bugs` for normal correctness;
+- `review-production` for runtime, operations, and security;
+- `review-bloat` for code and dependency bloat.
 
 They see the same request and diff. The joiner keeps all findings and only
 normalizes their output shape. It does not pick one reviewer and pretend that
@@ -172,9 +172,9 @@ flowchart TD
 
     subgraph review["review · run all reviewers and combine findings"]
         direction LR
-        standard_review["review-standard<br/>behavior + rules"]
-        review_gilfoyle["review-gilfoyle<br/>runtime + security"]
-        review_ponytail["review-ponytail<br/>simplicity + dependencies"]
+        review_bugs["review-bugs<br/>behavior + rules"]
+        review_production["review-production<br/>runtime + security"]
+        review_bloat["review-bloat<br/>simplicity + dependencies"]
     end
 
     intake -->|scope unclear| shape
@@ -196,7 +196,7 @@ flowchart TD
     classDef review fill:#ecfdf5,stroke:#059669,color:#064e3b,stroke-width:1.5px;
     classDef terminal fill:#f1f5f9,stroke:#475569,color:#0f172a,stroke-width:1.5px;
     class intake,shape,specify,build,verify core;
-    class standard_review,review_gilfoyle,review_ponytail review;
+    class review_bugs,review_production,review_bloat review;
     class finish,retro terminal;
 ```
 
@@ -231,20 +231,20 @@ experts from that project's own docs.
 
 ### Core
 
-| Skill             | Does                                                 |
-| ----------------- | ---------------------------------------------------- |
-| `build`           | Implement or repair code and run checks.             |
-| `finish`          | Take the PR to the requested end state.              |
-| `intake`          | Classify the request and choose the next step.       |
-| `retro`           | Record useful lessons after delivery.                |
-| `review-gilfoyle` | Check runtime, operations, and security.             |
-| `review-ponytail` | Find code and dependencies to cut.                   |
-| `review-standard` | Check behavior, compatibility, security, and tests.  |
-| `review`          | Run every reviewer after product verification.       |
-| `setup`           | Find repo commands and repair project config.        |
-| `shape`           | Make fuzzy work clear.                               |
-| `specify`         | Write the contract and next small slice.             |
-| `verify`          | Prove the product works before code review.          |
+| Skill               | Does                                                |
+| ------------------- | --------------------------------------------------- |
+| `build`             | Implement or repair code and run checks.            |
+| `finish`            | Take the PR to the requested end state.             |
+| `intake`            | Classify the request and choose the next step.      |
+| `retro`             | Record useful lessons after delivery.               |
+| `review-bloat`      | Find code and dependencies to cut.                  |
+| `review-bugs`       | Check for bugs, compatibility, security, and tests. |
+| `review-production` | Check runtime, operations, and security.            |
+| `review`            | Run every reviewer after product verification.      |
+| `setup`             | Find repo commands and repair project config.       |
+| `shape`             | Make fuzzy work clear.                              |
+| `specify`           | Write the contract and next small slice.            |
+| `verify`            | Prove the product works before code review.         |
 
 ### Add-ons
 

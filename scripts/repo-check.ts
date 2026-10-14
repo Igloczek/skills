@@ -79,7 +79,7 @@ function main(): void {
     || !review.body.includes('Do not select or omit')) {
     fail('review must invoke all available review skills without heuristic selection');
   }
-  for (const reviewer of ['review-standard', 'review-gilfoyle', 'review-ponytail']) {
+  for (const reviewer of ['review-bugs', 'review-production', 'review-bloat']) {
     if (!skills.has(reviewer)) fail(`missing review persona: ${reviewer}`);
     if (!review?.body.includes(`\`${reviewer}\``)) fail(`review does not route ${reviewer}`);
   }

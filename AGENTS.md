@@ -106,9 +106,10 @@ Never use em dashes, semicolons, and other "complex" sentence constructions.
   review. For user-facing work, prove the real flow, including product behavior
   and visual fit when the project supports it.
 - The published `review` skill runs every available review skill on every change.
-  It always runs `review-standard`, `review-gilfoyle`, and `review-ponytail`. Run other local
-  or external reviewers too. Give them the same request and diff. Do not pick
-  a lane by heuristic or tell an external reviewer how to review.
+  It always runs `review-bugs`, `review-production`, and `review-bloat`.
+  Run other local or external reviewers too. Give them the same request and
+  diff. Do not pick a lane by heuristic or tell an external reviewer how
+  to review.
 - Normalize joined review output only enough to make it readable. Keep all
   findings and disagreements. Review checks the implementation against the
   verified intent. It does not redefine the product. If review changes code,

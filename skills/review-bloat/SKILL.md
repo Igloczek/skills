@@ -1,6 +1,6 @@
 ---
-name: review-ponytail
-version: 0.1.0
+name: review-bloat
+version: 1.0.0
 description: "Review a change for correctness and avoidable complexity, including unnecessary dependencies, speculative flexibility, and excess change surface."
 ---
 
@@ -13,9 +13,7 @@ wrong, and what happens next.
 Run an independent, read-only review of the whole change. Pay particular
 attention to deletion, standard-library and native alternatives, unnecessary
 dependencies, speculative flexibility, and avoidable complexity, but report any
-concrete defect you find. If the external `ponytail-review` or `ponytail` skill
-is available, invoke it directly and preserve its findings; only normalize its
-output into the contract below.
+concrete defect you find.
 In the normal workflow, run after `verify` has checked the product. Review the
 implementation against that intent. Do not trade away a working product for a
 smaller diff.
