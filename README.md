@@ -45,11 +45,12 @@ updater, or lifecycle wrapper here.
 
 ### Reviews are additive
 
-Every change gets all three reviewers:
+Every change gets all four reviewers:
 
 - `review-bugs` for normal correctness;
 - `review-risk` for infrastructure, security, and reliability;
-- `review-quality` for logic, safety, load, tests, and leanness.
+- `review-quality` for logic, safety, load, tests, and leanness;
+- `review-tests` for tests that catch no real bugs.
 
 They see the same request and diff. The joiner keeps all findings and only
 normalizes their output shape. It does not pick one reviewer and pretend that
@@ -113,7 +114,7 @@ when you want the design and task plan first, then pass those artifacts to
 
 The workflows inherit your runner and model. Keep the skills installed in the
 project so Cezar finds this collection before same-named vendor skills. Review
-runs all three reviewers. Merging happens only when your request calls for
+runs all four reviewers. Merging happens only when your request calls for
 it. See the [workflow guide](workflows/README.md) for phases, skill coverage,
 resuming large work, and Cezar's execution limits.
 
@@ -167,6 +168,7 @@ flowchart TD
         review_bugs["review-bugs<br/>behavior + rules"]
         review_risk["review-risk<br/>infra + security + reliability"]
         review_quality["review-quality<br/>logic + load + leanness"]
+        review_tests["review-tests<br/>tests that catch nothing"]
     end
 
     intake -->|scope unclear| shape
@@ -188,7 +190,7 @@ flowchart TD
     classDef review fill:#ecfdf5,stroke:#059669,color:#064e3b,stroke-width:1.5px;
     classDef terminal fill:#f1f5f9,stroke:#475569,color:#0f172a,stroke-width:1.5px;
     class intake,shape,specify,build,verify core;
-    class review_bugs,review_risk,review_quality review;
+    class review_bugs,review_risk,review_quality,review_tests review;
     class finish,retro terminal;
 ```
 
@@ -232,6 +234,7 @@ experts from that project's own docs.
 | `review-bugs`    | Check for bugs, compatibility, security, and tests. |
 | `review-quality` | Check logic, safety, load, tests, and leanness.     |
 | `review-risk`    | Check infra, security, and reliability risk.        |
+| `review-tests`   | Flag tests that catch no real bugs.                 |
 | `review`         | Run every reviewer after product verification.      |
 | `setup`          | Find repo commands and repair project config.       |
 | `shape`          | Make fuzzy work clear.                              |
@@ -240,17 +243,16 @@ experts from that project's own docs.
 
 ### Add-ons
 
-| Skill              | Does                                            |
-| ------------------ | ----------------------------------------------- |
-| `deep-design`      | Check module boundaries before a risky change.  |
-| `how`              | Trace existing code and data flow.              |
-| `prototype`        | Answer one design question with throwaway code. |
-| `remove-bad-tests` | Remove tests that catch no real bugs.           |
-| `research`         | Check outside facts with sources.               |
-| `ui-dev`           | Build UI with accessible states and polish.     |
-| `ux-proof`         | Check a user flow in the real UI.               |
-| `wayfinder`        | Split genuinely multi-session work.             |
-| `why`              | Recover intent from code, docs, and history.    |
+| Skill         | Does                                            |
+| ------------- | ----------------------------------------------- |
+| `deep-design` | Check module boundaries before a risky change.  |
+| `how`         | Trace existing code and data flow.              |
+| `prototype`   | Answer one design question with throwaway code. |
+| `research`    | Check outside facts with sources.               |
+| `ui-dev`      | Build UI with accessible states and polish.     |
+| `ux-proof`    | Check a user flow in the real UI.               |
+| `wayfinder`   | Split genuinely multi-session work.             |
+| `why`         | Recover intent from code, docs, and history.    |
 
 ## Sources
 

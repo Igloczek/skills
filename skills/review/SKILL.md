@@ -22,8 +22,8 @@ intent. It does not invent product work.
 3. Confirm that a current `verify` result covers the same head revision. If it
    is missing or stale, run `verify` first. Do not use code review as a
    substitute for product proof.
-4. Run all three reviewers on every change: `review-bugs`,
-   `review-risk`, and `review-quality`. Run no other review skill, local or
+4. Run all four reviewers on every change: `review-bugs`,
+   `review-risk`, `review-quality`, and `review-tests`. Run no other review skill, local or
    external. Do not recursively invoke this joining skill. Do not select or omit
    a lane based on risk, file type, diff size, or a heuristic.
 5. Give each reviewer the same original request, project snapshot, pinned diff,
@@ -63,7 +63,7 @@ reviewers:
 Open: <unverified facts, missing results, owner, and next action|none>
 ```
 
-Include all three reviewers in `reviewers`. Include a concrete `NOT_RUN`
+Include all four reviewers in `reviewers`. Include a concrete `NOT_RUN`
 reason only when a reviewer cannot run, and surface that gap in
 `Open`/`NEEDS_HUMAN` rather than hiding it. Never edit code from this skill;
 route fixes to `build`.

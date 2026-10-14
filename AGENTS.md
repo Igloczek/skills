@@ -105,8 +105,8 @@ Never use em dashes, semicolons, and other "complex" sentence constructions.
 - Delivery workflows run `verify` immediately after `build` and before code
   review. For user-facing work, prove the real flow, including product behavior
   and visual fit when the project supports it.
-- The published `review` skill runs all three reviewers in this collection on
-  every change: `review-bugs`, `review-risk`, and `review-quality`. It runs
+- The published `review` skill runs all four reviewers in this collection on
+  every change: `review-bugs`, `review-risk`, `review-quality`, and `review-tests`. It runs
   no other review skill, local or external. Give the reviewers the same request
   and diff. Do not pick a lane by heuristic or tell a reviewer how to review.
 - Normalize joined review output only enough to make it readable. Keep all
