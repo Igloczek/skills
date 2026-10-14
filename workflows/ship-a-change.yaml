@@ -48,9 +48,9 @@ steps:
       Request: {{task}}
 
       Read CEZ_HANDOFF_FILE. Preserve no-action outcomes and unresolved required
-      blockers. Apply review only after current product verification. Discover and
-      invoke every available review skill, including review-bugs, review-production,
-      and review-bloat. Give independent read-only reviewers the same request,
+      blockers. Apply review only after current product verification. Run all three
+      reviewers, review-bugs, review-production, and review-bloat. Give independent
+      read-only reviewers the same request,
       pinned diff, checkout, and evidence. Wait for all results and preserve findings
       and disagreements. Do not recursively invoke the review joiner as a reviewer.
       For actionable findings, switch to build, then verify, then repeat review on

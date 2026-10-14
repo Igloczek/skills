@@ -48,10 +48,9 @@ PR: #<number> (link: <url>)
   required check, conflict, QA step, or repository-required approval is
   unresolved. Do not invent extra gates.
 - Do not report readiness for a code change until `review-bugs`,
-  `review-production`, and `review-bloat`, plus any additional review skills
-  invoked for the change, have returned terminal results after product
-  verification. A domain-expert result is included when domain rules were
-  involved.
+  `review-production`, and `review-bloat`, have returned terminal results
+  after product verification. A domain-expert result is included when domain
+  rules were involved.
 - Review findings are code feedback, not a new product contract. Re-verify any
   behavior changed while addressing them.
 - Do not block on a quality warning, unconfigured signal, or legacy violation

@@ -37,15 +37,15 @@ works, looks, and behaves as intended. `review` comes after that and checks the
 implementation. A code review can send changed code back through `build`, but
 the changed behavior must pass `verify` again.
 
-### External skills stay upstream
+### Self-contained
 
-This repo does not copy what the upstream [`npx skills`](https://github.com/vercel-labs/skills)
-tool already does. Discover, install, and use external skills with that CLI.
-There is no local registry, pin file, updater, or lifecycle wrapper here.
+Every skill here is self-contained. Nothing in this collection calls an external
+skill, and `setup` does not manage one. There is no local registry, pin file,
+updater, or lifecycle wrapper here.
 
 ### Reviews are additive
 
-Every change gets every available review skill. The baseline is:
+Every change gets all three reviewers:
 
 - `review-bugs` for normal correctness;
 - `review-production` for runtime, operations, and security;
@@ -113,17 +113,9 @@ when you want the design and task plan first, then pass those artifacts to
 
 The workflows inherit your runner and model. Keep the skills installed in the
 project so Cezar finds this collection before same-named vendor skills. Review
-runs every available reviewer. Merging happens only when your request calls for
+runs all three reviewers. Merging happens only when your request calls for
 it. See the [workflow guide](workflows/README.md) for phases, skill coverage,
 resuming large work, and Cezar's execution limits.
-
-For external skills, use the upstream CLI directly:
-
-```bash
-npx skills find <query>
-npx skills add <source> --skill <name> --agent <agent> --yes
-npx skills use <source> --skill <name>
-```
 
 ## Setup
 

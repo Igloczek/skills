@@ -22,17 +22,15 @@ intent. It does not invent product work.
 3. Confirm that a current `verify` result covers the same head revision. If it
    is missing or stale, run `verify` first. Do not use code review as a
    substitute for product proof.
-4. Invoke every available review skill for every change. Always invoke
-   `review-bugs`, `review-production`, and `review-bloat`; also invoke any
-   project-local or external review skills that are available. Use the runner's
-   inventory or `npx skills list` to discover them; do not maintain a second
-   registry. Do not recursively invoke this joining skill. Do not select or omit
+4. Run all three reviewers on every change: `review-bugs`,
+   `review-production`, and `review-bloat`. Run no other review skill, local or
+   external. Do not recursively invoke this joining skill. Do not select or omit
    a lane based on risk, file type, diff size, or a heuristic.
 5. Give each reviewer the same original request, project snapshot, pinned diff,
    and relevant evidence. Do not rewrite the request to narrow what a reviewer
-   may inspect or prescribe a review method for an external skill. Invoke an
-   external skill through the normal runner or `npx skills`; only normalize its
-   returned status, findings, scope, checks, and open items for this report.
+   may inspect or prescribe a review method for it. Only normalize each
+   reviewer's returned status, findings, scope, checks, and open items for this
+   report.
 6. When changed behavior uses domain semantics, run each relevant local domain
    expert as additional context over the same snapshot. A missing optional
    source or target is `NOT_RUN`, not a reason to stop; use `BLOCKED` only when
@@ -44,8 +42,8 @@ intent. It does not invent product work.
    and reason, and return the composed verdict. Perform tracker mutations when
    the task calls for them.
 
-Write the joined report in the repo voice. Keep the meaning of external
-findings, but cut their filler.
+Write the joined report in the repo voice. Keep the meaning of each
+reviewer's findings, but cut their filler.
 
 ## Output
 
@@ -65,19 +63,18 @@ reviewers:
 Open: <unverified facts, missing results, owner, and next action|none>
 ```
 
-Include every invoked reviewer in `reviewers`, including all three baseline
-reviewers and any external or project-local reviewer. Include a concrete
-`NOT_RUN` reason only when a promised reviewer cannot be invoked, and surface
-that gap in `Open`/`NEEDS_HUMAN` rather than hiding it. Never edit code from
-this skill; route fixes to `build`.
+Include all three reviewers in `reviewers`. Include a concrete `NOT_RUN`
+reason only when a reviewer cannot run, and surface that gap in
+`Open`/`NEEDS_HUMAN` rather than hiding it. Never edit code from this skill;
+route fixes to `build`.
 
 ## Rules
 
 - Do not invent requirements absent from the request, spec, or repository
   standards.
 - Treat security and data-loss risks as blockers when evidenced.
-- Reviewers are read-only. Do not constrain an external reviewer's scope beyond
-  the supplied target and the user's request.
+- Reviewers are read-only. Do not constrain a reviewer's scope beyond the
+  supplied target and the user's request.
 - Review does not redefine product intent. If a review finding changes behavior,
   route the code through `build`, then run `verify` again before finish.
 - Do not let a simplicity suggestion remove validation, security,

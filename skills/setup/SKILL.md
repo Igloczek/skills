@@ -1,6 +1,6 @@
 ---
 name: setup
-version: 0.2.0
+version: 0.2.1
 description: "Bootstrap a repository for the shared skills, install useful CLI tools, and record local commands, documents, providers, and safe defaults without overwriting existing configuration."
 ---
 
@@ -18,11 +18,6 @@ project as its working directory, using Bun or `node --experimental-strip-types`
 It performs the repeatable bootstrap: checks the project root and known signals
 and creates `.ai` when needed. Use `--dry-run` to inspect the result without
 changing anything. Do not recreate these checks manually.
-
-When an external skill is needed, use the upstream CLI directly, for example
-`npx skills find <query>`, `npx skills add <source> --skill <name> --agent <agent> --yes`,
-or `npx skills use <source> --skill <name>`. Do not add a local registry,
-lockfile, version policy, installer, or updater around that CLI.
 
 After writing or repairing `.ai/skills.json`, run the bundled
 [`scripts/check.ts`](scripts/check.ts) with `--require-setup`. It performs the
@@ -78,7 +73,7 @@ the domain-expert paths or `none`, and remaining gaps. End with `Status: READY` 
 - Never print, commit, or store a secret.
 - `--dry-run` must make no changes.
 - Do not maintain an external skill manifest, lockfile, pinned version, or
-  custom install/update lifecycle; use `npx skills` for external skills.
+  custom install/update lifecycle. This collection runs no external skills.
 - Never publish project-local domain experts or copy public-skill text into this
   collection.
 - Each domain expert must be grounded in project sources. A role such as

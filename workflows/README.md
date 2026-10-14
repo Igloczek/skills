@@ -28,13 +28,13 @@ project after installing the replacements so Cezar does not list both versions:
 | Plan | `wayfinder`, `specify` | Requirement coverage, dependent tasks, next slice specs, acceptance checks, and a resume note. |
 | Deliver each slice | `build`, `ui-dev`, `verify`, `ux-proof`, `review` | Working code, product proof, every review result, and updated task state. |
 | Verify the product | `verify`, `ux-proof` | Integrated behavior, cross-task journeys, and evidence for the full PRD. |
-| Review the whole change | `review`, `review-bugs`, `review-production`, `review-bloat`, every other available reviewer | Joined findings against the original request and cumulative diff. |
+| Review the whole change | `review`, `review-bugs`, `review-production`, `review-bloat` | Joined findings against the original request and cumulative diff. |
 | Finish | `finish`, `retro` | PR readiness or requested merge, remaining blockers, and useful lessons. |
 
 Each phase resolves the questions relevant to this product. It does not force
 outside research when no external facts matter, architecture work when the
 existing boundary fits, or a prototype when the decision is already clear.
-`ui-dev` invokes available UI design companions directly. `setup` stays separate.
+`ui-dev` applies its own UI rules. `setup` stays separate.
 All 20 public skills have a place across setup and these workflows.
 
 ## Large PRDs and continuation

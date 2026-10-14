@@ -1,6 +1,6 @@
 ---
 name: ui-dev
-version: 0.1.0
+version: 0.1.1
 description: "Implement interface changes with project contracts, accessible states, and polished interaction details."
 ---
 
@@ -11,11 +11,8 @@ short sentences, and no corporate filler. No yap. Say what happened, what is
 wrong, and what happens next.
 
 Use for components, routes, forms, responsive layout, user-visible states, and
-interaction. When `design-taste-frontend` or `make-interfaces-feel-better` is
-available, invoke it directly for the UI change and preserve its guidance. Do
-not reproduce an external skill's instructions or make setup manage it; use
-`npx skills` when the project needs to add or use one. Neither companion
-replaces the project's framework or explicit requirements.
+interaction. The rules below are the whole UI guidance. They do not replace the
+project's framework or explicit requirements.
 
 ## Workflow
 
