@@ -99,7 +99,6 @@ function main(): void {
   console.log(`DIRECTORIES: ${signals.directories.join(', ') || 'NONE'}`);
   console.log(`AI_CONFIG_DIR: ${aiDirectory} (${aiStatus})`);
   console.log(`AI_CONFIG: ${configPath} (${existsSync(configPath) ? 'PRESENT' : 'MISSING'})`);
-  console.log('External skills: use npx skills directly; none are managed by setup.');
 
   console.log(options.dryRun ? 'Status: DRY_RUN' : 'Status: READY');
 }

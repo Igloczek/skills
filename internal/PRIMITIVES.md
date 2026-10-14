@@ -46,9 +46,8 @@ lock ceremony to a solo workflow.
 ## review-engine
 
 Owner: `review` and `finish`. Run after `evidence-engine` has checked the
-product. Run every available review skill, including `review-standard`,
-`review-gilfoyle`, and `review-ponytail`; invoke additional project-local or
-external reviewers through the normal runner or `npx skills`. Do not narrow a
+product. Run the four reviewers in this collection: `review-bugs`,
+`review-risk`, `review-quality`, and `review-tests`. Run no other review skill. Do not narrow a
 reviewer's scope or omit a lane based on a heuristic. Join the results,
 normalize only the output shape, and keep disagreements visible. Review checks
 the implementation against verified intent. It does not redefine the product.

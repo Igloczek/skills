@@ -37,19 +37,20 @@ works, looks, and behaves as intended. `review` comes after that and checks the
 implementation. A code review can send changed code back through `build`, but
 the changed behavior must pass `verify` again.
 
-### External skills stay upstream
+### Self-contained
 
-This repo does not copy what the upstream [`npx skills`](https://github.com/vercel-labs/skills)
-tool already does. Discover, install, and use external skills with that CLI.
-There is no local registry, pin file, updater, or lifecycle wrapper here.
+Every skill here is self-contained. Nothing in this collection calls an external
+skill, and `setup` does not manage one. There is no local registry, pin file,
+updater, or lifecycle wrapper here.
 
 ### Reviews are additive
 
-Every change gets every available review skill. The baseline is:
+Every change gets all four reviewers:
 
-- `review-standard` for normal correctness;
-- `review-gilfoyle` for runtime, operations, and security;
-- `review-ponytail` for code and dependency bloat.
+- `review-bugs` for normal correctness;
+- `review-risk` for infrastructure, security, and reliability;
+- `review-quality` for logic, safety, load, tests, and leanness;
+- `review-tests` for tests that catch no real bugs.
 
 They see the same request and diff. The joiner keeps all findings and only
 normalizes their output shape. It does not pick one reviewer and pretend that
@@ -113,17 +114,9 @@ when you want the design and task plan first, then pass those artifacts to
 
 The workflows inherit your runner and model. Keep the skills installed in the
 project so Cezar finds this collection before same-named vendor skills. Review
-runs every available reviewer. Merging happens only when your request calls for
+runs all four reviewers. Merging happens only when your request calls for
 it. See the [workflow guide](workflows/README.md) for phases, skill coverage,
 resuming large work, and Cezar's execution limits.
-
-For external skills, use the upstream CLI directly:
-
-```bash
-npx skills find <query>
-npx skills add <source> --skill <name> --agent <agent> --yes
-npx skills use <source> --skill <name>
-```
 
 ## Setup
 
@@ -172,9 +165,10 @@ flowchart TD
 
     subgraph review["review · run all reviewers and combine findings"]
         direction LR
-        standard_review["review-standard<br/>behavior + rules"]
-        review_gilfoyle["review-gilfoyle<br/>runtime + security"]
-        review_ponytail["review-ponytail<br/>simplicity + dependencies"]
+        review_bugs["review-bugs<br/>behavior + rules"]
+        review_risk["review-risk<br/>infra + security + reliability"]
+        review_quality["review-quality<br/>logic + load + leanness"]
+        review_tests["review-tests<br/>tests that catch nothing"]
     end
 
     intake -->|scope unclear| shape
@@ -196,7 +190,7 @@ flowchart TD
     classDef review fill:#ecfdf5,stroke:#059669,color:#064e3b,stroke-width:1.5px;
     classDef terminal fill:#f1f5f9,stroke:#475569,color:#0f172a,stroke-width:1.5px;
     class intake,shape,specify,build,verify core;
-    class standard_review,review_gilfoyle,review_ponytail review;
+    class review_bugs,review_risk,review_quality,review_tests review;
     class finish,retro terminal;
 ```
 
@@ -231,20 +225,21 @@ experts from that project's own docs.
 
 ### Core
 
-| Skill             | Does                                                 |
-| ----------------- | ---------------------------------------------------- |
-| `build`           | Implement or repair code and run checks.             |
-| `finish`          | Take the PR to the requested end state.              |
-| `intake`          | Classify the request and choose the next step.       |
-| `retro`           | Record useful lessons after delivery.                |
-| `review-gilfoyle` | Check runtime, operations, and security.             |
-| `review-ponytail` | Find code and dependencies to cut.                   |
-| `review-standard` | Check behavior, compatibility, security, and tests.  |
-| `review`          | Run every reviewer after product verification.       |
-| `setup`           | Find repo commands and repair project config.        |
-| `shape`           | Make fuzzy work clear.                               |
-| `specify`         | Write the contract and next small slice.             |
-| `verify`          | Prove the product works before code review.          |
+| Skill            | Does                                                |
+| ---------------- | --------------------------------------------------- |
+| `build`          | Implement or repair code and run checks.            |
+| `finish`         | Take the PR to the requested end state.             |
+| `intake`         | Classify the request and choose the next step.      |
+| `retro`          | Record useful lessons after delivery.               |
+| `review-bugs`    | Check for bugs, compatibility, security, and tests. |
+| `review-quality` | Check logic, safety, load, tests, and leanness.     |
+| `review-risk`    | Check infra, security, and reliability risk.        |
+| `review-tests`   | Flag tests that catch no real bugs.                 |
+| `review`         | Run every reviewer after product verification.      |
+| `setup`          | Find repo commands and repair project config.       |
+| `shape`          | Make fuzzy work clear.                              |
+| `specify`        | Write the contract and next small slice.            |
+| `verify`         | Prove the product works before code review.         |
 
 ### Add-ons
 
@@ -254,7 +249,7 @@ experts from that project's own docs.
 | `how`         | Trace existing code and data flow.              |
 | `prototype`   | Answer one design question with throwaway code. |
 | `research`    | Check outside facts with sources.               |
-| `ui-dev`      | Build UI changes with basic accessibility.      |
+| `ui-dev`      | Build UI with accessible states and polish.     |
 | `ux-proof`    | Check a user flow in the real UI.               |
 | `wayfinder`   | Split genuinely multi-session work.             |
 | `why`         | Recover intent from code, docs, and history.    |

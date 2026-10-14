@@ -75,11 +75,11 @@ function main(): void {
   }
 
   const review = skills.get('review');
-  if (!review || !review.body.includes('every available review skill')
+  if (!review || !review.body.includes('Run no other review skill')
     || !review.body.includes('Do not select or omit')) {
-    fail('review must invoke all available review skills without heuristic selection');
+    fail('review must run only the bundled reviewers without heuristic selection');
   }
-  for (const reviewer of ['review-standard', 'review-gilfoyle', 'review-ponytail']) {
+  for (const reviewer of ['review-bugs', 'review-risk', 'review-quality', 'review-tests']) {
     if (!skills.has(reviewer)) fail(`missing review persona: ${reviewer}`);
     if (!review?.body.includes(`\`${reviewer}\``)) fail(`review does not route ${reviewer}`);
   }
@@ -120,7 +120,7 @@ function main(): void {
   }
 
   const obsoleteManifest = join(root, 'skills', 'setup', 'references', 'external-skills.json');
-  if (existsSync(obsoleteManifest)) fail('external skill manifests are not part of this repository; use npx skills');
+  if (existsSync(obsoleteManifest)) fail('external skill manifests are not part of this repository');
 
   for (const path of [
     'skills/setup/scripts/init.ts',

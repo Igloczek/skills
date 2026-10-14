@@ -97,18 +97,18 @@ Never use em dashes, semicolons, and other "complex" sentence constructions.
   registry, pin, updater, or workflow layer unless the repo truly needs it.
 - Keep `setup` project-local and self-healing. There is no separate setup
   verification skill.
-- Use the upstream `npx skills` CLI for external skills. Do not reimplement its
-  install, update, or version lifecycle here.
+- This repo runs no external skills. Do not add calls to them, a local
+  registry, or an install, update, or version lifecycle.
 - `build` handles features, fixes, maintenance, refactors, and other code
   changes. For a reported bug, reproduce it first, fix the root cause, and
   leave a regression check. Do not create a bug-only process.
 - Delivery workflows run `verify` immediately after `build` and before code
   review. For user-facing work, prove the real flow, including product behavior
   and visual fit when the project supports it.
-- The published `review` skill runs every available review skill on every change.
-  It always runs `review-standard`, `review-gilfoyle`, and `review-ponytail`. Run other local
-  or external reviewers too. Give them the same request and diff. Do not pick
-  a lane by heuristic or tell an external reviewer how to review.
+- The published `review` skill runs all four reviewers in this collection on
+  every change: `review-bugs`, `review-risk`, `review-quality`, and `review-tests`. It runs
+  no other review skill, local or external. Give the reviewers the same request
+  and diff. Do not pick a lane by heuristic or tell a reviewer how to review.
 - Normalize joined review output only enough to make it readable. Keep all
   findings and disagreements. Review checks the implementation against the
   verified intent. It does not redefine the product. If review changes code,
