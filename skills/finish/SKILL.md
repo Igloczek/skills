@@ -1,6 +1,6 @@
 ---
 name: finish
-version: 0.1.0
+version: 0.1.1
 description: "Take one PR from its current state to done: product verification, review, checks, QA, merge, and cleanup."
 ---
 
@@ -47,11 +47,10 @@ PR: #<number> (link: <url>)
 - Do not claim ready or merge while current product verification, an actual
   required check, conflict, QA step, or repository-required approval is
   unresolved. Do not invent extra gates.
-- Do not report readiness for a code change until `review-standard`,
-  `review-gilfoyle`, and `review-ponytail`, plus any additional review skills
-  invoked for the change, have returned terminal results after product
-  verification. A domain-expert result is included when domain rules were
-  involved.
+- Do not report readiness for a code change until `review-bugs`,
+  `review-risk`, `review-quality`, and `review-tests`, have returned terminal results
+  after product verification. A domain-expert result is included when domain
+  rules were involved.
 - Review findings are code feedback, not a new product contract. Re-verify any
   behavior changed while addressing them.
 - Do not block on a quality warning, unconfigured signal, or legacy violation
