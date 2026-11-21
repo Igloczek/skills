@@ -234,6 +234,7 @@ experts from that project's own docs.
 | Skill             | Does                                                 |
 | ----------------- | ---------------------------------------------------- |
 | `build`           | Implement or repair code and run checks.             |
+| `cezar-new-task`  | Create a separate top-level Cezar task.             |
 | `finish`          | Take the PR to the requested end state.              |
 | `intake`          | Classify the request and choose the next step.       |
 | `retro`           | Record useful lessons after delivery.                |
